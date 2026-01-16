@@ -1,0 +1,105 @@
+---
+import "@fontsource/bebas-neue/400.css";
+import "../styles/global.css";
+import Header from "../components/blocks/Header";
+import Footer from "../components/blocks/Footer";
+import { getCollection } from "astro:content";
+import { navigationLinks } from "../data/navigation";
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const {
+	title,
+	description = "Interrogante Spettacolo - Gestión y promoción de espectáculos de alto nivel",
+} = Astro.props;
+
+// Fetch dynamic children
+const creaciones = await getCollection("creaciones");
+const festival = await getCollection("festival");
+const performance = await getCollection("performance");
+
+// Update navigationLinks with real data
+const dynamicLinks = navigationLinks.map((link) => {
+	if (link.title === "CREACIONES") {
+		return {
+			...link,
+			children: creaciones.map((c) => ({
+				title: c.data.title,
+				href: `/creaciones/${c.slug}/`,
+			})),
+		};
+	}
+	if (link.title === "FESTIVAL") {
+		return {
+			...link,
+			children: festival.map((f) => ({
+				title: f.data.title,
+				href: `/festival/${f.slug}/`,
+			})),
+		};
+	}
+	if (link.title === "PERFORMANCE") {
+		return {
+			...link,
+			children: performance.map((p) => ({
+				title: p.data.title,
+				href: `/performance/${p.slug}/`,
+			})),
+		};
+	}
+	return link;
+});
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title} | Interrogante Spettacolo</title>
+		<meta name="description" content={description} />
+		<meta
+			name="keywords"
+			content="Interrogante Spettacolo, teatro, festival, cultura, arte, talleres culturales, formación profesores, La Carretilla, espectáculos, Italia, Milán"
+		/>
+		<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url} />
+		<meta
+			property="og:title"
+			content={`${title} | Interrogante Spettacolo`}
+		/>
+		<meta property="og:description" content={description} />
+		<meta
+			property="og:image"
+			content={new URL("/og-image.jpg", Astro.url)}
+		/>
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={Astro.url} />
+		<meta
+			property="twitter:title"
+			content={`${title} | Interrogante Spettacolo`}
+		/>
+		<meta property="twitter:description" content={description} />
+		<meta
+			property="twitter:image"
+			content={new URL("/og-image.jpg", Astro.url)}
+		/>
+	</head>
+	<body class="min-h-screen flex flex-col">
+		<Header client:load links={dynamicLinks} />
+		<div class="flex-grow">
+			<slot />
+		</div>
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Quinn";
+  src: url("/fonts/Quinn-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Optima";
+  src: url("/fonts/OptimaLTPro-Roman.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-serif: "Quinn", serif;
+  --font-sans: "Optima", sans-serif;
+  --font-nav: "Bebas Neue", sans-serif;
+  --font-accent: "Quinn", serif;
+  --font-technical: "Optima", sans-serif;
+
+  --color-primary: #4338ab;
+  --color-secondary: #a48956;
+  --color-dark-bg: #000000;
+  --color-luxury-gray: #0a0a0a;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-[#000000] font-sans text-[16px] font-normal tracking-normal antialiased;
+  }
+
+  h1,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif;
+  }
+
+  h2 {
+    @apply font-serif text-3xl sm:text-4xl lg:text-5xl uppercase leading-tight;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-rendering: optimizeLegibility;
+  }
+
+  h2 span {
+    @apply text-primary;
+  }
+}

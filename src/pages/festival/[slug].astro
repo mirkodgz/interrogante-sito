@@ -5,15 +5,14 @@ import BrandButton from "../../components/ui/BrandButton";
 import { cn } from "../../lib/utils";
 import { ArrowUpRight } from "lucide-react";
 
-export async function getStaticPaths() {
-    const festivalEntries = await getCollection("festival");
-    return festivalEntries.map((entry) => ({
-        params: { slug: entry.slug },
-        props: { entry },
-    }));
-}
+import { getEntry } from "astro:content";
 
-const { entry } = Astro.props;
+const { slug } = Astro.params;
+const entry = await getEntry("festival", slug);
+
+if (!entry) {
+    return Astro.redirect("/404");
+}
 const { Content } = await render(entry);
 const { title, subtitle, cover, videoUrl, press, quote, gallery } = entry.data;
 

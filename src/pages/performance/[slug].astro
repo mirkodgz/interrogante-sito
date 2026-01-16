@@ -14,15 +14,15 @@ import {
 } from "@/components/ui/carousel";
 import { PerformanceCarousel } from "../../components/blocks/PerformanceCarousel";
 
-export async function getStaticPaths() {
-    const entries = await getCollection("performance");
-    return entries.map((entry) => ({
-        params: { slug: entry.slug },
-        props: { entry },
-    }));
+import { getEntry } from "astro:content";
+
+const { slug } = Astro.params;
+const entry = await getEntry("performance", slug);
+
+if (!entry) {
+    return Astro.redirect("/404");
 }
 
-const { entry } = Astro.props;
 const { Content } = await render(entry);
 
 const hasGallery = entry.data.gallery && entry.data.gallery.length > 0;

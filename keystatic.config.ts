@@ -51,7 +51,14 @@ export default config({
                 title: fields.slug({ name: { label: 'Título' } }),
                 subtitle: fields.text({ label: 'Subtítulo' }),
                 cover: fields.text({ label: 'Imagen de Portada (URL)' }),
-                videoUrl: fields.text({ label: 'Video URL (Youtube)' }),
+                videoUrl: fields.text({ label: 'Video Principal (Legacy)' }),
+                additionalVideos: fields.array(
+                    fields.text({ label: 'URL del Video' }),
+                    {
+                        label: 'Videos Adicionales',
+                        itemLabel: (props) => props.value || 'Nuevo Video'
+                    }
+                ),
                 details: fields.text({
                     label: 'Detalles (Créditos, Info Técnica)',
                     multiline: true

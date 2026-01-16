@@ -24,6 +24,7 @@ const creacionesCollection = defineCollection({
         subtitle: z.string().optional(),
         cover: z.string().optional(),
         videoUrl: z.string().optional(),
+        additionalVideos: z.array(z.string()).optional(),
         quote: z.string().optional(),
         quoteAuthor: z.string().optional(),
         gallery: z.array(z.string()).optional(),

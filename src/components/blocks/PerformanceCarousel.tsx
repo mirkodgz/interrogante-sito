@@ -20,7 +20,7 @@ export function PerformanceCarousel({ images, title }: PerformanceCarouselProps)
             <Carousel className="w-full" opts={{ loop: true }}>
                 <CarouselContent>
                     {images.map((img, idx) => (
-                        <CarouselItem key={idx}>
+                        <CarouselItem key={idx} className="basis-full md:basis-1/2 lg:basis-1/3">
                             <div className="aspect-[4/5] w-full relative">
                                 <img
                                     src={img}

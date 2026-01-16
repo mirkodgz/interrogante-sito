@@ -1,16 +1,19 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getCollection, getEntry, render } from "astro:content";
+import { getCollection, render } from "astro:content";
 import BrandButton from "../../components/ui/BrandButton";
 import { cn } from "../../lib/utils";
 import { ArrowUpRight } from "lucide-react";
 
-const { slug } = Astro.params;
-if (!slug) return Astro.redirect("/404");
+export async function getStaticPaths() {
+    const festivalEntries = await getCollection("festival");
+    return festivalEntries.map((entry) => ({
+        params: { slug: entry.slug },
+        props: { entry },
+    }));
+}
 
-const entry = await getEntry("festival", slug);
-if (!entry) return Astro.redirect("/404");
-
+const { entry } = Astro.props;
 const { Content } = await render(entry);
 const { title, subtitle, cover, videoUrl, press, quote, gallery } = entry.data;
 

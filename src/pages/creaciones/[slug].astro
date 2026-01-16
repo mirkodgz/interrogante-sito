@@ -1,16 +1,19 @@
 ---
-import { getCollection, getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { render } from "astro:content";
 import { Youtube } from "lucide-react";
 import SectionHeader from "../../components/ui/SectionHeader";
 
-const { slug } = Astro.params;
-if (!slug) return Astro.redirect("/404");
+export async function getStaticPaths() {
+    const entries = await getCollection("creaciones");
+    return entries.map((entry) => ({
+        params: { slug: entry.slug },
+        props: { entry },
+    }));
+}
 
-const entry = await getEntry("creaciones", slug);
-if (!entry) return Astro.redirect("/404");
-
+const { entry } = Astro.props;
 const { Content } = await render(entry);
 
 // Helper for details rendering if needed.

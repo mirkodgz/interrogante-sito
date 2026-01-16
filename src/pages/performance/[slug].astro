@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { render } from "astro:content";
 import { Youtube } from "lucide-react";
@@ -12,13 +12,17 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
+import { PerformanceCarousel } from "../../components/blocks/PerformanceCarousel";
 
-const { slug } = Astro.params;
-if (!slug) return Astro.redirect("/404");
+export async function getStaticPaths() {
+    const entries = await getCollection("performance");
+    return entries.map((entry) => ({
+        params: { slug: entry.slug },
+        props: { entry },
+    }));
+}
 
-const entry = await getEntry("performance", slug);
-if (!entry) return Astro.redirect("/404");
-
+const { entry } = Astro.props;
 const { Content } = await render(entry);
 
 const hasGallery = entry.data.gallery && entry.data.gallery.length > 0;
@@ -87,25 +91,11 @@ const hasGallery = entry.data.gallery && entry.data.gallery.length > 0;
                 <div class="flex flex-col">
                     {
                         hasGallery ? (
-                            <div class="w-full rounded-sm overflow-hidden shadow-2xl bg-gray-100">
-                                <Carousel className="w-full" client:visible>
-                                    <CarouselContent>
-                                        {entry.data.gallery.map((img, idx) => (
-                                            <CarouselItem key={idx}>
-                                                <div class="aspect-[4/5] w-full relative">
-                                                    <img
-                                                        src={img}
-                                                        alt={`${entry.data.title} gallery ${idx + 1}`}
-                                                        class="absolute inset-0 w-full h-full object-cover"
-                                                    />
-                                                </div>
-                                            </CarouselItem>
-                                        ))}
-                                    </CarouselContent>
-                                    <CarouselPrevious className="left-4" />
-                                    <CarouselNext className="right-4" />
-                                </Carousel>
-                            </div>
+                            <PerformanceCarousel
+                                images={entry.data.gallery}
+                                title={entry.data.title}
+                                client:visible
+                            />
                         ) : (
                             /* Fallback to Video if no gallery, preserving original Logic for Mal Nacida if desired, 
                             OR we can move Video to bottom always? 

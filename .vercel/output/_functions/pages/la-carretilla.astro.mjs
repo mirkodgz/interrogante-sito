@@ -1,0 +1,146 @@
+import { a as createComponent, r as renderComponent, b as renderTemplate, m as maybeRenderHead, d as addAttribute } from '../chunks/astro/server_C-Iz92b6.mjs';
+import 'piccolore';
+import { $ as $$Layout } from '../chunks/Layout_HUSFDQDr.mjs';
+import { Check, UserCheck, FileText } from 'lucide-react';
+export { renderers } from '../renderers.mjs';
+
+const $$LaCarretilla = createComponent(($$result, $$props, $$slots) => {
+  const heroImage = "https://res.cloudinary.com/dskliu1ig/image/upload/v1768570408/la-carretilla-web-cover_ao294n.webp";
+  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "La Carretilla - Asociados | Interrogante Spettacolo" }, { "default": ($$result2) => renderTemplate` ${maybeRenderHead()}<main class="bg-white pb-20"> <!-- HERO SECTION --> <section class="relative h-[70vh] flex items-center justify-center overflow-hidden bg-primary"> <div class="absolute inset-0"> <img${addAttribute(heroImage, "src")} alt="La Carretilla Hero" class="w-full h-full object-cover opacity-100"> </div>  <div class="relative z-10 w-full container mx-auto px-6 flex justify-end"> <div class="max-w-md text-right flex flex-col items-end gap-4"> <div class="flex flex-col items-end"> <span class="font-nav text-white text-2xl tracking-[0.2em] uppercase opacity-80 underline decoration-secondary underline-offset-8">Interrogante</span> <h1 class="font-nav text-6xl md:text-8xl text-white uppercase tracking-tighter leading-none mt-2">
+LA CARRETILLA
+</h1> </div> <p class="font-nav text-xl md:text-2xl text-secondary uppercase tracking-[0.1em] font-bold bg-white/10 backdrop-blur-sm px-6 py-2 rounded-sm border-r-4 border-secondary">
+Exclusivamente para asociados
+</p> </div> </div> </section> <!-- SECTION: DESCUBRE LA CARRETILLA (Text + Image) --> <section class="py-24 container mx-auto px-6 max-w-7xl"> <div class="text-center mb-20"> <h2 class="font-nav text-4xl md:text-5xl text-primary uppercase tracking-tight font-bold">
+DESCUBRE LA CARRETILLA !
+</h2> </div> <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24"> <div class="rounded-sm overflow-hidden shadow-2xl"> <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2070&auto=format&fit=crop" alt="Interrogante Culture" class="w-full h-full object-cover aspect-[3/4]"> </div> <div class="space-y-8"> <div> <h3 class="font-nav text-2xl text-primary uppercase mb-4 tracking-wide border-b border-primary/10 pb-2">
+UNA EXPERIENCIA EXCLUSIVA PARA NUESTROS ASOCIADOS
+</h3> <p class="font-sans text-gray-700 text-lg leading-relaxed text-justify">
+La carretilla es un espacio itinerante diseñado
+                            exclusivamente para nuestros asociados. Entrarás en
+                            un mundo de diversidad cultural junto al equipo de
+                            Interrogante Spettacolo.
+</p> </div> <div> <h3 class="font-nav text-2xl text-primary uppercase mb-4 tracking-wide">
+¿QUÉ ES LA CARRETILLA?
+</h3> <p class="font-sans text-gray-700 text-lg leading-relaxed mb-6">
+Imagina una carretilla llena de experiencias
+                            enriquecedoras, donde cada mes podrás disfrutar de:
+</p> <ul class="space-y-3 font-sans text-gray-700 text-lg"> <li class="flex gap-3 items-center"> ${renderComponent($$result2, "Check", Check, { "className": "text-secondary w-5 h-5" })} Conciertos
+                                y eventos: Desde música tradicional hasta sonidos
+                                contemporáneos.
+</li> <li class="flex gap-3 items-center"> ${renderComponent($$result2, "Check", Check, { "className": "text-secondary w-5 h-5" })} Obras
+                                de teatro: Representaciones que te harán reflexionar,
+                                reír y emocionarte.
+</li> <li class="flex gap-3 items-center"> ${renderComponent($$result2, "Check", Check, { "className": "text-secondary w-5 h-5" })} Muestras
+                                de Arte: Exhibiciones de arte visual que celebran
+                                la creatividad y la innovación.
+</li> <li class="flex gap-3 items-center"> ${renderComponent($$result2, "Check", Check, { "className": "text-secondary w-5 h-5" })} Aventuras
+                                culinarias: Saborea platos típicos de distintas partes
+                                del mundo en un ambiente acogedor y amigable.
+</li> <li class="flex gap-3 items-center"> ${renderComponent($$result2, "Check", Check, { "className": "text-secondary w-5 h-5" })} Actividades
+                                interactivas: Talleres y dinámicas que fomentan la
+                                colaboración y el aprendizaje.
+</li> </ul> </div> </div> </div>  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"> <div class="order-2 lg:order-1 space-y-8"> <div> <h3 class="font-nav text-2xl text-primary uppercase mb-4 tracking-wide">
+¿POR QUÉ PARTICIPAR?
+</h3> <ul class="space-y-4 font-sans text-gray-700 text-lg"> <li> <strong class="text-primary font-nav text-lg block mb-1">Conexión Cultural:</strong> Una experiencia que celebra la diversidad y el talento
+                                artístico internacional.
+</li> <li> <strong class="text-primary font-nav text-lg block mb-1">Comunidad:</strong> Conectar con otros asociados, artistas y creativos
+                                en un ambiente inspirador.
+</li> <li> <strong class="text-primary font-nav text-lg block mb-1">Aprendizaje:</strong> Participar en actividades que fomentan el crecimiento
+                                cultural y personal.
+</li> </ul> </div> <div> <h3 class="font-nav text-2xl text-primary uppercase mb-4 tracking-wide">
+¿CÓMO PARTICIPAR?
+</h3> <p class="font-sans text-gray-700 text-lg leading-relaxed">
+Ser socio de La Carretilla es sencillo:
+</p> <ol class="list-decimal pl-6 space-y-2 mt-4 font-sans text-gray-700 text-lg"> <li>
+Hazte miembro de la Asociación Interrogante
+                                Spettacolo.
+</li> <li>
+Recibe nuestras invitaciones mensuales para
+                                participar en los eventos exclusivos.
+</li> <li>
+Disfruta de cada experiencia y contribuye a la
+                                creación de un entorno cultural vibrante.
+</li> </ol> </div> </div> <div class="order-1 lg:order-2 rounded-sm overflow-hidden shadow-2xl"> <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" alt="Community Interrogante" class="w-full h-full object-cover aspect-[3/4]"> </div> </div> </section> <!-- CTA BANNER --> <section class="py-20 bg-primary text-white text-center"> <div class="container mx-auto px-6 max-w-4xl"> <h2 class="font-nav text-3xl md:text-5xl uppercase mb-6 tracking-tight">
+DESCUBRE LA CARRETILLA !
+</h2> <p class="font-sans text-xl opacity-80 mb-10 leading-relaxed">
+Te invitamos a sumergirte en la experiencia de La
+                    Carretilla, donde el arte y la cultura se encuentran con la
+                    calidez de nuestra comunidad.
+</p> <a href="#form" class="inline-block bg-secondary text-white px-10 py-4 rounded-full font-nav tracking-widest uppercase hover:bg-white hover:text-primary transition-all duration-300 transform hover:scale-105 shadow-xl">
+Conviértete en asociado 👆
+</a> </div> </section> <!-- HOW TO BECOME MEMBER --> <section class="py-24 bg-gray-50"> <div class="container mx-auto px-6 max-w-4xl"> <h2 class="font-nav text-3xl md:text-4xl text-primary text-center uppercase mb-12 leading-tight">
+CÓMO CONVERTIRSE EN ASOCIADO DE INTERROGANTE SPETTACOLO
+</h2> <div class="font-sans text-gray-700 space-y-10 text-lg leading-relaxed"> <p class="text-center italic text-gray-500">
+Con nuestras propuestas combinamos la riqueza de la
+                        cultura latinoamericana con enfoques pedagógicos
+                        creativos, creando experiencias significativas tanto
+                        para estudiantes de todas las edades como para artistas.
+</p> <p>
+Al unirte como socio, recibirás tu apoyo a una comunidad
+                        que cree en el poder del arte para transformar personas.
+                        Ser parte de Interrogante Spettacolo para ti será una
+                        oportunidad para crecer junto, nutrir nuevos talentos y
+                        crear un impacto real.
+</p> <div class="space-y-12"> <div class="bg-white p-8 md:p-12 rounded-sm shadow-xl relative border-l-8 border-primary"> <div class="absolute -top-6 -left-6 bg-primary text-white w-12 h-12 flex items-center justify-center font-nav text-2xl rounded-full shadow-lg">
+1
+</div> <h4 class="font-nav text-2xl text-primary uppercase mb-6">
+Derechos del socio:
+</h4> <ul class="space-y-4 list-disc pl-6 font-sans text-gray-700"> <li>
+Formar parte de una comunidad con valores
+                                    similares, inmersa en una red de intercambio
+                                    artístico y multicultural.
+</li> <li>
+Previa reserva para participar en todos los
+                                    eventos (exhibiciones, espectáculos,
+                                    encuentros de La Carretilla, etc).
+</li> <li>
+Aportar sus habilidades y entusiasmo para la
+                                    buena marcha y crecimiento de la asociación
+                                    mediante actividades voluntarias
+                                    ocasionales.
+</li> <li>
+Asistir y participar activamente con voz y
+                                    voto en las asambleas anuales de asociados,
+                                    con el fin de determinar el rumbo de la
+                                    asociación y elegir a sus miembros de
+                                    decisión.
+</li> </ul> </div> <div class="bg-white p-8 md:p-12 rounded-sm shadow-xl relative border-l-8 border-secondary"> <div class="absolute -top-6 -left-6 bg-secondary text-white w-12 h-12 flex items-center justify-center font-nav text-2xl rounded-full shadow-lg">
+2
+</div> <h4 class="font-nav text-2xl text-secondary uppercase mb-6">
+Deberes del socio:
+</h4> <ul class="space-y-4 list-disc pl-6 font-sans text-gray-700"> <li>Respetar estatuto y reglamento interno.</li> <li>
+Abonar las cuotas sociales fijadas por la
+                                    Asamblea General.
+</li> <li>
+Acatar los acuerdos adoptados por el Consejo
+                                    Directivo.
+</li> <li>
+Cumplir con compromiso cualquier tarea o
+                                    función encomendada dentro de la asociación.
+</li> </ul> </div> </div> </div> </div> </section> <!-- REGISTRATION FORM --> <section id="form" class="py-24 container mx-auto px-6 max-w-4xl"> <div class="text-center mb-16"> <h2 class="font-nav text-4xl md:text-5xl text-primary uppercase mb-4 italic">
+FORMULARIO DE INSCRIPCIÓN
+</h2> <p class="font-sans text-gray-600 text-lg">
+Si quieres ser parte de nuestra comunidad y ayudarnos a
+                    promover el arte y la cultura, completa el siguiente
+                    formulario. El equipo de Interrogante Spettacolo se pondrá
+                    en contacto contigo para darte los pasos siguientes.
+</p> </div> <form class="space-y-6"> <div class="grid grid-cols-1 md:grid-cols-2 gap-6"> <input type="text" placeholder="Nombre y Apellidos" class="w-full bg-gray-50 border border-gray-200 px-6 py-4 font-sans focus:outline-none focus:border-primary transition-colors"> <input type="tel" placeholder="Teléfono" class="w-full bg-gray-50 border border-gray-200 px-6 py-4 font-sans focus:outline-none focus:border-primary transition-colors"> </div> <input type="email" placeholder="E-mail" class="w-full bg-gray-50 border border-gray-200 px-6 py-4 font-sans focus:outline-none focus:border-primary transition-colors"> <div class="flex items-center gap-3"> <input type="checkbox" id="terms" class="w-5 h-5 accent-primary"> <label for="terms" class="text-gray-500 text-sm font-sans">He leído y acepto los términos y condiciones</label> </div> <div class="text-center pt-8 space-y-6"> <button type="submit" class="bg-primary text-white px-12 py-4 rounded-full font-nav tracking-widest uppercase hover:bg-black transition-all duration-300 shadow-xl flex items-center gap-3 mx-auto"> ${renderComponent($$result2, "UserCheck", UserCheck, { "className": "w-5 h-5" })}
+Enviar solicitud de asociado
+</button> <a href="#" class="inline-flex items-center gap-2 text-primary font-nav text-lg uppercase tracking-wide border-b-2 border-primary/20 hover:border-primary transition-all pb-1 mx-auto"> ${renderComponent($$result2, "FileText", FileText, { "className": "w-5 h-5" })}
+Conoce el reglamento 📄
+</a> </div> </form> </section> </main> ` })}`;
+}, "D:/interrogante-sitoweb/src/pages/la-carretilla.astro", void 0);
+
+const $$file = "D:/interrogante-sitoweb/src/pages/la-carretilla.astro";
+const $$url = "/la-carretilla";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+    __proto__: null,
+    default: $$LaCarretilla,
+    file: $$file,
+    url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };

@@ -1,0 +1,91 @@
+{
+	"version": 3,
+	"routes": [
+		{
+			"handle": "filesystem"
+		},
+		{
+			"src": "^/_astro/(.*)$",
+			"headers": {
+				"cache-control": "public, max-age=31536000, immutable"
+			},
+			"continue": true
+		},
+		{
+			"src": "^/_server-islands/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/_image/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/keystatic(?:/(.*?))?/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/blog/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/blog/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/contacto/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/creaciones/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/creaciones/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/festival/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/festival/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/formacion-para-profesores/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/keystatic(?:/(.*?))?/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/la-carretilla/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/la-familia-garrigo/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/nosotros/team/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/nosotros/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/partners/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/performance/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/$",
+			"dest": "_render"
+		}
+	]
+}

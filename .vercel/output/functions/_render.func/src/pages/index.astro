@@ -1,0 +1,81 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/blocks/Hero";
+import TextStrips from "../components/blocks/TextStrips";
+import AboutSection from "../components/blocks/AboutSection";
+import PortfolioSection from "../components/blocks/PortfolioSection";
+import FestivalCTA from "../components/blocks/FestivalCTA";
+import NewsSection from "../components/blocks/NewsSection";
+import BlogSection from "../components/blocks/BlogSection";
+import { getCollection } from "astro:content";
+
+const blogItems = await getCollection("blog");
+
+const portfolioItems = [
+	{
+		id: "1",
+		title: "Talleres culturales",
+		description: "Colaboracion con :",
+		image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768143765/LavoratoriCreativiv2_p8nkt8.webp",
+		collaboratorLogo:
+			"https://res.cloudinary.com/dskliu1ig/image/upload/v1768143720/256px-Logotipo_del_Instituto_Cervantes.svg_wea4va.png",
+	},
+	{
+		id: "2",
+		title: "Taller de microteatro",
+		description: "Colaboracion con :",
+		image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768144875/Imagen-TallerdeMicroteatro_md5tl8.jpg",
+		collaboratorLogo:
+			"https://res.cloudinary.com/dskliu1ig/image/upload/v1768143720/256px-Logotipo_del_Instituto_Cervantes.svg_wea4va.png",
+	},
+	{
+		id: "3",
+		title: "Formación para profesores",
+		description: "Colaboracion con :",
+		image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768145257/Foto-v1s22134_r4yrrn.jpg",
+		collaboratorLogo:
+			"https://res.cloudinary.com/dskliu1ig/image/upload/v1768143720/256px-Logotipo_del_Instituto_Cervantes.svg_wea4va.png",
+	},
+	{
+		id: "4",
+		title: "Jugando en español",
+		description: "Interrogante Spettacolo",
+		image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768145671/JugandoEnEspanol-DEF_sbobsb.jpg",
+		collaboratorLogo:
+			"https://res.cloudinary.com/dskliu1ig/image/upload/v1768145671/JugandoEnEspanol-DEF_sbobsb.jpg",
+	},
+	{
+		id: "5",
+		title: "Crea tu taller",
+		description: "Colaboracion con :",
+		image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768146634/CreatuTallerCover_v9fy5l.jpg",
+		collaboratorLogo:
+			"https://res.cloudinary.com/dskliu1ig/image/upload/v1768143720/256px-Logotipo_del_Instituto_Cervantes.svg_wea4va.png",
+	},
+];
+---
+
+<Layout title="Home">
+	<main>
+		{/* SECCIÓN 1: HERO - VIDEO FONDO 90VH */}
+		<Hero client:load />
+
+		{/* SECCIÓN 2: CINTAS DE TEXTO ANIMADAS (Scroll Infinito) */}
+		<TextStrips client:load />
+
+		{/* SECCIÓN 3: CURSOS Y TALLERES (Portfolio) */}
+		<PortfolioSection client:load portfolioItems={portfolioItems} />
+
+		{/* SECCIÓN 4: CHI SIAMO / SOBRE NOSOTROS (Interrogante Spettacolo) */}
+		<AboutSection client:load />
+
+		{/* SECCIÓN 5: C.T.A. FESTIVAL */}
+		<FestivalCTA client:load />
+
+		{/* SECCIÓN 6: NEWS (Manual) */}
+		<NewsSection client:load />
+
+		{/* SECCIÓN 7: BLOG EN ESPAÑOL (Dinámico) */}
+		<BlogSection client:load blogItems={blogItems} />
+	</main>
+</Layout>

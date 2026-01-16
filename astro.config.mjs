@@ -11,7 +11,7 @@ import vercel from '@astrojs/vercel';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://interrogantespettacolo.com',
-  output: 'static',
+  output: 'server',
   integrations: [react(), keystatic(), markdoc(), sitemap()],
 
   vite: {

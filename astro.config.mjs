@@ -10,7 +10,7 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://interrogantespettacolo.com',
+  site: 'https://interrogante-sito.vercel.app',
   output: 'server',
   integrations: [react(), keystatic(), markdoc(), sitemap()],
 

@@ -1,0 +1,195 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { render } from "astro:content";
+import { Youtube } from "lucide-react";
+import SectionHeader from "../../components/ui/SectionHeader";
+// Import standard carousel components if compatible with Astro islands or use client directives
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel";
+import { PerformanceCarousel } from "../../components/blocks/PerformanceCarousel";
+
+export async function getStaticPaths() {
+    const entries = await getCollection("performance");
+    return entries.map((entry) => ({
+        params: { slug: entry.slug },
+        props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const hasGallery = entry.data.gallery && entry.data.gallery.length > 0;
+---
+
+<Layout title={`${entry.data.title} - Performance`}>
+    <main class="bg-white min-h-screen pb-24">
+        {/* HERO - 60vh */}
+        <section
+            class="relative h-[60vh] w-full overflow-hidden bg-black mb-16"
+        >
+            {
+                entry.data.cover && (
+                    <div class="absolute inset-0">
+                        <img
+                            src={entry.data.cover}
+                            alt={entry.data.title}
+                            class="w-full h-full object-cover opacity-80"
+                        />
+                        <div class="absolute inset-0 bg-black/20" />
+                    </div>
+                )
+            }
+            <div
+                class="relative z-10 h-full container mx-auto px-6 flex flex-col justify-end pb-20"
+            >
+                <h1
+                    class="font-nav text-5xl md:text-7xl lg:text-8xl text-white uppercase tracking-tighter"
+                >
+                    {entry.data.title}
+                </h1>
+            </div>
+        </section>
+
+        <div class="container mx-auto px-6 max-w-7xl">
+            {
+                /* CONTENT DESCRIPTION (Top for Sagrada, but keeps consistency?)
+                User requested:
+                1. Post Content (Description)
+                2. Grid (Carousel | Details)
+                3. Video
+                
+                For Mal Nacida, we had [Video | Details] -> Content.
+                Let's check if we can switch dynamically or just adopt the new layout for all.
+                The new layout: Content -> Visuals/Details -> Video seems robust.
+                Let's try to adopt it.
+             */
+            }
+
+            {/* 1. DESCRIPTION / POST CONTENT */}
+            <div class="max-w-4xl mx-auto text-center mb-16">
+                <div
+                    class="prose prose-lg prose-p:font-sans prose-p:text-gray-800 prose-headings:font-serif max-w-none text-justify"
+                >
+                    <Content />
+                </div>
+            </div>
+
+            {/* 2. GRID SECTION: Visual (Carousel or Video) + Details */}
+            <div
+                class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-24 items-start"
+            >
+                {
+                    /* Left Column: Carousel (if gallery) OR Video (if no gallery) */
+                }
+                <div class="flex flex-col">
+                    {
+                        hasGallery ? (
+                            <PerformanceCarousel
+                                images={entry.data.gallery}
+                                title={entry.data.title}
+                                client:visible
+                            />
+                        ) : (
+                            /* Fallback to Video if no gallery, preserving original Logic for Mal Nacida if desired, 
+                            OR we can move Video to bottom always? 
+                            User said "Video breve url ... (embebido en la pagina)" specifically.
+                            If we have NO gallery, the video is likely the main visual.
+                            If we HAVE gallery, the gallery is the main visual, video goes bottom.
+                         */
+                            entry.data.videoUrl && (
+                                <div class="aspect-video w-full rounded-sm overflow-hidden shadow-2xl mb-4 group relative bg-black">
+                                    <iframe
+                                        width="100%"
+                                        height="100%"
+                                        src={entry.data.videoUrl.replace(
+                                            "watch?v=",
+                                            "embed/",
+                                        )}
+                                        title="YouTube video player"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowfullscreen
+                                        class="absolute inset-0 w-full h-full"
+                                    />
+                                </div>
+                            )
+                        )
+                    }
+                </div>
+
+                {/* Right Column: Details */}
+                {
+                    entry.data.details && (
+                        <div class="bg-primary p-8 md:p-12 rounded-sm text-white shadow-xl h-full">
+                            {/* Rendering details with simple Markdown bold support */}
+                            <div
+                                class="font-sans text-sm md:text-base leading-relaxed whitespace-pre-wrap"
+                                set:html={entry.data.details
+                                    .replace(
+                                        /\*\*(.*?)\*\*/g,
+                                        "<strong>$1</strong>",
+                                    )
+                                    .replace(/\n/g, "<br/>")}
+                            />
+                        </div>
+                    )
+                }
+            </div>
+
+            {
+                /* 3. BOTTOM VIDEO (Only if Gallery was present, meaning video wasn't shown above) 
+                OR if user wants video explicitly at bottom.
+                Let's stick to: If Gallery, then show video here.
+            */
+            }
+            {
+                hasGallery && entry.data.videoUrl && (
+                    <div class="max-w-4xl mx-auto mb-12">
+                        <h3 class="font-nav text-2xl uppercase mb-6 text-center">
+                            Video
+                        </h3>
+                        <div class="aspect-video w-full rounded-sm overflow-hidden shadow-2xl mb-4 group relative bg-black">
+                            <iframe
+                                width="100%"
+                                height="100%"
+                                src={entry.data.videoUrl.replace(
+                                    "watch?v=",
+                                    "embed/",
+                                )}
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                                class="absolute inset-0 w-full h-full"
+                            />
+                        </div>
+                    </div>
+                )
+            }
+
+            {/* FULL VIDEO LINK */}
+            {
+                entry.data.fullVideoUrl && (
+                    <div class="text-center mb-24">
+                        <a
+                            href={entry.data.fullVideoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-2 bg-black text-white px-8 py-3 rounded-full font-nav tracking-widest uppercase hover:bg-primary transition-colors duration-300"
+                        >
+                            <Youtube className="w-5 h-5" />
+                            Ver Video Completo
+                        </a>
+                    </div>
+                )
+            }
+        </div>
+    </main>
+</Layout>

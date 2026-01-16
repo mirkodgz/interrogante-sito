@@ -1,0 +1,79 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { render } from "astro:content";
+
+export async function getStaticPaths() {
+    const posts = await getCollection("blog");
+    return posts.map((post) => ({
+        params: { slug: post.slug },
+        props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, cover, author, date } = post.data;
+
+const formattedDate = date
+    ? new Date(date).toLocaleDateString("es-ES", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+      })
+    : null;
+---
+
+<Layout title={`${title} - Blog`}>
+    <main class="bg-white min-h-screen pb-24">
+        {/* HERO SECTION - 45vh */}
+        <div
+            class="relative h-[45vh] w-full bg-black overflow-hidden flex items-center justify-center"
+        >
+            {
+                cover && (
+                    <div class="absolute inset-0 z-0">
+                        <img
+                            src={cover}
+                            alt={title}
+                            class="w-full h-full object-cover opacity-60"
+                        />
+                        <div class="absolute inset-0 bg-black/40" />
+                    </div>
+                )
+            }
+
+            <div
+                class="relative z-10 container mx-auto px-6 text-center max-w-5xl"
+            >
+                <h1
+                    class="font-nav text-4xl md:text-5xl lg:text-6xl text-white uppercase tracking-tighter leading-tight drop-shadow-lg"
+                >
+                    {title}
+                </h1>
+                <div
+                    class="flex items-center justify-center gap-4 mt-6 text-white/90 font-serif text-lg"
+                >
+                    {
+                        author && (
+                            <span class="uppercase tracking-widest text-sm font-sans font-bold text-white border-b border-white/30 pb-1">
+                                {author}
+                            </span>
+                        )
+                    }
+                    {formattedDate && <span>|</span>}
+                    {formattedDate && <span>{formattedDate}</span>}
+                </div>
+            </div>
+        </div>
+
+        {/* CONTENT SECTION */}
+        <article class="container mx-auto px-6 max-w-4xl py-16 md:py-24">
+            <div
+                class="prose prose-lg md:prose-xl prose-headings:font-serif prose-p:font-sans prose-p:text-gray-700 prose-a:text-primary max-w-none"
+            >
+                <Content />
+            </div>
+        </article>
+    </main>
+</Layout>

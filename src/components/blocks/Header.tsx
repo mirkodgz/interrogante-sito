@@ -61,7 +61,7 @@ export default function Header({ links }: { links?: NavItem[] }) {
                     <img
                         src="/Logo-Interrogante-white2.svg"
                         alt="Interrogante Spettacolo"
-                        className="h-[40px] w-auto object-contain"
+                        className="h-[40px] md:h-[59px] w-auto object-contain"
                     />
                 </a>
 

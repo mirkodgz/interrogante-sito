@@ -4,6 +4,7 @@ import "@fontsource/bebas-neue/400.css";
 import "../styles/global.css";
 import Header from "../components/blocks/Header";
 import Footer from "../components/blocks/Footer";
+import BackToTop from "../components/ui/BackToTop";
 import { getCollection } from "astro:content";
 import { navigationLinks } from "../data/navigation";
 
@@ -84,8 +85,11 @@ const socialImageURL = ogImage.startsWith("http")
 		<meta name="generator" content={Astro.generator} />
 
 		<!-- Primary Meta Tags -->
-		<title>{title} | Interrogante Spettacolo</title>
-		<meta name="title" content={`${title} | Interrogante Spettacolo`} />
+		<title>{title} | Interrogante Spettacolo - Compañía Artística</title>
+		<meta
+			name="title"
+			content={`${title} | Interrogante Spettacolo - Compañía Artística`}
+		/>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonicalURL} />
 
@@ -96,7 +100,7 @@ const socialImageURL = ogImage.startsWith("http")
 		<meta property="og:url" content={Astro.url} />
 		<meta
 			property="og:title"
-			content={`${title} | Interrogante Spettacolo`}
+			content={`${title} | Interrogante Spettacolo - Compañía Artística`}
 		/>
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content={socialImageURL} />
@@ -107,7 +111,7 @@ const socialImageURL = ogImage.startsWith("http")
 		<meta property="twitter:url" content={Astro.url} />
 		<meta
 			property="twitter:title"
-			content={`${title} | Interrogante Spettacolo`}
+			content={`${title} | Interrogante Spettacolo - Compañía Artística`}
 		/>
 		<meta property="twitter:description" content={description} />
 		<meta property="twitter:image" content={socialImageURL} />
@@ -123,5 +127,6 @@ const socialImageURL = ogImage.startsWith("http")
 			<slot />
 		</div>
 		<Footer />
+		<BackToTop client:load />
 	</body>
 </html>

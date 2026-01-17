@@ -9,7 +9,7 @@ const NewsSection = () => {
             title: "A PIEDI NUDI 4",
             highlightedWord: "4",
             image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768527003/Foto-Cover-APN4_fvdqfy.jpg",
-            href: "#"
+            href: "/festival/"
         },
         {
             title: "LA CARRETILLA",
@@ -20,16 +20,16 @@ const NewsSection = () => {
     ];
 
     return (
-        <section className="py-24 bg-white border-t border-black/5">
+        <section className="py-16 bg-white border-t border-black/5">
             <div className="container mx-auto px-6">
                 {/* Section Title */}
                 <SectionHeader
                     title="NEWS"
                     highlightedWord="NEWS"
-                    className="mb-16"
+                    className="mb-10"
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
                     {newsItems.map((item, index) => (
                         <MotionPreset
                             key={index}
@@ -40,18 +40,18 @@ const NewsSection = () => {
                             className="flex flex-col items-center group"
                         >
                             {/* Card Title */}
-                            <h3 className="font-nav font-bold text-3xl md:text-4xl text-black uppercase mb-8 tracking-tighter">
+                            <h3 className="font-serif font-bold text-[27px] text-black uppercase mb-6 tracking-[0.3px]">
                                 {item.title.split(item.highlightedWord)[0]}
-                                <span className="text-primary">{item.highlightedWord}</span>
+                                <span className="text-secondary">{item.highlightedWord}</span>
                                 {item.title.split(item.highlightedWord)[1]}
                             </h3>
 
                             {/* Card Image */}
-                            <div className="relative w-full aspect-[4/3] rounded-sm overflow-hidden mb-8">
+                            <div className="relative w-full max-w-[449px] aspect-[449/271] rounded-sm overflow-hidden mb-6">
                                 <img
                                     src={item.image}
                                     alt={item.title}
-                                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
                                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             </div>
@@ -61,7 +61,7 @@ const NewsSection = () => {
                                 text="VER MÁS"
                                 href={item.href}
                                 variant="primary"
-                                className="scale-90 md:scale-100"
+                                className="scale-90"
                             />
                         </MotionPreset>
                     ))}

@@ -6,6 +6,7 @@ interface BrandButtonProps {
     text?: string;
     children?: React.ReactNode;
     href?: string;
+    target?: string;
     variant?: 'primary' | 'secondary' | 'outline' | 'black' | 'ghost' | 'white';
     className?: string;
     onClick?: () => void;
@@ -16,6 +17,7 @@ export default function BrandButton({
     text,
     children,
     href,
+    target,
     variant = 'primary',
     className = '',
     onClick,
@@ -42,11 +44,13 @@ export default function BrandButton({
         >
             <Component
                 href={href}
+                target={target}
+                rel={target === '_blank' ? 'noopener noreferrer' : undefined}
                 onClick={onClick}
                 className={`
           relative flex items-center justify-between gap-4 
-          px-8 py-4 border-2 transition-all duration-300
-          font-nav text-[18px] tracking-[2px] uppercase group rounded-full
+          px-4 py-2 border-2 transition-all duration-300
+          font-nav text-[18px] tracking-[1px] uppercase group rounded-full
           ${variants[variant]}
         `}
             >

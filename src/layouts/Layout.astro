@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import "@fontsource/bebas-neue/400.css";
 import "../styles/global.css";
 import Header from "../components/blocks/Header";
@@ -9,11 +10,13 @@ import { navigationLinks } from "../data/navigation";
 interface Props {
 	title: string;
 	description?: string;
+	ogImage?: string;
 }
 
 const {
 	title,
-	description = "Interrogante Spettacolo - Gestión y promoción de espectáculos de alto nivel",
+	description = "Gestión y promoción de espectáculos de alto nivel. Festival A PIEDI NUDI, teatro, talleres culturales y formación para profesores en Milán.",
+	ogImage = "/og-image.jpg",
 } = Astro.props;
 
 // Fetch dynamic children
@@ -22,36 +25,54 @@ const festival = await getCollection("festival");
 const performance = await getCollection("performance");
 
 // Update navigationLinks with real data
-const dynamicLinks = navigationLinks.map((link) => {
-	if (link.title === "CREACIONES") {
-		return {
-			...link,
-			children: creaciones.map((c) => ({
+const dynamicLinks = navigationLinks
+	.filter((link) => link.title !== "PERFORMANCE") // Remove top-level PERFORMANCE
+	.map((link) => {
+		if (link.title === "CREACIONES") {
+			const creacionesItems = creaciones.map((c) => ({
 				title: c.data.title,
 				href: `/creaciones/${c.slug}/`,
-			})),
-		};
-	}
-	if (link.title === "FESTIVAL") {
-		return {
-			...link,
-			children: festival.map((f) => ({
-				title: f.data.title,
-				href: `/festival/${f.slug}/`,
-			})),
-		};
-	}
-	if (link.title === "PERFORMANCE") {
-		return {
-			...link,
-			children: performance.map((p) => ({
-				title: p.data.title,
-				href: `/performance/${p.slug}/`,
-			})),
-		};
-	}
-	return link;
-});
+			}));
+
+			// Find if there's a PERFORMANCE placeholder in static children
+			const staticChildren = link.children || [];
+			const performancePlaceholder = staticChildren.find(
+				(child) => child.title === "PERFORMANCE",
+			);
+
+			const finalChildren = [...creacionesItems];
+
+			if (performancePlaceholder) {
+				finalChildren.push({
+					...performancePlaceholder,
+					children: performance.map((p) => ({
+						title: p.data.title,
+						href: `/performance/${p.slug}/`,
+					})),
+				});
+			}
+
+			return {
+				...link,
+				children: finalChildren,
+			};
+		}
+		if (link.title === "FESTIVAL") {
+			return {
+				...link,
+				children: festival.map((f) => ({
+					title: f.data.title,
+					href: `/festival/${f.slug}/`,
+				})),
+			};
+		}
+		return link;
+	});
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImageURL = ogImage.startsWith("http")
+	? ogImage
+	: new URL(ogImage, Astro.site);
 ---
 
 <!doctype html>
@@ -59,15 +80,16 @@ const dynamicLinks = navigationLinks.map((link) => {
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/png" href="/favicon-interrogante.png" />
 		<meta name="generator" content={Astro.generator} />
+
+		<!-- Primary Meta Tags -->
 		<title>{title} | Interrogante Spettacolo</title>
+		<meta name="title" content={`${title} | Interrogante Spettacolo`} />
 		<meta name="description" content={description} />
-		<meta
-			name="keywords"
-			content="Interrogante Spettacolo, teatro, festival, cultura, arte, talleres culturales, formación profesores, La Carretilla, espectáculos, Italia, Milán"
-		/>
-		<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+		<link rel="canonical" href={canonicalURL} />
+
+		<ClientRouter />
 
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
@@ -77,10 +99,8 @@ const dynamicLinks = navigationLinks.map((link) => {
 			content={`${title} | Interrogante Spettacolo`}
 		/>
 		<meta property="og:description" content={description} />
-		<meta
-			property="og:image"
-			content={new URL("/og-image.jpg", Astro.url)}
-		/>
+		<meta property="og:image" content={socialImageURL} />
+		<meta property="og:site_name" content="Interrogante Spettacolo" />
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
@@ -90,9 +110,11 @@ const dynamicLinks = navigationLinks.map((link) => {
 			content={`${title} | Interrogante Spettacolo`}
 		/>
 		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content={socialImageURL} />
+
 		<meta
-			property="twitter:image"
-			content={new URL("/og-image.jpg", Astro.url)}
+			name="keywords"
+			content="Interrogante Spettacolo, teatro milan, festival a piedi nudi, cultura española milan, talleres teatro, formación profesores español, teatro multicultural, booking artistas milan"
 		/>
 	</head>
 	<body class="min-h-screen flex flex-col">

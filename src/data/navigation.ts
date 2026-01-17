@@ -19,7 +19,7 @@ export const navigationLinks = [
             },
             {
                 title: "FORMACIÓN PARA PROFESORES",
-                href: "/formacion-para-profesores/",
+                href: "/formacion-para-profesores-de-espanol/",
             },
             { title: "TALLERES PARA NIÑOS", href: "/talleres-para-ninos/" },
             { title: "CREA TU TALLER", href: "/crea-tu-taller/" },
@@ -39,20 +39,24 @@ export const navigationLinks = [
         title: "CREACIONES",
         href: "/creaciones/",
         children: [
-            { title: "De la poesía al teatro", href: "/creaciones/poesia-al-teatro/" },
-            { title: "Poetas en paralelo", href: "/creaciones/poetas-en-paralelo/" },
-            { title: "CORPUS", href: "/creaciones/corpus/" },
             { title: "Etiquetas", href: "/creaciones/etiquetas/" },
+            { title: "De la poesía al teatro", href: "/creaciones/poesia-al-teatro/" },
+            { title: "CORPUS", href: "/creaciones/corpus/" },
+            { title: "La Familia Garrido", href: "/creaciones/la-familia-garrigo/" },
+            { title: "Poetas en paralelo", href: "/creaciones/poetas-en-paralelo/" },
             { title: "Tipos", href: "/creaciones/tipos/" },
-            { title: "La Familia Garrigo", href: "/creaciones/la-familia-garrigo/" },
-        ],
-    },
-    {
-        title: "PERFORMANCE",
-        href: "/performance/",
-        children: [
-            { title: "MAL NACIDA", href: "/performance/mal-nacida/" },
-            { title: "SAGRADA INSTRUCCIÓN", href: "/performance/sagrada-instruccion/" },
+            {
+                title: "PERFORMANCE",
+                href: "/performance/",
+                children: [
+                    { title: "MAL NACIDA", href: "/performance/mal-nacida/" },
+                    { title: "SAGRADA INSTRUCCIÓN", href: "/performance/sagrada-instruccion/" },
+                    { title: "CONCIERTO PARA DOS", href: "/performance/concierto-para-dos/" },
+                    { title: "CONTACT MUSIC", href: "/performance/contact-music/" },
+                    { title: "SOLA", href: "/performance/sola/" },
+                    { title: "NEGRO SOY", href: "/performance/negro-soy/" },
+                ]
+            },
         ],
     },
     {

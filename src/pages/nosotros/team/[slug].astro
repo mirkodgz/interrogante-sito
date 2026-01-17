@@ -1,46 +1,27 @@
 ---
-import { getCollection } from "astro:content";
+import { getEntry, render } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
-import { render } from "astro:content";
+import PageHero from "../../../components/ui/PageHero";
 
-export async function getStaticPaths() {
-    const teamEntries = await getCollection("team");
-    return teamEntries.map((entry) => ({
-        params: { slug: entry.slug },
-        props: { entry },
-    }));
-}
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect("/404");
 
-const { entry } = Astro.props;
+const entry = await getEntry("team", slug);
+if (!entry) return Astro.redirect("/404");
+
 const { Content } = await render(entry);
 ---
 
-<Layout title={`${entry.data.name} - Team`}>
+<Layout title={`${entry.data.name} - Equipo`}>
     <main class="bg-white min-h-screen">
-        {/* HERO SECTION - 80vh */}
-        <section class="relative h-[80vh] w-full overflow-hidden bg-black">
-            <div class="absolute inset-0">
-                <img
-                    src={entry.data.cover}
-                    alt={entry.data.name}
-                    class="w-full h-full object-cover opacity-60"
-                />
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"
-                >
-                </div>
-            </div>
-
-            <div
-                class="relative z-10 h-full container mx-auto px-6 flex flex-col justify-end pb-32 items-center"
-            >
-                <h1
-                    class="font-nav text-6xl md:text-8xl lg:text-9xl text-white uppercase tracking-tighter text-center"
-                >
-                    {entry.data.name}
-                </h1>
-            </div>
-        </section>
+        {/* HERO SECTION */}
+        <PageHero
+            client:load
+            title={entry.data.name.toUpperCase()}
+            image={entry.data.cover}
+            height="60vh"
+            overlayOpacity="bg-black/20"
+        />
 
         {/* CONTENT SECTION */}
         <section class="py-24">
@@ -51,12 +32,12 @@ const { Content } = await render(entry);
                 >
                     <div class="flex flex-col">
                         <h2
-                            class="font-nav text-4xl md:text-5xl uppercase text-black mb-2 tracking-wide"
+                            class="font-serif text-[35px] uppercase text-black mb-2 tracking-wide leading-none"
                         >
                             {entry.data.name}
                         </h2>
                         <p
-                            class="font-serif text-xl md:text-2xl text-black/70 italic"
+                            class="font-sans text-lg md:text-[20px] text-black/70"
                         >
                             {entry.data.role}
                         </p>
@@ -74,8 +55,8 @@ const { Content } = await render(entry);
                                     <span class="sr-only">Facebook</span>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
+                                        width="34"
+                                        height="34"
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
@@ -99,8 +80,8 @@ const { Content } = await render(entry);
                                     <span class="sr-only">Instagram</span>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
+                                        width="34"
+                                        height="34"
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
@@ -140,8 +121,8 @@ const { Content } = await render(entry);
                                     <span class="sr-only">LinkedIn</span>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
+                                        width="34"
+                                        height="34"
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
@@ -187,9 +168,9 @@ const { Content } = await render(entry);
                     </div>
 
                     {/* Bio Text - Right Column */}
-                    <div class="lg:col-span-8">
+                    <div class="lg:col-span-8 text-justify">
                         <div
-                            class="prose prose-lg prose-p:font-sans prose-p:text-black/80 prose-p:leading-relaxed prose-headings:font-serif prose-a:text-primary max-w-none text-justify"
+                            class="bio-content font-sans text-[#3c3c3c] text-base font-semibold leading-relaxed [&_a]:text-primary [&_a]:font-bold [&_a]:no-underline hover:[&_a]:underline"
                         >
                             <Content />
                         </div>
@@ -199,3 +180,24 @@ const { Content } = await render(entry);
         </section>
     </main>
 </Layout>
+
+<style is:global>
+    .bio-content p {
+        margin-bottom: 1.25rem !important;
+    }
+    .bio-content p:last-child {
+        margin-bottom: 0 !important;
+    }
+</style>
+
+<script>
+    // Handle external links in the bio section
+    const bioLinks = document.querySelectorAll(".prose a");
+    bioLinks.forEach((link) => {
+        const href = link.getAttribute("href");
+        if (href && (href.startsWith("http") || href.startsWith("https"))) {
+            link.setAttribute("target", "_blank");
+            link.setAttribute("rel", "noopener noreferrer");
+        }
+    });
+</script>

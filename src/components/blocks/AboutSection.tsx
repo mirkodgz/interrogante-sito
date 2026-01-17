@@ -49,7 +49,7 @@ const AboutSection = () => {
                     transition={{ duration: 0.8 }}
                     className="max-w-4xl text-center mb-12"
                 >
-                    <p className="text-white/90 text-[16px] font-normal leading-relaxed">
+                    <p className="text-white/90 text-[16px] font-semibold leading-relaxed">
                         Organizada como una asociación sin fines de lucro, Interrogante Spettacolo se dedica a la producción artística y a la enseñanza del español en Italia, utilizando un enfoque que combina la rica herencia cultural latinoamericana con metodologías pedagógicas creativas. La propuesta de la compañía no solo mejora las competencias lingüísticas de los estudiantes, sino que también promueve su desarrollo artístico, estableciendo un vínculo profundo con el idioma español a través de la expresión y la creatividad. Esto ha permitido que Interrogante Spettacolo se convierta en un referente en la formación de docentes y estudiantes, creando un entorno en el que el arte y la creatividad son fundamentales para un aprendizaje transformador.
                     </p>
                 </MotionPreset>

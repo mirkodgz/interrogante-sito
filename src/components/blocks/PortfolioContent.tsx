@@ -6,8 +6,7 @@ import Autoplay from 'embla-carousel-autoplay'
 
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel'
 
-import { MotionPreset } from '@/components/ui/motion-preset'
-
+import BrandButton from '@/components/ui/BrandButton'
 import { cn } from '@/lib/utils'
 
 import type { PortfolioItem } from './PortfolioSection'
@@ -108,6 +107,21 @@ const PortfolioContent = ({ portfolioItems }: PortfolioContentProps) => {
                           className="w-[35px] h-[35px] object-contain rounded-sm border border-black/10 bg-white p-0.5"
                         />
                       )}
+                    </div>
+
+                    {/* CTA Button - Only visible when active */}
+                    <div className={cn(
+                      'pt-4 transition-all duration-700 flex justify-center',
+                      isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+                    )}>
+                      <BrandButton
+                        href={item.href}
+                        target={item.target}
+                        variant="primary"
+                        className="px-8"
+                      >
+                        Más información
+                      </BrandButton>
                     </div>
                   </div>
                 </div>

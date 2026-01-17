@@ -1,5 +1,13 @@
 import { config, fields, collection, singleton } from '@keystatic/core';
 
+const seoFields = {
+    seo: fields.object({
+        title: fields.text({ label: 'Título SEO (Opcional)', description: 'Si se deja vacío, se usará el título principal' }),
+        description: fields.text({ label: 'Meta Descripción (Recomendado)', multiline: true, description: 'Resumen de 150-160 caracteres para Google' }),
+        ogImage: fields.text({ label: 'Imagen para Redes Sociales (URL)', description: 'Imagen que se mostrará al compartir en WhatsApp/FB' }),
+    }, { label: 'SEO y Redes Sociales', description: 'Configuración para Google y Redes Sociales' })
+};
+
 export default config({
     storage: process.env.NODE_ENV === 'production'
         ? {
@@ -38,6 +46,7 @@ export default config({
                 ),
                 quote: fields.text({ label: 'Frase', multiline: true }),
                 gallery: fields.array(fields.text({ label: 'URL' }), { label: 'Galería' }),
+                ...seoFields,
                 content: fields.document({ label: 'Contenido', formatting: true }),
             },
         }),
@@ -66,6 +75,7 @@ export default config({
                 quote: fields.text({ label: 'Frase Destacada', multiline: true }),
                 quoteAuthor: fields.text({ label: 'Autor de la Frase' }),
                 gallery: fields.array(fields.text({ label: 'URL de Imagen' }), { label: 'Galería de Fotos' }),
+                ...seoFields,
                 content: fields.document({ label: 'Descripción Principal', formatting: true }),
             },
         }),
@@ -85,6 +95,7 @@ export default config({
                 gallery: fields.array(fields.text({ label: 'Imagen URL' }), { label: 'Galería (Carrusel)' }),
                 details: fields.text({ label: 'Detalles', multiline: true }),
                 description: fields.text({ label: 'Descripción', multiline: true }),
+                ...seoFields,
                 content: fields.document({ label: 'Contenido', formatting: true }),
             },
         }),
@@ -100,6 +111,7 @@ export default config({
                 cover: fields.text({ label: 'Imagen de Portada (URL)' }),
                 author: fields.text({ label: 'Autor' }),
                 summary: fields.text({ label: 'Resumen/Extracto', multiline: true }),
+                ...seoFields,
                 content: fields.document({ label: 'Contenido', formatting: true }),
             },
         }),
@@ -117,6 +129,7 @@ export default config({
                 facebook: fields.text({ label: 'Facebook URL' }),
                 instagram: fields.text({ label: 'Instagram URL' }),
                 linkedin: fields.text({ label: 'LinkedIn URL' }),
+                ...seoFields,
                 content: fields.document({ label: 'Biografía', formatting: true }),
             },
         }),

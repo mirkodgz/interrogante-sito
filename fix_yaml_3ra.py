@@ -1,6 +1,8 @@
----
+import os
+
+content = """---
 title: "Tercera Edición|A PIEDI NUDI"
-subtitle: "Tercera Edición : A PIEDI NUDI \"Avatares sociales\""
+subtitle: "Tercera Edición : A PIEDI NUDI \\"Avatares sociales\\""
 edition: "III Edición"
 date: 2024-05-15
 cover: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768616439/Terza-Edizione-Gallery-6_swh8at.webp"
@@ -38,3 +40,8 @@ En esta tercera edición, el tema central son los “Avatares Sociales” o sea,
 El festival cuenta con la participación de tres institutos de la región lombarda y tiene carácter de competencia, otorgando el Premio A PIEDI NUDI a las mejores creaciones.
 
 Un aspecto que distingue esta edición es además la participación de tres coaches que guiarán, junto al profesor de español de cada instituto, la producción artística. Los mismos entran a representar tres países diferentes de Latinoamérica: Ecuador, Venezuela y Chile, lo cual enriquece el ámbito multicultural de esta edición.
+"""
+
+file_path = r'd:/interrogante-sitoweb/src/content/festival/tercera-edicion-a-piedi-nudi.mdoc'
+with open(file_path, 'w', encoding='utf-8') as f:
+    f.write(content)

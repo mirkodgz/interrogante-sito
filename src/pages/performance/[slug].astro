@@ -25,10 +25,15 @@ if (!entry) {
 
 const { Content } = await render(entry);
 
+const { title, description, cover, seo } = entry.data;
+const seoTitle = seo?.title || `${title} - Performance`;
+const seoDescription = seo?.description || description;
+const seoOgImage = seo?.ogImage || cover;
+
 const hasGallery = entry.data.gallery && entry.data.gallery.length > 0;
 ---
 
-<Layout title={`${entry.data.title} - Performance`}>
+<Layout title={seoTitle} description={seoDescription} ogImage={seoOgImage}>
     <main class="bg-white min-h-screen pb-24">
         {/* HERO - 60vh */}
         <section
@@ -50,7 +55,7 @@ const hasGallery = entry.data.gallery && entry.data.gallery.length > 0;
                 class="relative z-10 h-full container mx-auto px-6 flex flex-col justify-end pb-20"
             >
                 <h1
-                    class="font-nav text-5xl md:text-7xl lg:text-8xl text-white uppercase tracking-tighter"
+                    class="font-nav text-5xl md:text-7xl lg:text-8xl text-white uppercase"
                 >
                     {entry.data.title}
                 </h1>

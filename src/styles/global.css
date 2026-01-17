@@ -31,7 +31,7 @@
 
 @layer base {
   body {
-    @apply bg-white text-[#000000] font-sans text-[16px] font-normal tracking-normal antialiased;
+    @apply bg-white text-[#3c3c3c] font-sans text-[16px] font-semibold tracking-normal antialiased;
   }
 
   h1,

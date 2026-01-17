@@ -9,6 +9,8 @@ export type PortfolioItem = {
   title: string
   description: string
   image: string
+  href: string
+  target?: '_blank' | '_self'
   collaboratorLogo?: string
 }
 
@@ -19,7 +21,7 @@ type PortfolioComponentProps = {
 const Portfolio = ({ portfolioItems }: PortfolioComponentProps) => {
   return (
     /* SECCIÓN: PORTAFOLIO / PROYECTOS */
-    <section className='space-y-12 py-8 sm:space-y-16 sm:py-16 lg:space-y-24 lg:py-24 bg-[#efeff6] text-black'>
+    <section className='space-y-8 py-8 sm:space-y-10 sm:py-16 lg:space-y-12 lg:py-24 bg-[#efeff6] text-black'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* Header Content */}
         <div className="flex flex-col items-center">
@@ -29,7 +31,7 @@ const Portfolio = ({ portfolioItems }: PortfolioComponentProps) => {
             description="Diseñamos experiencias de formación en español que transforman el aprendizaje en una vivencia artística y significativa. Inspirados en valores como la autenticidad, la innovación, la colaboración y la excelencia educativa, nuestras propuestas combinan técnicas teatrales y creativas con una profunda conexión cultural latinoamericana e hispana.
 
 Ofrecemos actividades que inspiran a profesores, estudiantes y público en general, fomentando la creatividad, el crecimiento personal y profesional"
-            className="mb-8"
+            className="mb-2"
           />
         </div>
       </div>

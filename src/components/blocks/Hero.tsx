@@ -3,7 +3,7 @@ import React from 'react';
 export default function Hero() {
     return (
         /* SECCIÓN: HERO - CINEMATIC BACKGROUND */
-        <section className="h-[90vh] relative overflow-hidden bg-black p-0 m-0">
+        <section className="h-[40vh] md:h-[90vh] relative overflow-hidden bg-black p-0 m-0">
             {/* Background Video */}
             <video
                 autoPlay

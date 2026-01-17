@@ -1,4 +1,6 @@
----
+import os
+
+content = """---
 title: "Primera Edición|A PIEDI NUDI"
 subtitle: "Primera Edición del Concierto Espectáculo “PIES DESCALZOS: SUELOS, PUEBLOS Y SUS CONEXIONES”"
 edition: "I Edición"
@@ -27,10 +29,12 @@ gallery:
   - "https://res.cloudinary.com/dskliu1ig/image/upload/v1768522360/Photo1Concert3_lfov4j.jpg"
 ---
 
-Primera Edición del Concierto Espectáculo “PIES DESCALZOS: SUELOS, PUEBLOS Y SUS CONEXIONES”. El evento, concebido y organizado por la Asociación Interrogante Spettacolo, cuenta con el patrocinio del Municipio 3 de la Municipalidad de Milán, el Consulado General de la República Dominicana en Milán, el Grupo Consular de América Latina y el Caribe en el Norte de Italia y el Instituto Cervantes de Milán. La iniciativa tiene como objetivo crear un canto de agradecimiento a la “Madre Tierra” reuniendo en un mismo escenario a artistas de diferentes culturas y nacionalidades. Una representación que cuenta el vínculo entre Milán y los diferentes pueblos del mundo. Un gesto solidario de participación colectiva por el bienestar, el respeto y la paz.
+Primera Edición del Concierto Espectáculo “PIES DESCALZOS: SUELOS, PUEBLOS Y SUS CONEXIONES”.
 
-**Finalidad**
+# Finalidad
+El objetivo es promover y mejorar las expresiones y tradiciones de una comunidad multicultural.
+"""
 
-El evento tiene como objetivo motivar futuras actividades y dinámicas artísticas que materialicen los conceptos de inclusión, interacción, innovación, diversidad y contaminación creativa entre las diferentes voces culturales que convergen en Milán.
-
-El objetivo es promover y mejorar las expresiones y tradiciones de una comunidad multicultural a través de la participación y las relaciones de trabajo entre instituciones y asociaciones en el área de Milán.
+file_path = r'd:/interrogante-sitoweb/src/content/festival/primera-edicion-a-piedi-nudi.mdoc'
+with open(file_path, 'w', encoding='utf-8') as f:
+    f.write(content)

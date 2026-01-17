@@ -4,8 +4,18 @@ import { Instagram, Facebook, Linkedin, Mail, Phone, MapPin } from 'lucide-react
 
 export default function Footer() {
     return (
-        <footer className="bg-secondary text-black pt-20 pb-10 border-t border-black/10">
-            <div className="container mx-auto px-6">
+        <footer className="relative bg-secondary text-black pt-20 pb-10 border-t border-black/10 overflow-hidden">
+            {/* Corner Shapes */}
+            <div
+                className="absolute top-0 right-0 w-[400px] h-[120px] bg-primary pointer-events-none"
+                style={{ clipPath: 'polygon(100% 0, 0 0, 100% 100%)' }}
+            />
+            <div
+                className="absolute bottom-0 left-0 w-[400px] h-[120px] bg-primary pointer-events-none"
+                style={{ clipPath: 'polygon(0 0, 0 100%, 100% 100%)' }}
+            />
+
+            <div className="container mx-auto px-6 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 mb-20">
                     {/* Brand Section */}
                     <div className="flex flex-col gap-8">
@@ -16,7 +26,7 @@ export default function Footer() {
                                 className="h-48 w-auto object-contain self-start"
                             />
                         </a>
-                        <p className="text-black font-sans text-sm leading-relaxed max-w-sm">
+                        <p className="text-black font-sans text-base font-semibold leading-relaxed max-w-sm">
                             Interrogante Spettacolo es una compañía internacional de experimentación artística. Organizada en una asociación sin ánimo de lucro de producción y promoción artística multicultural.
                         </p>
                     </div>
@@ -25,7 +35,7 @@ export default function Footer() {
                     <div className="flex flex-col gap-8">
                         <div>
                             <h3 className="font-nav text-lg font-bold uppercase tracking-widest border-l-4 border-white pl-3 mb-6">DIRECCIÓN: KALUA RODRIGUEZ</h3>
-                            <div className="text-sm font-sans space-y-1">
+                            <div className="text-base font-sans font-semibold space-y-1">
                                 <p className="font-bold">ASSOCIAZIONE INTERROGANTE SPETTACOLO</p>
                                 <p>Via Per San Pietro 1328</p>
                                 <p>22010 Carlazzo (CO)</p>
@@ -36,13 +46,13 @@ export default function Footer() {
                         <div>
                             <h3 className="font-nav text-lg font-bold uppercase tracking-widest border-l-4 border-white pl-3 mb-6">INFO/CONTACTO</h3>
                             <ul className="flex flex-col gap-4">
-                                <li className="text-sm font-sans">
+                                <li className="text-base font-sans font-semibold">
                                     <p>Tel/WhatsApp: +39 392 168 3752</p>
                                     <p>Dirección: Kalúa Rodríguez</p>
                                 </li>
                                 {contactInfo.emails.map((email) => (
                                     <li key={email}>
-                                        <a href={`mailto:${email}`} className="text-sm font-sans hover:underline">
+                                        <a href={`mailto:${email}`} className="text-base font-sans font-semibold hover:underline">
                                             {email}
                                         </a>
                                     </li>
@@ -70,7 +80,7 @@ export default function Footer() {
 
                 {/* Bottom Bar */}
                 <div className="border-t border-black/10 pt-10 text-center">
-                    <p className="text-sm font-nav font-bold uppercase tracking-widest">
+                    <p className="text-sm font-semibold uppercase">
                         © {new Date().getFullYear()} Interrogante Spettacolo - All rights reserved
                     </p>
                 </div>

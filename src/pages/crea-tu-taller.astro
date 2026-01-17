@@ -1,0 +1,50 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/ui/PageHero";
+
+const heroImage =
+    "https://res.cloudinary.com/dskliu1ig/image/upload/v1768146634/CreatuTallerCover_v9fy5l.jpg";
+---
+
+<Layout title="Crea tu Taller | Interrogante Spettacolo">
+    <main class="bg-white pb-20">
+        {/* HERO SECTION */}
+        <PageHero
+            client:load
+            title="CREA TU TALLER"
+            image={heroImage}
+            height="60vh"
+        >
+            <p
+                class="text-white/80 font-sans text-xl mt-4 uppercase tracking-[4px]"
+            >
+                Diseño a medida
+            </p>
+        </PageHero>
+
+        <section class="py-24 container mx-auto px-6 max-w-4xl text-center">
+            <h2
+                class="font-nav text-3xl md:text-5xl text-primary uppercase mb-8"
+            >
+                Tu visión, nuestra experiencia
+            </h2>
+            <p
+                class="font-sans text-lg text-gray-600 leading-relaxed text-justify mb-8"
+            >
+                Diseñamos experiencias de formación en español a medida para
+                instituciones, empresas o grupos privados. Si tienes una idea o
+                una necesidad específica, nuestro equipo creativo trabajará
+                contigo para desarrollar un taller único que combine arte,
+                cultura y aprendizaje.
+            </p>
+            <div class="mt-12">
+                <a
+                    href="/contacto"
+                    class="inline-block bg-primary text-white px-10 py-4 rounded-full font-nav tracking-widest uppercase hover:bg-secondary transition-all duration-300"
+                >
+                    Cuéntanos tu idea
+                </a>
+            </div>
+        </section>
+    </main>
+</Layout>

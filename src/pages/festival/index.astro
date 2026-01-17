@@ -1,67 +1,277 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import SectionHeader from "../../components/ui/SectionHeader";
-import { getCollection } from "astro:content";
+import BrandButton from "../../components/ui/BrandButton";
 
-// 1. Obtener todas las ediciones del festival
-const festivales = await getCollection("festival");
+// Helper para YouTube
+function getYoutubeEmbedUrl(url: string | undefined) {
+    if (!url) return null;
+    const videoIdMatch =
+        url.match(/[?&]v=([^&#]+)/) || url.match(/youtu\.be\/([^&#?]+)/);
+    const videoId = videoIdMatch ? videoIdMatch[1] : null;
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+}
 
-// 2. Ordenarlas por fecha (de la más reciente a la más antigua)
-const festivalesOrdenados = festivales.sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+const edicion2025Video = getYoutubeEmbedUrl(
+    "https://www.youtube.com/watch?v=7UAb2lf-bBY",
 );
+
+// Datos manuales para las ediciones anteriores
+const edicionesAnteriores = [
+    {
+        title: "PRIMERA EDICIÓN",
+        image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768621591/A-Piedi-Nudi-1-Cover_ic5rvl.jpg",
+        link: "/festival/primera-edicion-a-piedi-nudi",
+    },
+    {
+        title: "SEGUNDA EDICIÓN",
+        image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768621594/A-Piedi-Nudi-2-Cover_srgq1b.jpg",
+        link: "/festival/segunda-edicion-a-piedi-nudi",
+    },
+    {
+        title: "TERCERA EDICIÓN",
+        image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768621597/A-Piedi-Nudi-3-Cover_ulpthf.jpg",
+        link: "/festival/tercera-edicion-a-piedi-nudi",
+    },
+    {
+        title: "CUARTA EDICIÓN",
+        image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768621597/A-Piedi-Nudi-3-Cover_ulpthf.jpg", // Repite 3era como pidió el usuario
+        link: "/festival/tercera-edicion-a-piedi-nudi", // Lleva a la 3era como pidió el usuario
+    },
+];
 ---
 
 <Layout title="Festival A PIEDI NUDI">
     <main class="min-h-screen bg-white">
-        {/* Header de la sección */}
-        <div class="pt-32 pb-12 px-4 max-w-7xl mx-auto">
-            <SectionHeader
-                title="Nuestro Festival"
-                highlightedWord="Festival"
-                description="Explora la trayectoria del festival A PIEDI NUDI a través de sus ediciones."
-                className="mb-16"
-                client:load
+        {/* SECCIÓN 1: HERO (380px) */}
+        <section
+            class="h-[420px] w-full relative overflow-hidden flex items-center justify-center"
+        >
+            <img
+                src="https://res.cloudinary.com/dskliu1ig/image/upload/v1768526709/A-Piedi-Nudi-FotoCover-Home_vbnzeg.jpg"
+                class="absolute inset-0 w-full h-full object-cover"
+                alt="Festival Hero"
             />
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="relative z-10 text-center">
+                <h1
+                    class="text-white font-nav font-bold text-5xl md:text-7xl uppercase tracking-[0.3em] drop-shadow-2xl"
+                >
+                    FESTIVAL
+                </h1>
+            </div>
+        </section>
 
-            {/* Grid de Festivales */}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* SECCIÓN 2: EDICIÓN 2025 */}
+        <section class="py-24 px-4 bg-white">
+            <div class="max-w-5xl mx-auto text-center">
+                <h2
+                    class="font-nav font-bold text-4xl md:text-5xl text-black uppercase mb-12 tracking-tight"
+                >
+                    EDICIÓN 2025
+                </h2>
+                <div
+                    class="relative aspect-video rounded-sm overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] bg-black group"
+                >
+                    {
+                        edicion2025Video && (
+                            <iframe
+                                src={edicion2025Video}
+                                title="Trailer Festival"
+                                class="absolute inset-0 w-full h-full border-0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                            />
+                        )
+                    }
+                </div>
+            </div>
+        </section>
+
+        {/* SECCIÓN 3: PROGRAMA Y COLABORA */}
+        <section class="py-12 px-4 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                {/* BLOQUE PROGRAMA */}
+                <div
+                    class="group relative aspect-[16/9] overflow-hidden rounded-sm bg-primary cursor-pointer"
+                >
+                    <video
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                    >
+                        <source
+                            src="https://res.cloudinary.com/dskliu1ig/video/upload/v1768621370/Programma_weiptp.mp4"
+                            type="video/mp4"
+                        />
+                    </video>
+                    <div
+                        class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"
+                    >
+                    </div>
+                    <div
+                        class="absolute inset-0 flex flex-col items-center justify-center p-8"
+                    >
+                        <h3
+                            class="text-white font-nav font-bold text-3xl md:text-4xl uppercase tracking-[0.15em] mb-4 drop-shadow-lg"
+                        >
+                            PROGRAMA
+                        </h3>
+                        <div
+                            class="h-1 w-16 bg-white group-hover:w-32 transition-all duration-500 rounded-full shadow-lg"
+                        >
+                        </div>
+                    </div>
+                </div>
+
+                {/* BLOQUE COLABORA */}
+                <div
+                    class="group relative aspect-[16/9] overflow-hidden rounded-sm bg-primary cursor-pointer"
+                >
+                    <video
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                    >
+                        <source
+                            src="https://res.cloudinary.com/dskliu1ig/video/upload/v1768621379/ColaboraConNosotros_unbr1m.mp4"
+                            type="video/mp4"
+                        />
+                    </video>
+                    <div
+                        class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"
+                    >
+                    </div>
+                    <div
+                        class="absolute inset-0 flex flex-col items-center justify-center p-8"
+                    >
+                        <h3
+                            class="text-white font-nav font-bold text-3xl md:text-4xl uppercase tracking-[0.15em] mb-4 drop-shadow-lg text-center"
+                        >
+                            COLABORA CON NOSOTROS
+                        </h3>
+                        <div
+                            class="h-1 w-16 bg-white group-hover:w-32 transition-all duration-500 rounded-full shadow-lg"
+                        >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {/* SECCIÓN 4: APOYO AL FESTIVAL */}
+        <section
+            class="mt-24 py-20 bg-[#A68B5B] w-full text-center relative overflow-hidden"
+        >
+            <div class="max-w-4xl mx-auto px-4 relative z-10">
+                <div class="flex flex-col items-center gap-8">
+                    <h2
+                        class="text-white font-nav font-bold text-4xl md:text-5xl uppercase tracking-wider flex items-center gap-6"
+                    >
+                        APOYA AL FESTIVAL
+                        <span class="animate-bounce">👇</span>
+                    </h2>
+                    <BrandButton
+                        text="APOYA AL FESTIVAL"
+                        href="#"
+                        variant="white"
+                        className="text-lg px-12"
+                        client:load
+                    />
+                </div>
+            </div>
+            {/* Sutil decorado de fondo */}
+            <div
+                class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"
+            >
+            </div>
+            <div
+                class="absolute bottom-0 left-0 w-96 h-96 bg-black/5 rounded-full translate-y-1/2 -translate-x-1/2"
+            >
+            </div>
+        </section>
+
+        {/* SECCIÓN 5: VISIÓN Y EDICIONES ANTERIORES */}
+        <section class="py-24 px-4 bg-white">
+            <div class="max-w-7xl mx-auto">
+                {/* Visión */}
+                <div class="text-center mb-32">
+                    <h2
+                        class="font-nav font-bold text-4xl md:text-[42px] text-black uppercase mb-10"
+                    >
+                        NUESTRA VISIÓN DEL FESTIVAL
+                    </h2>
+                    <p
+                        class="max-w-3xl mx-auto text-black font-sans text-xl font-semibold leading-relaxed opacity-90"
+                    >
+                        A Piedi Nudi es un festival para difundir la cultura
+                        latinoamericana, fortalecer relaciones entre jóvenes,
+                        profesores, instituciones y comunidades hispanas en
+                        Milán, utilizando el español como herramienta de
+                        comunicación intercultural.
+                    </p>
+                </div>
+
                 {
-                    festivalesOrdenados.map((edicion) => (
-                        <article class="group relative flex flex-col gap-4">
-                            {/* Imagen con efecto hover */}
-                            <div class="overflow-hidden rounded-lg aspect-[4/3] bg-gray-100">
-                                <img
-                                    src={edicion.data.cover}
-                                    alt={edicion.data.title}
-                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                />
-                            </div>
+                    /* Título Ediciones Anteriores (Alineación derecha según captura) */
+                }
+                <div class="flex justify-end mb-16 mr-4">
+                    <h3
+                        class="font-nav font-bold text-[34px] md:text-[44px] text-black uppercase"
+                    >
+                        EDICIONES ANTERIORES
+                    </h3>
+                </div>
 
-                            {/* Contenido */}
-                            <div class="space-y-2">
-                                <span class="text-sm font-nav tracking-widest text-primary uppercase">
-                                    {edicion.data.edition} •{" "}
-                                    {edicion.data.date.getFullYear()}
-                                </span>
-                                <h2 class="text-3xl font-primary text-black group-hover:text-primary transition-colors">
-                                    {edicion.data.title}
-                                </h2>
-                                <p class="text-black/60 font-sans line-clamp-3">
-                                    {edicion.data.description}
-                                </p>
+                {/* Grid Manual de 4 festivales */}
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-2"
+                >
+                    {
+                        edicionesAnteriores.map((edicion) => (
+                            <div class="flex flex-col rounded-2xl overflow-hidden shadow-[0_10px_40px_rgba(142,168,201,0.15)] bg-[#E8F1F8] border border-[#D1E1EF] group transition-all duration-500 hover:-translate-y-3">
+                                {/* Imagen a sangre (edge-to-edge) */}
+                                <div class="aspect-[3/4] overflow-hidden relative">
+                                    <img
+                                        src={edicion.image}
+                                        alt={edicion.title}
+                                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+                                </div>
+                                <div class="p-2 text-center flex-1 flex flex-col justify-between gap-4 text-black">
+                                    <h4 class="font-nav font-bold text-[28px] uppercase leading-tight mt-4">
+                                        {edicion.title}
+                                    </h4>
 
-                                {/* Link simulado (pronto haremos la página de detalle individual) */}
-                                <div class="pt-2">
-                                    <span class="text-black font-nav text-sm border-b border-black pb-0.5 group-hover:text-primary group-hover:border-primary transition-colors">
-                                        VER MÁS
-                                    </span>
+                                    <div class="flex items-center justify-center w-full mb-4">
+                                        <BrandButton
+                                            href={edicion.link}
+                                            variant="primary"
+                                            showArrow={false}
+                                            className="rounded-full shadow-lg w-full max-w-[200px]"
+                                            client:load
+                                        >
+                                            <span class="font-normal text-sm tracking-normal">
+                                                VER FESTIVAL
+                                            </span>
+                                        </BrandButton>
+                                    </div>
                                 </div>
                             </div>
-                        </article>
-                    ))
-                }
+                        ))
+                    }
+                </div>
             </div>
-        </div>
+        </section>
     </main>
 </Layout>
+
+<style>
+    /* Suavizado de bordes y transiciones */
+    html {
+        scroll-behavior: smooth;
+    }
+</style>

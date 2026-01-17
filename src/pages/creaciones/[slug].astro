@@ -5,6 +5,7 @@ import { render } from "astro:content";
 import { Youtube } from "lucide-react";
 import SectionHeader from "../../components/ui/SectionHeader";
 import { PerformanceCarousel } from "../../components/blocks/PerformanceCarousel";
+import FestivalGallery from "../../components/blocks/FestivalGallery";
 
 const { slug } = Astro.params;
 if (!slug) return Astro.redirect("/404");
@@ -13,177 +14,238 @@ const entry = await getEntry("creaciones", slug);
 if (!entry) return Astro.redirect("/404");
 
 const { Content } = await render(entry);
+const { title, subtitle, cover, seo } = entry.data;
+
+const seoTitle = seo?.title || `${title} - Creaciones`;
+const seoDescription = seo?.description || subtitle;
+const seoOgImage = seo?.ogImage || cover;
 ---
 
-<Layout title={`${entry.data.title} - Creaciones`}>
-    
-    {slug === 'la-familia-garrido' ? (
-        <main class="bg-black min-h-screen pb-24 text-white">
-            {/* HERO */}
-            <section class="relative h-[60vh] w-full overflow-hidden mb-16">
-                {entry.data.cover && (
-                    <div class="absolute inset-0">
-                        <img src={entry.data.cover} alt={entry.data.title} class="w-full h-full object-cover opacity-60" />
-                        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black" />
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <h1 class="font-nav text-5xl md:text-8xl uppercase tracking-tighter leading-none text-center px-4 mix-blend-overlay opacity-90">
-                                {entry.data.title}
-                            </h1>
+<Layout title={seoTitle} description={seoDescription} ogImage={seoOgImage}>
+    {
+        slug === "la-familia-garrido" ? (
+            <main class="bg-black min-h-screen pb-24 text-white">
+                {/* HERO */}
+                <section class="relative h-[35vh] md:h-[60vh] w-full overflow-hidden mb-16">
+                    {entry.data.cover && (
+                        <div class="absolute inset-0">
+                            <img
+                                src={entry.data.cover}
+                                alt={entry.data.title}
+                                class="w-full h-full object-cover opacity-60"
+                            />
+                            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black" />
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <h1 class="font-nav text-5xl md:text-8xl uppercase leading-none text-center px-4 mix-blend-overlay opacity-90">
+                                    {entry.data.title}
+                                </h1>
+                            </div>
                         </div>
-                    </div>
-                )}
-            </section>
+                    )}
+                </section>
 
-            <div class="container mx-auto px-6 max-w-7xl">
-                {/* Header Text */}
-                <div class="text-center mb-16 space-y-4">
-                    <h2 class="font-nav text-2xl md:text-3xl uppercase tracking-widest text-primary">
-                        {entry.data.details?.split('\n')[0] || "DIRECCIÓN KALUA RODRIGUEZ"} 
-                    </h2>
-                    <p class="font-serif text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                        {entry.data.subtitle}
-                    </p>
-                </div>
-
-                {/* Main Grid */}
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-24 items-center max-w-6xl mx-auto">
-                    <div class="aspect-video w-full rounded-sm overflow-hidden shadow-2xl bg-gray-900 border border-gray-800">
-                         {entry.data.videoUrl && (
-                            <video width="100%" height="100%" controls class="w-full h-full object-cover">
-                                <source src={entry.data.videoUrl} type="video/mp4" />
-                            </video>
-                        )}
+                <div class="container mx-auto px-6 max-w-7xl">
+                    {/* Header Text */}
+                    <div class="text-center mb-16 space-y-4">
+                        <h2 class="font-nav text-2xl md:text-3xl uppercase tracking-widest text-primary">
+                            {entry.data.details?.split("\n")[0] ||
+                                "DIRECCIÓN KALUA RODRIGUEZ"}
+                        </h2>
+                        <p class="font-serif text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                            {entry.data.subtitle}
+                        </p>
                     </div>
-                    <div class="text-left font-sans text-sm md:text-base text-white font-bold space-y-1 leading-relaxed pl-4">
-                         <div class="whitespace-pre-wrap" set:html={entry.data.details.replace(entry.data.details?.split('\n')[0] || "", "").replace(/\*\*(.*?)\*\*/g, "<strong class='text-primary uppercase tracking-wider block mt-4 mb-1'>$1</strong>").replace(/\n/g, "<br/>")} />
-                    </div>
-                </div>
 
-                {/* Trio Videos */}
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-                    {entry.data.additionalVideos && entry.data.additionalVideos.slice(0, 3).map((url, i) => (
-                         <div class="aspect-[9/16] w-full bg-gray-900 rounded-sm overflow-hidden border border-gray-800 relative group">
-                             <video width="100%" height="100%" controls class="w-full h-full object-cover">
-                                <source src={url} type="video/mp4" />
-                            </video>
-                         </div>
-                    ))}
-                </div>
-
-                {/* Bottom Video */}
-                {entry.data.additionalVideos && entry.data.additionalVideos[3] && (
-                    <div class="max-w-2xl mx-auto mb-24">
-                        <div class="aspect-video w-full bg-gray-900 rounded-sm overflow-hidden border border-gray-800 shadow-2xl">
-                             <video width="100%" height="100%" controls class="w-full h-full">
-                                <source src={entry.data.additionalVideos[3]} type="video/mp4" />
-                            </video>
-                        </div>
-                    </div>
-                )}
-            </div>
-        </main>
-    ) : (
-        <main class="bg-white min-h-screen pb-24">
-            {/* HERO - 60vh */}
-            <section class="relative h-[60vh] w-full overflow-hidden bg-black mb-16">
-                {entry.data.cover && (
-                    <div class="absolute inset-0">
-                        <img
-                            src={entry.data.cover}
-                            alt={entry.data.title}
-                            class="w-full h-full object-cover opacity-80"
-                        />
-                        <div class="absolute inset-0 bg-black/20" />
-                    </div>
-                )}
-            </section>
-
-            <div class="container mx-auto px-6 max-w-7xl">
-                {/* VIDEO & DETAILS SECTION */}
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-24 items-start">
-                    {/* Left: Video */}
-                    <div class="flex flex-col">
-                        {entry.data.videoUrl && (
-                            <div class="aspect-video w-full rounded-sm overflow-hidden shadow-2xl mb-4 group relative bg-black">
-                                <iframe
+                    {/* Main Grid */}
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-24 items-center max-w-6xl mx-auto">
+                        <div class="aspect-video w-full rounded-sm overflow-hidden shadow-2xl bg-gray-900 border border-gray-800">
+                            {entry.data.videoUrl && (
+                                <video
                                     width="100%"
                                     height="100%"
-                                    src={entry.data.videoUrl.replace("watch?v=", "embed/")}
-                                    title="YouTube video player"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowfullscreen
-                                    class="absolute inset-0 w-full h-full"
+                                    controls
+                                    class="w-full h-full object-cover"
+                                >
+                                    <source
+                                        src={entry.data.videoUrl}
+                                        type="video/mp4"
+                                    />
+                                </video>
+                            )}
+                        </div>
+                        <div class="text-left font-sans text-sm md:text-base text-white font-bold space-y-1 leading-relaxed pl-4">
+                            <div
+                                class="whitespace-pre-wrap"
+                                set:html={entry.data.details
+                                    .replace(
+                                        entry.data.details?.split("\n")[0] ||
+                                            "",
+                                        "",
+                                    )
+                                    .replace(
+                                        /\*\*(.*?)\*\*/g,
+                                        "<strong class='text-primary uppercase tracking-wider block mt-4 mb-1'>$1</strong>",
+                                    )
+                                    .replace(/\n/g, "<br/>")}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Trio Videos */}
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+                        {entry.data.additionalVideos &&
+                            entry.data.additionalVideos
+                                .slice(0, 3)
+                                .map((url, i) => (
+                                    <div class="aspect-[9/16] w-full bg-gray-900 rounded-sm overflow-hidden border border-gray-800 relative group">
+                                        <video
+                                            width="100%"
+                                            height="100%"
+                                            controls
+                                            class="w-full h-full object-cover"
+                                        >
+                                            <source
+                                                src={url}
+                                                type="video/mp4"
+                                            />
+                                        </video>
+                                    </div>
+                                ))}
+                    </div>
+
+                    {/* Bottom Video */}
+                    {entry.data.additionalVideos &&
+                        entry.data.additionalVideos[3] && (
+                            <div class="max-w-2xl mx-auto mb-24">
+                                <div class="aspect-video w-full bg-gray-900 rounded-sm overflow-hidden border border-gray-800 shadow-2xl">
+                                    <video
+                                        width="100%"
+                                        height="100%"
+                                        controls
+                                        class="w-full h-full"
+                                    >
+                                        <source
+                                            src={entry.data.additionalVideos[3]}
+                                            type="video/mp4"
+                                        />
+                                    </video>
+                                </div>
+                            </div>
+                        )}
+                </div>
+            </main>
+        ) : (
+            <main class="bg-white min-h-screen pb-24">
+                {/* HERO - 60vh */}
+                <section class="relative h-[25vh] md:h-[45vh] w-full overflow-hidden mb-16">
+                    {entry.data.cover && (
+                        <div class="absolute inset-0">
+                            <img
+                                src={entry.data.cover}
+                                alt={entry.data.title}
+                                class="w-full h-full object-cover"
+                            />
+                            <div class="absolute inset-0 bg-black/40" />
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <h1 class="font-nav text-5xl md:text-7xl lg:text-7xl text-white uppercase text-center px-4 drop-shadow-2xl">
+                                    {entry.data.title}
+                                </h1>
+                            </div>
+                        </div>
+                    )}
+                </section>
+
+                <div class="container mx-auto px-6 max-w-7xl">
+                    {/* VIDEO & DETAILS SECTION */}
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-24 items-start">
+                        {/* Left: Video */}
+                        <div class="flex flex-col">
+                            {entry.data.videoUrl && (
+                                <div class="aspect-video w-full rounded-sm overflow-hidden shadow-2xl mb-4 group relative bg-black">
+                                    <iframe
+                                        width="100%"
+                                        height="100%"
+                                        src={entry.data.videoUrl.replace(
+                                            "watch?v=",
+                                            "embed/",
+                                        )}
+                                        title="YouTube video player"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowfullscreen
+                                        class="absolute inset-0 w-full h-full"
+                                    />
+                                </div>
+                            )}
+                            {entry.data.videoUrl && (
+                                <a
+                                    href={entry.data.videoUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-primary text-center font-serif text-lg hover:underline mt-2"
+                                >
+                                    Video Completo
+                                </a>
+                            )}
+                        </div>
+
+                        {/* Right: Details Box */}
+                        {entry.data.details && (
+                            <div class="bg-primary p-8 md:p-4 rounded-sm text-white shadow-xl">
+                                <div
+                                    class="font-sans text-sm md:text-base leading-relaxed whitespace-pre-wrap"
+                                    set:html={entry.data.details
+                                        .replace(
+                                            /\*\*(.*?)\*\*/g,
+                                            "<strong>$1</strong>",
+                                        )
+                                        .replace(/\n/g, "<br/>")}
                                 />
                             </div>
                         )}
-                        {entry.data.videoUrl && (
-                            <a
-                                href={entry.data.videoUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="text-primary text-center font-serif text-lg hover:underline mt-2"
-                            >
-                                Video Completo
-                            </a>
-                        )}
                     </div>
 
-                    {/* Right: Details Box */}
-                    {entry.data.details && (
-                        <div class="bg-primary p-8 md:p-12 rounded-sm text-white shadow-xl">
+                    {/* TITLE & DESCRIPTION */}
+                    <div class="max-w-4xl mb-24">
+                        <div class="prose prose-lg prose-p:font-sans prose-p:text-gray-800 prose-headings:font-serif text-justify max-w-none">
+                            <Content />
+                        </div>
+                    </div>
+
+                    {/* QUOTE SECTION */}
+                    {entry.data.quote && (
+                        <div class="flex flex-col items-center justify-center text-center max-w-4xl mx-auto mb-4 px-4">
                             <div
-                                class="font-sans text-sm md:text-base leading-relaxed whitespace-pre-wrap"
-                                set:html={entry.data.details.replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>").replace(/\n/g, "<br/>")}
+                                class="text-6xl text-black mb-4"
+                                style="font-family: Georgia, 'Times New Roman', Times, serif;"
+                            >
+                                “
+                            </div>
+                            <blockquote
+                                class="text-[20px] not-italic text-black leading-snug mb-8"
+                                style="font-family: Georgia, 'Times New Roman', Times, serif;"
+                            >
+                                {entry.data.quote}
+                            </blockquote>
+                            {entry.data.quoteAuthor && (
+                                <cite class="font-nav text-xl text-black uppercase tracking-widest not-italic font-bold">
+                                    {entry.data.quoteAuthor}
+                                </cite>
+                            )}
+                        </div>
+                    )}
+
+                    {/* GALLERY SECTION (Interactive Lightbox) */}
+                    {entry.data.gallery && entry.data.gallery.length > 0 && (
+                        <div class="mt-20">
+                            <FestivalGallery
+                                client:load
+                                images={entry.data.gallery}
                             />
                         </div>
                     )}
                 </div>
-
-                {/* TITLE & DESCRIPTION */}
-                <div class="max-w-4xl mb-24">
-                    <h1 class="font-nav text-5xl md:text-6xl text-black uppercase tracking-tighter mb-8 leading-none">
-                        {entry.data.title}
-                    </h1>
-                    <div class="prose prose-lg prose-p:font-sans prose-p:text-gray-800 prose-headings:font-serif text-justify max-w-none">
-                        <Content />
-                    </div>
-                </div>
-
-                {/* QUOTE SECTION */}
-                {entry.data.quote && (
-                    <div class="flex flex-col items-center justify-center text-center max-w-4xl mx-auto mb-24 px-4">
-                        <div class="text-6xl text-black mb-6 font-serif">“</div>
-                        <blockquote class="font-serif text-2xl md:text-3xl italic text-black leading-relaxed mb-8">
-                            {entry.data.quote}
-                        </blockquote>
-                        {entry.data.quoteAuthor && (
-                            <cite class="font-nav text-xl text-black uppercase tracking-widest not-italic font-bold">
-                                {entry.data.quoteAuthor}
-                            </cite>
-                        )}
-                    </div>
-                )}
-
-                {/* GALLERY SECTION (Legacy Grid) */}
-                {entry.data.gallery && entry.data.gallery.length > 0 && (
-                    <section>
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1">
-                            {entry.data.gallery.map((image, i) => (
-                                <div class="relative aspect-square overflow-hidden group cursor-pointer bg-gray-100">
-                                    <img
-                                        src={image}
-                                        alt={`Gallery image ${i + 1}`}
-                                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                        loading="lazy"
-                                    />
-                                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-                )}
-            </div>
-        </main>
-    )}
+            </main>
+        )
+    }
 </Layout>

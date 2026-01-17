@@ -4,6 +4,7 @@ import { MotionPreset } from '@/components/ui/motion-preset';
 import BrandButton from '@/components/ui/BrandButton';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface BlogItem {
     id: string;
@@ -26,6 +27,21 @@ const BlogSection = ({ blogItems }: BlogSectionProps) => {
         dragFree: true
     });
 
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const [scrollSnaps, setScrollSnaps] = React.useState<number[]>([]);
+
+    const onSelect = React.useCallback(() => {
+        if (!emblaApi) return;
+        setSelectedIndex(emblaApi.selectedScrollSnap());
+    }, [emblaApi]);
+
+    React.useEffect(() => {
+        if (!emblaApi) return;
+        onSelect();
+        setScrollSnaps(emblaApi.scrollSnapList());
+        emblaApi.on('select', onSelect);
+    }, [emblaApi, onSelect]);
+
     const scrollPrev = React.useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
     const scrollNext = React.useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
@@ -39,17 +55,16 @@ const BlogSection = ({ blogItems }: BlogSectionProps) => {
                     className="mb-16"
                 />
 
-                <div className="relative max-w-6xl mx-auto px-12">
-                    {/* Navigation Arrows */}
+                <div className="relative max-w-6xl mx-auto px-2 md:px-12">
                     <button
                         onClick={scrollPrev}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 text-black/40 hover:text-primary transition-colors focus:outline-none"
+                        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 text-black/40 hover:text-primary transition-colors focus:outline-none hidden"
                     >
                         <ChevronLeft size={48} strokeWidth={1} />
                     </button>
                     <button
                         onClick={scrollNext}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 text-black/40 hover:text-primary transition-colors focus:outline-none"
+                        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 text-black/40 hover:text-primary transition-colors focus:outline-none hidden"
                     >
                         <ChevronRight size={48} strokeWidth={1} />
                     </button>
@@ -74,8 +89,8 @@ const BlogSection = ({ blogItems }: BlogSectionProps) => {
                                         </div>
 
                                         {/* Content */}
-                                        <div className="p-8 flex flex-col items-center flex-grow">
-                                            <h3 className="font-nav font-bold text-[18px] text-center uppercase tracking-tight leading-tight mb-8 min-h-[3rem] line-clamp-2">
+                                        <div className="p-6 flex flex-col items-center flex-grow">
+                                            <h3 className="font-nav font-bold text-[20px] text-center uppercase tracking-normal leading-tight mb-4 min-h-[3rem] line-clamp-2">
                                                 {item.data.title}
                                             </h3>
 
@@ -84,13 +99,35 @@ const BlogSection = ({ blogItems }: BlogSectionProps) => {
                                                 href={`/blog/${item.slug}`}
                                                 variant="primary"
                                                 showArrow
-                                                className="mt-auto scale-90"
+                                                className="mt-2"
                                             />
                                         </div>
                                     </MotionPreset>
                                 </div>
                             ))}
                         </div>
+                    </div>
+
+                    {/* Navigation Dots - Visible on all screen sizes */}
+                    <div className='mt-12 flex flex-col items-center gap-4'>
+                        <div className='flex justify-center items-center gap-3'>
+                            {scrollSnaps.map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => emblaApi?.scrollTo(index)}
+                                    className={cn(
+                                        'rounded-full transition-all duration-500',
+                                        index === selectedIndex
+                                            ? 'w-10 h-2 bg-primary shadow-md shadow-primary/40'
+                                            : 'w-2 h-2 bg-black/20 hover:bg-black/40'
+                                    )}
+                                    aria-label={`Go to slide ${index + 1}`}
+                                />
+                            ))}
+                        </div>
+                        <span className='text-black/40 text-[11px] font-nav tracking-[3px] uppercase'>
+                            {selectedIndex + 1} / {scrollSnaps.length}
+                        </span>
                     </div>
                 </div>
             </div>

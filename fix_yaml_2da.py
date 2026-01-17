@@ -1,4 +1,8 @@
----
+import os
+
+# Define exact binary content to avoid any tool-induced formatting issues
+# Using 2 spaces for indentation and simple string mapping
+content = """---
 title: "Segunda Edición|A PIEDI NUDI"
 subtitle: "Segunda Edición del Concierto Espectáculo “PIES DESCALZOS: SUELOS, PUEBLOS Y SUS CONEXIONES”"
 edition: "II Edición"
@@ -33,3 +37,8 @@ gallery:
 **Objetivos**
 
 **A través de la experiencia física y emocional que genera la creación artística, se busca que el estudiante entre en contacto con su propio cuerpo, con el espacio en el que se mueve e interactúa, y con los demás. De esta forma, el acercamiento a la lengua española y a la cultura hispánica se convierte en una herramienta para aproximarse a otras culturas, fomentar la convivencia pacífica e impulsar una interacción positiva.**
+"""
+
+file_path = r'd:/interrogante-sitoweb/src/content/festival/segunda-edicion-a-piedi-nudi.mdoc'
+with open(file_path, 'w', encoding='utf-8') as f:
+    f.write(content)

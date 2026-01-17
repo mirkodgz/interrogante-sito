@@ -11,13 +11,13 @@ const AboutDescription = () => {
         >
             <div className="max-w-4xl mx-auto text-center space-y-12">
                 <MotionPreset fade slide={{ direction: 'up', offset: 30 }} delay={0.2}>
-                    <h2 className="font-nav text-5xl md:text-7xl uppercase tracking-normal drop-shadow-lg">
+                    <h2 className="text-white">
                         INTERROGANTE SPETTACOLO
                     </h2>
                 </MotionPreset>
 
                 <MotionPreset fade slide={{ direction: 'up', offset: 30 }} delay={0.4}>
-                    <div className="font-sans text-lg md:text-xl leading-relaxed space-y-8 text-white/90">
+                    <div className="font-sans text-base leading-relaxed space-y-8 text-white/90 font-semibold">
                         <p>
                             Interrogante Spettacolo es una compañía internacional de creación artística multicultural, fundada en La Habana y actualmente con sede en Milán. La iniciativa surge de la visión de Kalua Rodríguez, quien buscaba establecer un espacio innovador y experimental para graduados en pedagogía con inquietudes artísticas. Su experiencia como actriz y emigrante en Europa la llevó a comprender el poder del arte como medio para la reconexión personal y social, ofreciendo experiencias significativas a través del teatro y otras formas creativas.
                         </p>

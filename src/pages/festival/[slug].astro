@@ -1,11 +1,13 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/ui/PageHero";
 import { getCollection, render } from "astro:content";
 import BrandButton from "../../components/ui/BrandButton";
 import { cn } from "../../lib/utils";
 import { ArrowUpRight } from "lucide-react";
 
 import { getEntry } from "astro:content";
+import FestivalGallery from "../../components/blocks/FestivalGallery";
 
 const { slug } = Astro.params;
 const entry = await getEntry("festival", slug);
@@ -14,169 +16,223 @@ if (!entry) {
     return Astro.redirect("/404");
 }
 const { Content } = await render(entry);
-const { title, subtitle, cover, videoUrl, press, quote, gallery } = entry.data;
+const {
+    title,
+    subtitle,
+    cover,
+    videoUrl,
+    press,
+    quote,
+    gallery,
+    isComingSoon,
+    description,
+    seo,
+} = entry.data;
+
+const seoTitle = seo?.title || title.replace("|", " - ");
+const seoDescription = seo?.description || description;
+const seoOgImage = seo?.ogImage || cover;
 
 // Helper para convertir URL de YouTube a Embed
 function getYoutubeEmbedUrl(url: string | undefined) {
     if (!url) return null;
-    const regExp =
-        /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return match && match[2].length === 11
-        ? `https://www.youtube.com/embed/${match[2]}`
+    // Simplest approach: match the 11 character ID
+    const videoIdMatch =
+        url.match(/[?&]v=([^&#]+)/) || url.match(/youtu\.be\/([^&#?]+)/);
+    const videoId = videoIdMatch ? videoIdMatch[1] : null;
+    return videoId
+        ? `https://www.youtube.com/embed/${videoId}?origin=${encodeURIComponent("http://localhost:4321")}`
         : null;
 }
 
 const embedVideoUrl = getYoutubeEmbedUrl(videoUrl);
+
+// Split title for Hero if it contains '|'
+const titleParts = title.split("|");
+const displayTitle = titleParts.length > 1 ? titleParts.join(" - ") : title;
 ---
 
-<Layout title={title}>
+<Layout title={seoTitle} description={seoDescription} ogImage={seoOgImage}>
     <main class="bg-white w-full overflow-x-hidden">
-        {/* SECCIÓN 1: HERO (75vh, Centered Title) */}
-        <section
-            class="relative w-full h-[75vh] flex items-center justify-center bg-gray-900 overflow-hidden"
-        >
-            {
-                cover && (
-                    <div class="absolute inset-0 z-0">
-                        <img
-                            src={cover}
-                            alt={title}
-                            class="w-full h-full object-cover"
-                        />
-                        <div class="absolute inset-0 bg-black/50" />
-                    </div>
-                )
-            }
-
-            <div class="relative z-10 text-center px-4 max-w-7xl mx-auto">
-                <h1
-                    class="text-white font-serif font-bold text-4xl md:text-6xl lg:text-8xl uppercase tracking-wider drop-shadow-2xl"
-                >
-                    {title}
-                </h1>
-            </div>
-        </section>
-
-        {/* SECCIÓN 2: VIDEO + TEXTO (2 Columnas en escritorio) */}
-        <section class="py-20 md:py-32 w-full">
-            <div
-                class="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-12 lg:gap-20"
-            >
-                {/* BLOQUE IZQUIERDO: VIDEO */}
-                <div class="w-full lg:w-1/2">
-                    <div
-                        class="relative w-full aspect-video rounded-xl overflow-hidden shadow-2xl bg-black"
-                    >
-                        {
-                            embedVideoUrl ? (
-                                <iframe
-                                    src={embedVideoUrl}
-                                    title="YouTube video player"
-                                    class="absolute inset-0 w-full h-full border-0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen
-                                />
-                            ) : (
-                                <div class="w-full h-full flex items-center justify-center text-white/50">
-                                    Video no disponible
-                                </div>
-                            )
-                        }
-                    </div>
-                </div>
-
-                {/* BLOQUE DERECHO: TEXTO */}
-                <div class="w-full lg:w-1/2 flex flex-col gap-8">
-                    {
-                        subtitle && (
-                            <h2 class="font-serif font-bold text-2xl md:text-4xl text-black uppercase leading-tight">
-                                {subtitle}
-                            </h2>
-                        )
-                    }
-                    <div
-                        class="prose prose-lg text-black font-sans text-lg lg:text-[18px] leading-relaxed text-justify"
-                    >
-                        <Content />
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        {/* SECCIÓN 3: HABLAN DE NOSOTROS (3 Columnas) */}
         {
-            press && press.length > 0 && (
-                <section class="py-20 bg-white">
-                    <div class="max-w-7xl mx-auto px-4">
-                        <h2 class="text-center font-nav font-bold text-5xl md:text-7xl text-primary uppercase mb-20 tracking-tighter">
-                            HABLAN DE NOSOTROS
-                        </h2>
-
-                        <div class="flex flex-col md:flex-row gap-12 lg:gap-16 justify-between items-start">
-                            {press.map((item) => (
-                                <div class="flex flex-col items-center flex-1 w-full group">
-                                    <h3 class="font-nav font-bold text-2xl lg:text-3xl text-black uppercase mb-6 tracking-wide text-center">
-                                        {item.title}
-                                    </h3>
-
-                                    <a
-                                        href={item.url}
-                                        target="_blank"
-                                        class="w-full aspect-[4/3] rounded-sm overflow-hidden mb-8 shadow-xl block border border-black/5"
-                                    >
-                                        <img
-                                            src={item.image}
-                                            alt={item.title}
-                                            class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
-                                        />
-                                    </a>
-
-                                    <BrandButton
-                                        href={item.url}
-                                        variant="primary"
-                                        className="scale-90 md:scale-100"
-                                    >
-                                        VER MÁS
-                                    </BrandButton>
-                                </div>
-                            ))}
-                        </div>
+            isComingSoon ? (
+                <section class="min-h-[80vh] flex flex-col items-center justify-center text-center px-4">
+                    <h1 class="font-nav font-bold text-5xl md:text-8xl text-primary uppercase mb-6">
+                        PRÓXIMAMENTE
+                    </h1>
+                    <p class="font-sans text-xl text-black/60 uppercase tracking-widest">
+                        Estamos preparando la {title.split("|")[0]}
+                    </p>
+                    <div class="mt-12">
+                        <BrandButton href="/festival/" variant="primary">
+                            VOLVER AL FESTIVAL
+                        </BrandButton>
                     </div>
                 </section>
-            )
-        }
-
-        {/* SECCIÓN 4: LA FRASE (Mini Sección) */}
-        {
-            quote && (
-                <section class="py-24 px-4 bg-white border-y border-black/5">
-                    <div class="max-w-5xl mx-auto text-center">
-                        <p class="font-nav font-bold text-xl md:text-3xl text-black uppercase leading-relaxed tracking-wide italic">
-                            "{quote}"
-                        </p>
-                    </div>
-                </section>
-            )
-        }
-
-        {/* SECCIÓN 5: GALERÍA (4 por fila) */}
-        {
-            gallery && gallery.length > 0 && (
-                <section class="py-20 px-4 max-w-[1600px] mx-auto">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        {gallery.map((img) => (
-                            <div class="aspect-square rounded-sm overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 bg-gray-100 group">
-                                <img
-                                    src={img}
-                                    alt="Galería Festival"
-                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    loading="lazy"
-                                />
+            ) : (
+                <>
+                    {/* SECCIÓN 1: HERO (75vh, Centered Title) */}
+                    <PageHero
+                        client:load
+                        title={displayTitle}
+                        image={cover || ""}
+                        height="75vh"
+                    />
+                    {/* SECCIÓN 2: VIDEO + TEXTO (2 Columnas en escritorio) */}
+                    <section class="py-20 md:py-32 w-full">
+                        <div class="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-12 lg:gap-20">
+                            {/* BLOQUE IZQUIERDO: VIDEO */}
+                            <div class="w-full lg:w-1/2">
+                                <div class="relative w-full aspect-video rounded-sm overflow-hidden shadow-2xl bg-black mb-6">
+                                    {embedVideoUrl ? (
+                                        <>
+                                            <iframe
+                                                src={embedVideoUrl}
+                                                title="YouTube video player"
+                                                class="absolute inset-0 w-full h-full border-0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen
+                                            />
+                                            {/* Capa de fallback por si YouTube bloquea la inserción (como en la 1ra y 3ra) */}
+                                            <a
+                                                href={videoUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                class="absolute inset-0 z-10 opacity-0 hover:opacity-100 flex items-center justify-center bg-black/40 transition-opacity group-video"
+                                            >
+                                                <div class="bg-white/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/30 text-white font-nav font-semibold text-sm uppercase tracking-widest flex items-center gap-3">
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="20"
+                                                        height="20"
+                                                        viewBox="0 0 24 24"
+                                                        fill="currentColor"
+                                                        class="w-5 h-5"
+                                                    >
+                                                        <path d="M8 5v14l11-7z" />
+                                                    </svg>
+                                                    Guarda su YouTube
+                                                </div>
+                                            </a>
+                                        </>
+                                    ) : (
+                                        <div class="w-full h-full flex items-center justify-center text-white/50">
+                                            Video no disponible
+                                        </div>
+                                    )}
+                                </div>
+                                {title && (
+                                    <p class="text-secondary font-nav font-semibold text-center uppercase tracking-wide text-sm md:text-base mb-4">
+                                        Resumen {title.replace("|", " ")}
+                                    </p>
+                                )}
+                                {videoUrl && (
+                                    <div class="flex justify-center">
+                                        <a
+                                            href={videoUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="inline-flex items-center gap-2 text-black font-nav font-semibold uppercase tracking-widest text-xs hover:text-secondary transition-colors group"
+                                        >
+                                            <span class="border-b border-black group-hover:border-secondary transition-colors">
+                                                VER VIDEO COMPLETO
+                                            </span>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="16"
+                                                height="16"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                class="w-4 h-4"
+                                            >
+                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                                <polyline points="15 3 21 3 21 9" />
+                                                <line
+                                                    x1="10"
+                                                    y1="14"
+                                                    x2="21"
+                                                    y2="3"
+                                                />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                )}
                             </div>
-                        ))}
-                    </div>
-                </section>
+
+                            {/* BLOQUE DERECHO: TEXTO */}
+                            <div class="w-full lg:w-1/2 flex flex-col gap-8">
+                                {subtitle && (
+                                    <h2 class="font-nav font-semibold text-2xl md:text-3xl text-black uppercase leading-[1.1] tracking-tight">
+                                        {subtitle}
+                                    </h2>
+                                )}
+                                <div class="text-black font-sans text-[16px] font-semibold leading-relaxed text-left space-y-6">
+                                    <Content />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    {/* SECCIÓN 3: HABLAN DE NOSOTROS (Grid) */}
+                    {press && press.length > 0 && (
+                        <section class="py-20 bg-white border-t border-black/5">
+                            <div class="max-w-7xl mx-auto px-4">
+                                <h2 class="text-center font-nav font-bold text-[32px] md:text-[38px] text-primary uppercase mb-20 tracking-normal leading-tight">
+                                    HABLAN DE NOSOTROS
+                                </h2>
+
+                                <div
+                                    class={`grid grid-cols-1 sm:grid-cols-2 ${press.length === 3 ? "lg:grid-cols-3 max-w-5xl" : "lg:grid-cols-4"} mx-auto gap-12 lg:gap-8`}
+                                >
+                                    {press.map((item) => (
+                                        <div class="flex flex-col items-center group">
+                                            <h3 class="font-nav font-bold text-xl text-black uppercase mb-6 tracking-wide text-center h-12 flex items-center">
+                                                {item.title}
+                                            </h3>
+
+                                            <a
+                                                href={item.url}
+                                                target="_blank"
+                                                class="w-full aspect-square rounded-sm overflow-hidden mb-8 shadow-lg block border border-black/5"
+                                            >
+                                                <img
+                                                    src={item.image}
+                                                    alt={item.title}
+                                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                                />
+                                            </a>
+
+                                            <BrandButton
+                                                href={item.url}
+                                                variant="primary"
+                                                className="px-6 py-2 text-sm"
+                                            >
+                                                LEER MÁS
+                                            </BrandButton>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+                    )}
+                    {/* SECCIÓN 4: LA FRASE (Mini Sección) */}
+                    {quote && (
+                        <section class="py-24 px-4 bg-white border-y border-black/5">
+                            <div class="max-w-[1000px] mx-auto text-center">
+                                <p class="font-nav font-semibold text-xl md:text-2xl text-black uppercase leading-relaxed tracking-wide">
+                                    "{quote}"
+                                </p>
+                            </div>
+                        </section>
+                    )}
+                    {/* SECCIÓN 5: GALERÍA (4 por fila) */}
+                    {gallery && gallery.length > 0 && (
+                        <FestivalGallery client:load images={gallery} />
+                    )}
+                </>
             )
         }
     </main>

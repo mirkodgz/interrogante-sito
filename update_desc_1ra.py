@@ -1,4 +1,6 @@
----
+import os
+
+content = """---
 title: "Primera Edición|A PIEDI NUDI"
 subtitle: "Primera Edición del Concierto Espectáculo “PIES DESCALZOS: SUELOS, PUEBLOS Y SUS CONEXIONES”"
 edition: "I Edición"
@@ -34,3 +36,8 @@ Primera Edición del Concierto Espectáculo “PIES DESCALZOS: SUELOS, PUEBLOS Y
 El evento tiene como objetivo motivar futuras actividades y dinámicas artísticas que materialicen los conceptos de inclusión, interacción, innovación, diversidad y contaminación creativa entre las diferentes voces culturales que convergen en Milán.
 
 El objetivo es promover y mejorar las expresiones y tradiciones de una comunidad multicultural a través de la participación y las relaciones de trabajo entre instituciones y asociaciones en el área de Milán.
+"""
+
+file_path = r'd:/interrogante-sitoweb/src/content/festival/primera-edicion-a-piedi-nudi.mdoc'
+with open(file_path, 'w', encoding='utf-8') as f:
+    f.write(content)

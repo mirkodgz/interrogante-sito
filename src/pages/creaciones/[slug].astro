@@ -146,7 +146,7 @@ const seoOgImage = seo?.ogImage || cover;
                                 class="w-full h-full object-cover"
                             />
                             <div class="absolute inset-0 bg-black/40" />
-                            <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
                                 <h1 class="font-nav text-5xl md:text-7xl lg:text-7xl text-white uppercase text-center px-4 drop-shadow-2xl">
                                     {entry.data.title}
                                 </h1>
@@ -156,6 +156,15 @@ const seoOgImage = seo?.ogImage || cover;
                 </section>
 
                 <div class="container mx-auto px-6 max-w-7xl">
+                    {/* QUOTE AUTHOR (Below Hero) */}
+                    {entry.data.quoteAuthor && (
+                        <div class="text-center mb-16">
+                            <p class="font-nav text-xl md:text-3xl text-black uppercase tracking-widest">
+                                {entry.data.quoteAuthor}
+                            </p>
+                        </div>
+                    )}
+
                     {/* VIDEO & DETAILS SECTION */}
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-24 items-start">
                         {/* Left: Video */}
@@ -207,6 +216,11 @@ const seoOgImage = seo?.ogImage || cover;
 
                     {/* TITLE & DESCRIPTION */}
                     <div class="max-w-4xl mb-24">
+                        {entry.data.subtitle && (
+                            <h2 class="font-nav text-4xl md:text-5xl text-primary uppercase tracking-widest mb-8 leading-none">
+                                {entry.data.subtitle}
+                            </h2>
+                        )}
                         <div class="prose prose-lg prose-p:font-sans prose-p:text-gray-800 prose-headings:font-serif text-justify max-w-none">
                             <Content />
                         </div>
@@ -214,18 +228,14 @@ const seoOgImage = seo?.ogImage || cover;
 
                     {/* QUOTE SECTION */}
                     {entry.data.quote && (
-                        <div class="flex flex-col items-center justify-center text-center max-w-4xl mx-auto mb-4 px-4">
-                            <div
-                                class="text-6xl text-black mb-4"
-                                style="font-family: Georgia, 'Times New Roman', Times, serif;"
-                            >
-                                “
-                            </div>
+                        <div class="flex flex-col items-center justify-center text-center max-w-4xl mx-auto mb-12 px-4">
                             <blockquote
-                                class="text-[20px] not-italic text-black leading-snug mb-8"
+                                class="text-[20px] md:text-2xl not-italic text-black leading-relaxed mb-6"
                                 style="font-family: Georgia, 'Times New Roman', Times, serif;"
                             >
+                                <span class="text-4xl md:text-5xl leading-none text-black mr-2">“</span>
                                 {entry.data.quote}
+                                <span class="text-4xl md:text-5xl leading-none text-black ml-2">”</span>
                             </blockquote>
                             {entry.data.quoteAuthor && (
                                 <cite class="font-nav text-xl text-black uppercase tracking-widest not-italic font-bold">

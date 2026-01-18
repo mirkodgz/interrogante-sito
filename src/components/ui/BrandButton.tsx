@@ -50,7 +50,7 @@ export default function BrandButton({
                 className={`
           relative flex items-center justify-between gap-4 
           px-4 py-2 border-2 transition-all duration-300
-          font-nav text-[18px] tracking-[1px] uppercase group rounded-full
+          font-nav font-normal text-[18px] tracking-[1px] uppercase group rounded-full
           ${variants[variant]}
         `}
             >

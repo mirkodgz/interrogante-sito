@@ -64,7 +64,7 @@ const SectionHeader = ({
             {description && (
                 <MotionPreset fade slide={{ direction: 'up', offset: 30 }} delay={0.6} transition={{ duration: 0.7 }}>
                     <p className={cn(
-                        "text-base font-semibold leading-relaxed max-w-2xl",
+                        "text-base font-semibold leading-relaxed max-w-2xl whitespace-pre-line",
                         isDark ? "text-white/90" : "text-[#3c3c3c]",
                         isCenter && "mx-auto"
                     )}>

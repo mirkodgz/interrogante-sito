@@ -22,7 +22,7 @@ const PageHero = ({
     return (
         <section
             className={cn("relative w-full overflow-hidden flex items-center justify-center", className)}
-            style={{ height }}
+            style={height ? { height } : undefined}
         >
             {/* Background Image */}
             <div className="absolute inset-0">

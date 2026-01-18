@@ -71,9 +71,9 @@ const BlogSection = ({ blogItems }: BlogSectionProps) => {
 
                     {/* Carousel */}
                     <div className="overflow-hidden" ref={emblaRef}>
-                        <div className="flex gap-6">
+                        <div className="flex -ml-6">
                             {blogItems.map((item) => (
-                                <div key={item.id} className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0">
+                                <div key={item.id} className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 pl-6">
                                     <MotionPreset
                                         fade
                                         slide={{ direction: 'up', offset: 20 }}
@@ -125,9 +125,7 @@ const BlogSection = ({ blogItems }: BlogSectionProps) => {
                                 />
                             ))}
                         </div>
-                        <span className='text-black/40 text-[11px] font-nav tracking-[3px] uppercase'>
-                            {selectedIndex + 1} / {scrollSnaps.length}
-                        </span>
+
                     </div>
                 </div>
             </div>

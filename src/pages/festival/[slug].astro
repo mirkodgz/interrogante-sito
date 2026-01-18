@@ -7,7 +7,7 @@ import { cn } from "../../lib/utils";
 import { ArrowUpRight } from "lucide-react";
 
 import { getEntry } from "astro:content";
-import FestivalGallery from "../../components/blocks/FestivalGallery";
+import GalleryCarousel from "../../components/blocks/GalleryCarousel";
 
 const { slug } = Astro.params;
 const entry = await getEntry("festival", slug);
@@ -41,7 +41,7 @@ function getYoutubeEmbedUrl(url: string | undefined) {
         url.match(/[?&]v=([^&#]+)/) || url.match(/youtu\.be\/([^&#?]+)/);
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
     return videoId
-        ? `https://www.youtube.com/embed/${videoId}?origin=${encodeURIComponent("http://localhost:4321")}`
+        ? `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`
         : null;
 }
 
@@ -76,11 +76,13 @@ const displayTitle = titleParts.length > 1 ? titleParts.join(" - ") : title;
                         client:load
                         title={displayTitle}
                         image={cover || ""}
-                        height="75vh"
+                        height=""
+                        className="h-[50vh] md:h-[75vh]"
+                        overlayOpacity="bg-black/20"
                     />
                     {/* SECCIÓN 2: VIDEO + TEXTO (2 Columnas en escritorio) */}
                     <section class="py-20 md:py-32 w-full">
-                        <div class="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-12 lg:gap-20">
+                        <div class="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-12 lg:gap-10">
                             {/* BLOQUE IZQUIERDO: VIDEO */}
                             <div class="w-full lg:w-1/2">
                                 <div class="relative w-full aspect-video rounded-sm overflow-hidden shadow-2xl bg-black mb-6">
@@ -90,30 +92,10 @@ const displayTitle = titleParts.length > 1 ? titleParts.join(" - ") : title;
                                                 src={embedVideoUrl}
                                                 title="YouTube video player"
                                                 class="absolute inset-0 w-full h-full border-0"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                 allowfullscreen
                                             />
                                             {/* Capa de fallback por si YouTube bloquea la inserción (como en la 1ra y 3ra) */}
-                                            <a
-                                                href={videoUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                class="absolute inset-0 z-10 opacity-0 hover:opacity-100 flex items-center justify-center bg-black/40 transition-opacity group-video"
-                                            >
-                                                <div class="bg-white/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/30 text-white font-nav font-semibold text-sm uppercase tracking-widest flex items-center gap-3">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="20"
-                                                        height="20"
-                                                        viewBox="0 0 24 24"
-                                                        fill="currentColor"
-                                                        class="w-5 h-5"
-                                                    >
-                                                        <path d="M8 5v14l11-7z" />
-                                                    </svg>
-                                                    Guarda su YouTube
-                                                </div>
-                                            </a>
                                         </>
                                     ) : (
                                         <div class="w-full h-full flex items-center justify-center text-white/50">
@@ -122,55 +104,42 @@ const displayTitle = titleParts.length > 1 ? titleParts.join(" - ") : title;
                                     )}
                                 </div>
                                 {title && (
-                                    <p class="text-secondary font-nav font-semibold text-center uppercase tracking-wide text-sm md:text-base mb-4">
-                                        Resumen {title.replace("|", " ")}
-                                    </p>
-                                )}
-                                {videoUrl && (
-                                    <div class="flex justify-center">
+                                    <div class="flex justify-center mt-4">
                                         <a
                                             href={videoUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            class="inline-flex items-center gap-2 text-black font-nav font-semibold uppercase tracking-widest text-xs hover:text-secondary transition-colors group"
+                                            class="inline-flex items-center gap-2 font-sans text-[16px] font-semibold text-[#4338ab] hover:underline transition-all"
                                         >
-                                            <span class="border-b border-black group-hover:border-secondary transition-colors">
-                                                VER VIDEO COMPLETO
-                                            </span>
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
-                                                width="16"
-                                                height="16"
+                                                width="20"
+                                                height="20"
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
                                                 stroke-width="2"
                                                 stroke-linecap="round"
                                                 stroke-linejoin="round"
-                                                class="w-4 h-4"
+                                                class="lucide lucide-youtube-icon lucide-youtube"
                                             >
-                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                                                <polyline points="15 3 21 3 21 9" />
-                                                <line
-                                                    x1="10"
-                                                    y1="14"
-                                                    x2="21"
-                                                    y2="3"
-                                                />
+                                                <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+                                                <path d="m10 15 5-3-5-3z" />
                                             </svg>
+                                            Resumen {title.replace("|", " ")}
                                         </a>
                                     </div>
                                 )}
                             </div>
 
                             {/* BLOQUE DERECHO: TEXTO */}
-                            <div class="w-full lg:w-1/2 flex flex-col gap-8">
+                            <div class="w-full lg:w-1/2 flex flex-col gap-3">
                                 {subtitle && (
-                                    <h2 class="font-nav font-semibold text-2xl md:text-3xl text-black uppercase leading-[1.1] tracking-tight">
+                                    <h2 class="font-nav font-bold text-[25px] text-black uppercase leading-[1.1] tracking-[0.3px]">
                                         {subtitle}
                                     </h2>
                                 )}
-                                <div class="text-black font-sans text-[16px] font-semibold leading-relaxed text-left space-y-6">
+                                <div class="text-[#656464] font-sans text-[16px] font-semibold leading-[1.5] text-left space-y-6">
                                     <Content />
                                 </div>
                             </div>
@@ -178,7 +147,7 @@ const displayTitle = titleParts.length > 1 ? titleParts.join(" - ") : title;
                     </section>
                     {/* SECCIÓN 3: HABLAN DE NOSOTROS (Grid) */}
                     {press && press.length > 0 && (
-                        <section class="py-20 bg-white border-t border-black/5">
+                        <section class="py-20 bg-[#efeff6] border-t border-black/5">
                             <div class="max-w-7xl mx-auto px-4">
                                 <h2 class="text-center font-nav font-bold text-[32px] md:text-[38px] text-primary uppercase mb-20 tracking-normal leading-tight">
                                     HABLAN DE NOSOTROS
@@ -189,14 +158,14 @@ const displayTitle = titleParts.length > 1 ? titleParts.join(" - ") : title;
                                 >
                                     {press.map((item) => (
                                         <div class="flex flex-col items-center group">
-                                            <h3 class="font-nav font-bold text-xl text-black uppercase mb-6 tracking-wide text-center h-12 flex items-center">
+                                            <h3 class="font-nav font-bold text-[25px] text-black uppercase mb-4 tracking-wide text-center h-12 flex items-center">
                                                 {item.title}
                                             </h3>
 
                                             <a
                                                 href={item.url}
                                                 target="_blank"
-                                                class="w-full aspect-square rounded-sm overflow-hidden mb-8 shadow-lg block border border-black/5"
+                                                class="w-full aspect-square rounded-sm overflow-hidden mb-5 shadow-lg block border border-black/5"
                                             >
                                                 <img
                                                     src={item.image}
@@ -221,16 +190,16 @@ const displayTitle = titleParts.length > 1 ? titleParts.join(" - ") : title;
                     {/* SECCIÓN 4: LA FRASE (Mini Sección) */}
                     {quote && (
                         <section class="py-24 px-4 bg-white border-y border-black/5">
-                            <div class="max-w-[1000px] mx-auto text-center">
-                                <p class="font-nav font-semibold text-xl md:text-2xl text-black uppercase leading-relaxed tracking-wide">
+                            <div class="max-w-[700px] mx-auto text-center">
+                                <p class="font-nav font-normal text-xl md:text-2xl text-black uppercase leading-relaxed tracking-[0.5px]">
                                     "{quote}"
                                 </p>
                             </div>
                         </section>
                     )}
-                    {/* SECCIÓN 5: GALERÍA (4 por fila) */}
+                    {/* SECCIÓN 5: GALERÍA (Carousel con barra de progreso) */}
                     {gallery && gallery.length > 0 && (
-                        <FestivalGallery client:load images={gallery} />
+                        <GalleryCarousel client:load images={gallery} />
                     )}
                 </>
             )

@@ -34,7 +34,7 @@ export default function Footer() {
                     {/* Contact/Info Section */}
                     <div className="flex flex-col gap-8">
                         <div>
-                            <h3 className="font-nav text-lg font-bold uppercase tracking-widest border-l-4 border-white pl-3 mb-6">DIRECCIÓN: KALUA RODRIGUEZ</h3>
+                            <h3 className="font-nav text-lg font-normal uppercase tracking-[1px] border-l-4 border-white pl-3 mb-6">DIRECCIÓN: KALUA RODRIGUEZ</h3>
                             <div className="text-base font-sans font-semibold space-y-1">
                                 <p className="font-bold">ASSOCIAZIONE INTERROGANTE SPETTACOLO</p>
                                 <p>Via Per San Pietro 1328</p>
@@ -44,7 +44,7 @@ export default function Footer() {
                         </div>
 
                         <div>
-                            <h3 className="font-nav text-lg font-bold uppercase tracking-widest border-l-4 border-white pl-3 mb-6">INFO/CONTACTO</h3>
+                            <h3 className="font-nav text-lg font-normal uppercase tracking-[1px] border-l-4 border-white pl-3 mb-6">INFO/CONTACTO</h3>
                             <ul className="flex flex-col gap-4">
                                 <li className="text-base font-sans font-semibold">
                                     <p>Tel/WhatsApp: +39 392 168 3752</p>
@@ -63,7 +63,7 @@ export default function Footer() {
 
                     {/* Social Section */}
                     <div className="flex flex-col gap-6">
-                        <h3 className="font-nav text-lg font-bold uppercase tracking-widest border-l-4 border-white pl-3 mb-6">SÍGUENOS EN</h3>
+                        <h3 className="font-nav text-lg font-normal uppercase tracking-[1px] border-l-4 border-white pl-3 mb-6">SÍGUENOS EN</h3>
                         <div className="flex gap-4">
                             <a href={contactInfo.social.facebook} target="_blank" rel="noopener noreferrer" className="bg-white p-2 text-primary hover:bg-black hover:text-white transition-all transform hover:-translate-y-1 shadow-md">
                                 <Facebook size={24} fill="currentColor" />

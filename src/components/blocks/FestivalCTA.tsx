@@ -5,7 +5,7 @@ import SectionHeader from '@/components/ui/SectionHeader';
 
 const FestivalCTA = () => {
     return (
-        <section className="relative py-12 bg-[#efeff6] overflow-hidden">
+        <section className="relative py-24 bg-[#efeff6] overflow-hidden">
             <div className="container mx-auto px-6 flex flex-col items-center">
                 {/* Title */}
                 <SectionHeader
@@ -26,7 +26,7 @@ const FestivalCTA = () => {
                         <img
                             src="https://res.cloudinary.com/dskliu1ig/image/upload/v1768526709/A-Piedi-Nudi-FotoCover-Home_vbnzeg.jpg"
                             alt="Festival A Piedi Nudi"
-                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                            className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 group-hover:bg-black/0 transition-colors duration-500"></div>
                     </div>
@@ -40,7 +40,7 @@ const FestivalCTA = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <BrandButton
-                        text="Descubre el Festival"
+                        text="VER MÁS"
                         href="/festival/"
                         variant="primary"
                     />

@@ -149,9 +149,7 @@ const PortfolioContent = ({ portfolioItems }: PortfolioContentProps) => {
           ))}
         </div>
 
-        <span className='text-black/40 text-[11px] font-nav lg:text-[12px] tracking-[3px] uppercase'>
-          {current + 1} / {portfolioItems.length}
-        </span>
+
       </div>
     </div>
   )

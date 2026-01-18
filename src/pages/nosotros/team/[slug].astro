@@ -1,5 +1,5 @@
 ---
-import { getEntry, render } from "astro:content";
+import { getEntry, render, getCollection } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import PageHero from "../../../components/ui/PageHero";
 
@@ -10,6 +10,12 @@ const entry = await getEntry("team", slug);
 if (!entry) return Astro.redirect("/404");
 
 const { Content } = await render(entry);
+
+// Fetch other team members for navigation
+const allTeamMembers = await getCollection("team");
+const otherTeamMembers = allTeamMembers
+    .filter((member) => member.slug !== slug)
+    .slice(0, 2); // Ensure we show at most 2 (perfect for a team of 3)
 ---
 
 <Layout title={`${entry.data.name} - Equipo`}>
@@ -19,142 +25,20 @@ const { Content } = await render(entry);
             client:load
             title={entry.data.name.toUpperCase()}
             image={entry.data.cover}
-            height="60vh"
+            className="!h-[35vh] md:!h-[60vh]"
             overlayOpacity="bg-black/20"
         />
 
         {/* CONTENT SECTION */}
         <section class="py-24">
             <div class="container mx-auto px-6 max-w-7xl">
-                {/* Header Row: Name/Role & Socials */}
-                <div
-                    class="flex flex-col md:flex-row justify-between items-start border-b border-black/10 pb-12 mb-16 gap-8"
-                >
-                    <div class="flex flex-col">
-                        <h2
-                            class="font-serif text-[35px] uppercase text-black mb-2 tracking-wide leading-none"
-                        >
-                            {entry.data.name}
-                        </h2>
-                        <p
-                            class="font-sans text-lg md:text-[20px] text-black/70"
-                        >
-                            {entry.data.role}
-                        </p>
-                    </div>
-
-                    <div class="flex gap-6">
-                        {
-                            entry.data.facebook && (
-                                <a
-                                    href={entry.data.facebook}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="text-black hover:text-primary transition-colors"
-                                >
-                                    <span class="sr-only">Facebook</span>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="34"
-                                        height="34"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-                                    </svg>
-                                </a>
-                            )
-                        }
-                        {
-                            entry.data.instagram && (
-                                <a
-                                    href={entry.data.instagram}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="text-black hover:text-primary transition-colors"
-                                >
-                                    <span class="sr-only">Instagram</span>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="34"
-                                        height="34"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <>
-                                            <rect
-                                                width="20"
-                                                height="20"
-                                                x="2"
-                                                y="2"
-                                                rx="5"
-                                                ry="5"
-                                            />
-                                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                                            <line
-                                                x1="17.5"
-                                                x2="17.51"
-                                                y1="6.5"
-                                                y2="6.5"
-                                            />
-                                        </>
-                                    </svg>
-                                </a>
-                            )
-                        }
-                        {
-                            entry.data.linkedin && (
-                                <a
-                                    href={entry.data.linkedin}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="text-black hover:text-primary transition-colors"
-                                >
-                                    <span class="sr-only">LinkedIn</span>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="34"
-                                        height="34"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <>
-                                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                                            <rect
-                                                width="4"
-                                                height="12"
-                                                x="2"
-                                                y="9"
-                                            />
-                                            <circle cx="4" cy="4" r="2" />
-                                        </>
-                                    </svg>
-                                </a>
-                            )
-                        }
-                    </div>
-                </div>
-
                 {/* Profile & Bio Layout */}
                 <div
-                    class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start"
+                    class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center"
                 >
-                    {/* Circle Image - Left Column */}
-                    <div
-                        class="lg:col-span-4 flex justify-center lg:justify-start"
-                    >
+                    {/* Left Column: Image + Name + Role */}
+                    <div class="lg:col-span-4 flex flex-col items-center gap-8">
+                        {/* Image */}
                         <div
                             class="relative w-64 h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-white shadow-2xl ring-1 ring-black/5 bg-primary/5"
                         >
@@ -165,19 +49,203 @@ const { Content } = await render(entry);
                                 class="w-full h-full object-cover"
                             />
                         </div>
+
+                        {/* Name & Role */}
+                        <div class="text-center">
+                            <h2
+                                class="font-serif text-[32px] uppercase text-black mb-2 tracking-wide leading-none"
+                            >
+                                {entry.data.name}
+                            </h2>
+                            <p
+                                class="font-sans text-lg md:text-[20px] text-black/70"
+                            >
+                                {entry.data.role}
+                            </p>
+                        </div>
                     </div>
 
-                    {/* Bio Text - Right Column */}
-                    <div class="lg:col-span-8 text-justify">
+                    {/* Right Column: Bio + Socials */}
+                    <div class="lg:col-span-8 relative">
+                        {/* Bio Text - Added padding bottom for icons */}
                         <div
-                            class="bio-content font-sans text-[#3c3c3c] text-base font-semibold leading-relaxed [&_a]:text-primary [&_a]:font-bold [&_a]:no-underline hover:[&_a]:underline"
+                            class="bio-content font-sans text-[#3c3c3c] text-base font-semibold leading-relaxed [&_a]:text-primary [&_a]:font-bold [&_a]:no-underline hover:[&_a]:underline pb-16 lg:pb-12 text-justify"
                         >
                             <Content />
+                        </div>
+
+                        {/* Social Icons - Absolute Bottom Right */}
+                        <div class="absolute bottom-0 right-0 flex gap-4">
+                            {
+                                entry.data.facebook && (
+                                    <a
+                                        href={entry.data.facebook}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="text-black hover:text-primary transition-colors"
+                                    >
+                                        <span class="sr-only">Facebook</span>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="28"
+                                            height="28"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                                        </svg>
+                                    </a>
+                                )
+                            }
+                            {
+                                entry.data.instagram && (
+                                    <a
+                                        href={entry.data.instagram}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="text-black hover:text-primary transition-colors"
+                                    >
+                                        <span class="sr-only">Instagram</span>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="28"
+                                            height="28"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <>
+                                                <rect
+                                                    width="20"
+                                                    height="20"
+                                                    x="2"
+                                                    y="2"
+                                                    rx="5"
+                                                    ry="5"
+                                                />
+                                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                                                <line
+                                                    x1="17.5"
+                                                    x2="17.51"
+                                                    y1="6.5"
+                                                    y2="6.5"
+                                                />
+                                            </>
+                                        </svg>
+                                    </a>
+                                )
+                            }
+                            {
+                                entry.data.linkedin && (
+                                    <a
+                                        href={entry.data.linkedin}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="text-black hover:text-primary transition-colors"
+                                    >
+                                        <span class="sr-only">LinkedIn</span>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="28"
+                                            height="28"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <>
+                                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                                <rect
+                                                    width="4"
+                                                    height="12"
+                                                    x="2"
+                                                    y="9"
+                                                />
+                                                <circle cx="4" cy="4" r="2" />
+                                            </>
+                                        </svg>
+                                    </a>
+                                )
+                            }
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        {/* TEAM NAVIGATION / SEE ALSO */}
+        {
+            otherTeamMembers.length > 0 && (
+                <section class="border-t border-black/10 py-20 bg-[#efeff6]">
+                    <div class="container mx-auto px-6 max-w-5xl">
+                        <h3 class="font-nav text-center text-lg font-semibold uppercase tracking-[2px] text-black/70 mb-4">
+                            Conoce al resto del equipo
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {otherTeamMembers.map((member) => (
+                                <a
+                                    href={`/nosotros/team/${member.slug}`}
+                                    class="group relative flex items-center gap-6 p-6 rounded-2xl bg-white border border-black/5 hover:border-black/10 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                                >
+                                    {/* Avatar */}
+                                    <div class="w-30 h-30 flex-shrink-0 rounded-full overflow-hidden border-2 border-white shadow-md ring-1 ring-black/5">
+                                        <img
+                                            src={
+                                                member.data.profileImage ||
+                                                member.data.cover
+                                            }
+                                            alt={member.data.name}
+                                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                        />
+                                    </div>
+
+                                    {/* Text Info */}
+                                    <div class="flex flex-col">
+                                        <span class="font-nav text-[14px] uppercase font-bold text-primary tracking-widest mb-1 opacity-80 group-hover:opacity-100">
+                                            Leer biografía de
+                                        </span>
+                                        <h2 class="font-serif text-[25px] uppercase text-black leading-none tracking-wider group-hover:text-primary transition-colors mb-2">
+                                            {member.data.name}
+                                        </h2>
+                                        <p class="font-sans text-sm text-black/70 line-clamp-1 font-semibold">
+                                            {member.data.role}
+                                        </p>
+                                    </div>
+
+                                    {/* Arrow Icon */}
+                                    <div class="absolute right-6 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-primary">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M5 12h14" />
+                                            <path d="m12 5 7 7-7 7" />
+                                        </svg>
+                                    </div>
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )
+        }
     </main>
 </Layout>
 

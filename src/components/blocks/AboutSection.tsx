@@ -28,8 +28,8 @@ const AboutSection = () => {
                 <MotionPreset
                     fade
                     slide={{ direction: 'up', offset: 40 }}
-                    delay={0.6}
-                    transition={{ duration: 0.8 }}
+                    delay={0.2}
+                    transition={{ duration: 0.6 }}
                     className="w-full max-w-5xl mb-12"
                 >
                     <div className="relative aspect-video rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10">
@@ -45,8 +45,8 @@ const AboutSection = () => {
                 <MotionPreset
                     fade
                     slide={{ direction: 'up', offset: 30 }}
-                    delay={0.8}
-                    transition={{ duration: 0.8 }}
+                    delay={0.3}
+                    transition={{ duration: 0.6 }}
                     className="max-w-4xl text-center mb-12"
                 >
                     <p className="text-white/90 text-[16px] font-semibold leading-relaxed">
@@ -58,8 +58,8 @@ const AboutSection = () => {
                 <MotionPreset
                     fade
                     slide={{ direction: 'up', offset: 20 }}
-                    delay={1.0}
-                    transition={{ duration: 0.6 }}
+                    delay={0.4}
+                    transition={{ duration: 0.5 }}
                 >
                     <BrandButton
                         text="Conócenos más"

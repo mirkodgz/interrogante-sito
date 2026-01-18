@@ -1,0 +1,29 @@
+{
+    "redirects": [
+        {
+            "source": "/ita/festival",
+            "destination": "/festival",
+            "permanent": true
+        },
+        {
+            "source": "/ita/festival/",
+            "destination": "/festival",
+            "permanent": true
+        },
+        {
+            "source": "/ita",
+            "destination": "/",
+            "permanent": true
+        },
+        {
+            "source": "/ita/",
+            "destination": "/",
+            "permanent": true
+        },
+        {
+            "source": "/ita/:path*",
+            "destination": "/:path*",
+            "permanent": true
+        }
+    ]
+}

@@ -153,7 +153,7 @@ export default function Header({ links }: { links?: NavItem[] }) {
                     <div className="flex items-center gap-1 ml-4 border-l border-white/20 pl-4">
                         <a
                             href="#"
-                            className="flex items-center gap-2 px-2 py-1 text-white hover:text-secondary transition-colors font-nav text-[18px] uppercase font-normal opacity-50 grayscale hover:opacity-100 hover:grayscale-0"
+                            className="flex items-center gap-2 px-2 py-1 text-white hover:text-secondary transition-colors font-nav text-[18px] uppercase font-normal hover:opacity-100"
                             title="Italiano (Proximamente)"
                         >
                             <div className="w-6 h-4 flex overflow-hidden rounded-[1px] shadow-sm">
@@ -161,7 +161,6 @@ export default function Header({ links }: { links?: NavItem[] }) {
                                 <div className="w-1/3 h-full bg-white"></div>
                                 <div className="w-1/3 h-full bg-[#ce2b37]"></div>
                             </div>
-                            <span className="leading-none">IT</span>
                         </a>
                         <a
                             href="/"
@@ -173,7 +172,6 @@ export default function Header({ links }: { links?: NavItem[] }) {
                                 <div className="h-2/4 bg-[#f1bf00]"></div>
                                 <div className="h-1/4 bg-[#aa151b]"></div>
                             </div>
-                            <span className="leading-none">ES</span>
                         </a>
                     </div>
                 </div>
@@ -303,7 +301,7 @@ export default function Header({ links }: { links?: NavItem[] }) {
                                     >
                                         <a
                                             href="#"
-                                            className="flex items-center gap-3 text-white font-nav text-xl uppercase tracking-widest opacity-50 grayscale"
+                                            className="flex items-center gap-3 text-white font-nav text-xl uppercase tracking-widest"
                                             onClick={() => setIsOpen(false)}
                                         >
                                             <div className="w-6 h-5 flex overflow-hidden rounded-[2px] shadow-sm">
@@ -311,7 +309,6 @@ export default function Header({ links }: { links?: NavItem[] }) {
                                                 <div className="w-1/3 h-full bg-white"></div>
                                                 <div className="w-1/3 h-full bg-[#ce2b37]"></div>
                                             </div>
-                                            <span>IT</span>
                                         </a>
                                         <a
                                             href="/"
@@ -323,7 +320,6 @@ export default function Header({ links }: { links?: NavItem[] }) {
                                                 <div className="h-2/4 bg-[#f1bf00]"></div>
                                                 <div className="h-1/4 bg-[#aa151b]"></div>
                                             </div>
-                                            <span>ES</span>
                                         </a>
                                     </motion.div>
                                 </nav>

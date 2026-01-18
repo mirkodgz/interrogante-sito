@@ -10,6 +10,7 @@ interface SectionHeaderProps {
     align?: 'center' | 'left'
     variant?: 'dark' | 'light'
     className?: string
+    as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 }
 
 const SectionHeader = ({
@@ -19,7 +20,8 @@ const SectionHeader = ({
     description,
     align = 'center',
     variant = 'light',
-    className
+    className,
+    as: Tag = 'h2'
 }: SectionHeaderProps) => {
     const isCenter = align === 'center'
     const isDark = variant === 'dark'
@@ -53,12 +55,13 @@ const SectionHeader = ({
             )}
 
             <MotionPreset fade slide={{ direction: 'up', offset: 40 }} delay={0.4} transition={{ duration: 0.8 }}>
-                <h2 className={cn(
+                <Tag className={cn(
                     "relative z-1 inline-block",
+                    "font-serif text-3xl sm:text-4xl lg:text-5xl uppercase leading-tight font-bold tracking-[0.3px]",
                     isDark ? "text-white" : "text-black"
                 )}>
                     {renderTitle()}
-                </h2>
+                </Tag>
             </MotionPreset>
 
             {description && (

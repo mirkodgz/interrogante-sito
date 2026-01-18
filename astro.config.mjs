@@ -12,7 +12,23 @@ import vercel from '@astrojs/vercel';
 export default defineConfig({
   site: 'https://interrogantespettacolo.com',
   output: 'server',
-  integrations: [react(), keystatic(), markdoc(), sitemap()],
+integrations: [
+    react(),
+    keystatic(),
+    markdoc(),
+    sitemap({
+      changefreq: 'weekly',
+      priority: 0.7,
+      lastmod: new Date(),
+      serialize(item) {
+        if (item.url === 'https://interrogantespettacolo.com/') {
+          item.changefreq = 'daily';
+          item.priority = 1.0;
+        }
+        return item;
+      },
+    }),
+  ],
 
   vite: {
     plugins: [tailwindcss()],

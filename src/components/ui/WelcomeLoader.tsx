@@ -62,21 +62,18 @@ export default function WelcomeLoader() {
                             <img
                                 src="/favicon-interrogante.png"
                                 alt="Interrogante Spettacolo"
-                                className="w-32 h-32 md:w-48 md:h-48 object-contain"
+                                className="w-20 h-20 md:w-24 md:h-24 object-contain"
                             />
                         </motion.div>
 
-                        {/* Text / Question Mark detail */}
+                        {/* Spinner Detail */}
                         <motion.div
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.8, duration: 0.8 }}
-                            className="mt-8 flex flex-col items-center"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.8 }}
+                            className="mt-6 flex flex-col items-center"
                         >
-                            <span className="font-nav text-primary text-xl md:text-2xl tracking-[4px] uppercase font-bold">
-                                Interrogante
-                            </span>
-                            <div className="h-[2px] w-12 bg-primary mt-2" />
+                            <div className="w-8 h-8 border-2 border-primary/20 border-t-primary rounded-full animate-spin" />
                         </motion.div>
                     </div>
 

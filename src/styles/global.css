@@ -27,6 +27,29 @@
   --color-secondary: #a48956;
   --color-dark-bg: #000000;
   --color-luxury-gray: #0a0a0a;
+
+  --animate-marquee-horizontal: marquee-horizontal var(--marquee-duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--marquee-duration) infinite linear;
+
+  @keyframes marquee-horizontal {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(calc(-100% - var(--marquee-gap)));
+    }
+  }
+
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+
+    to {
+      transform: translateY(calc(-100% - var(--marquee-gap)));
+    }
+  }
 }
 
 @layer base {

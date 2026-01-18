@@ -85,10 +85,18 @@ const socialImageURL = ogImage.startsWith("http")
 		<meta name="generator" content={Astro.generator} />
 
 		<!-- Primary Meta Tags -->
-		<title>{title} | Interrogante Spettacolo - Compañía Artística</title>
+		<title>
+			{
+				title.startsWith("Interrogante Spettacolo")
+					? title
+					: `${title} | Interrogante Spettacolo - Compañía Artística`
+			}
+		</title>
 		<meta
 			name="title"
-			content={`${title} | Interrogante Spettacolo - Compañía Artística`}
+			content={title.startsWith("Interrogante Spettacolo")
+				? title
+				: `${title} | Interrogante Spettacolo - Compañía Artística`}
 		/>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonicalURL} />

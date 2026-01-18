@@ -12,7 +12,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
-import { PerformanceCarousel } from "../../components/blocks/PerformanceCarousel";
+import { SingleLineGallery } from "../../components/blocks/SingleLineGallery";
 
 import { getEntry } from "astro:content";
 
@@ -36,30 +36,27 @@ const hasGallery = entry.data.gallery && entry.data.gallery.length > 0;
 <Layout title={seoTitle} description={seoDescription} ogImage={seoOgImage}>
     <main class="bg-white min-h-screen pb-24">
         {/* HERO - 60vh */}
+        {/* HERO - 60vh */}
         <section
-            class="relative h-[60vh] w-full overflow-hidden bg-black mb-16"
+            class="relative h-[25vh] md:h-[60vh] w-full overflow-hidden mb-16 bg-black"
         >
             {
                 entry.data.cover && (
-                    <div class="absolute inset-0">
+                    <div class="absolute inset-0 flex items-center justify-center">
                         <img
                             src={entry.data.cover}
                             alt={entry.data.title}
-                            class="w-full h-full object-cover opacity-80"
+                            class="w-full h-full object-contain"
                         />
-                        <div class="absolute inset-0 bg-black/20" />
+                        <div class="absolute inset-0 bg-black/10" />
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <h1 class="font-serif text-white text-[32px] md:text-[40px] uppercase tracking-wider subpixel-antialiased drop-shadow-lg text-center px-4">
+                                {entry.data.title}
+                            </h1>
+                        </div>
                     </div>
                 )
             }
-            <div
-                class="relative z-10 h-full container mx-auto px-6 flex flex-col justify-end pb-20"
-            >
-                <h1
-                    class="font-nav text-5xl md:text-7xl lg:text-8xl text-white uppercase"
-                >
-                    {entry.data.title}
-                </h1>
-            </div>
         </section>
 
         <div class="container mx-auto px-6 max-w-7xl">
@@ -80,7 +77,7 @@ const hasGallery = entry.data.gallery && entry.data.gallery.length > 0;
             {/* 1. DESCRIPTION / POST CONTENT */}
             <div class="max-w-4xl mx-auto text-center mb-16">
                 <div
-                    class="prose prose-lg prose-p:font-sans prose-p:text-gray-800 prose-headings:font-serif max-w-none text-justify"
+                    class="prose prose-lg prose-p:font-sans prose-p:text-gray-800 prose-headings:font-serif max-w-none text-center"
                 >
                     <Content />
                 </div>
@@ -96,10 +93,9 @@ const hasGallery = entry.data.gallery && entry.data.gallery.length > 0;
                 <div class="flex flex-col">
                     {
                         hasGallery ? (
-                            <PerformanceCarousel
+                            <SingleLineGallery
                                 images={entry.data.gallery}
-                                title={entry.data.title}
-                                client:visible
+                                client:load
                             />
                         ) : (
                             /* Fallback to Video if no gallery, preserving original Logic for Mal Nacida if desired, 
@@ -110,19 +106,28 @@ const hasGallery = entry.data.gallery && entry.data.gallery.length > 0;
                          */
                             entry.data.videoUrl && (
                                 <div class="aspect-video w-full rounded-sm overflow-hidden shadow-2xl mb-4 group relative bg-black">
-                                    <iframe
-                                        width="100%"
-                                        height="100%"
-                                        src={entry.data.videoUrl.replace(
-                                            "watch?v=",
-                                            "embed/",
-                                        )}
-                                        title="YouTube video player"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        allowfullscreen
-                                        class="absolute inset-0 w-full h-full"
-                                    />
+                                    {entry.data.videoUrl.includes("youtube") ||
+                                    entry.data.videoUrl.includes("youtu.be") ? (
+                                        <iframe
+                                            width="100%"
+                                            height="100%"
+                                            src={entry.data.videoUrl.replace(
+                                                "watch?v=",
+                                                "embed/",
+                                            )}
+                                            title="YouTube video player"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            allowfullscreen
+                                            class="absolute inset-0 w-full h-full"
+                                        />
+                                    ) : (
+                                        <video
+                                            src={entry.data.videoUrl}
+                                            controls
+                                            class="absolute inset-0 w-full h-full object-contain"
+                                        />
+                                    )}
                                 </div>
                             )
                         )
@@ -132,7 +137,7 @@ const hasGallery = entry.data.gallery && entry.data.gallery.length > 0;
                 {/* Right Column: Details */}
                 {
                     entry.data.details && (
-                        <div class="bg-primary p-8 md:p-12 rounded-sm text-white shadow-xl h-full">
+                        <div class="bg-primary p-4 md:p-4 rounded-sm text-white shadow-xl h-full">
                             {/* Rendering details with simple Markdown bold support */}
                             <div
                                 class="font-sans text-sm md:text-base leading-relaxed whitespace-pre-wrap"
@@ -161,19 +166,28 @@ const hasGallery = entry.data.gallery && entry.data.gallery.length > 0;
                             Video
                         </h3>
                         <div class="aspect-video w-full rounded-sm overflow-hidden shadow-2xl mb-4 group relative bg-black">
-                            <iframe
-                                width="100%"
-                                height="100%"
-                                src={entry.data.videoUrl.replace(
-                                    "watch?v=",
-                                    "embed/",
-                                )}
-                                title="YouTube video player"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen
-                                class="absolute inset-0 w-full h-full"
-                            />
+                            {entry.data.videoUrl.includes("youtube") ||
+                            entry.data.videoUrl.includes("youtu.be") ? (
+                                <iframe
+                                    width="100%"
+                                    height="100%"
+                                    src={entry.data.videoUrl.replace(
+                                        "watch?v=",
+                                        "embed/",
+                                    )}
+                                    title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen
+                                    class="absolute inset-0 w-full h-full"
+                                />
+                            ) : (
+                                <video
+                                    src={entry.data.videoUrl}
+                                    controls
+                                    class="absolute inset-0 w-full h-full object-contain"
+                                />
+                            )}
                         </div>
                     </div>
                 )

@@ -1,17 +1,12 @@
----
+import os
+
+content = """---
 title: CONCIERTO PARA DOS
 cover: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768707296/PortadaConciertoParaDos_aclcan.webp"
-gallery:
-  - "https://res.cloudinary.com/dskliu1ig/image/upload/v1768707660/CPDOS1_cstzsu.webp"
-  - "https://res.cloudinary.com/dskliu1ig/image/upload/v1768707660/CPDOS2_logss0.webp"
-  - "https://res.cloudinary.com/dskliu1ig/image/upload/v1768707660/CPDOS3_zqnyku.webp"
-  - "https://res.cloudinary.com/dskliu1ig/image/upload/v1768707660/CPDOS4_dpwanh.webp"
-  - "https://res.cloudinary.com/dskliu1ig/image/upload/v1768707660/CPDOS5_ob3urv.webp"
-videoUrl: "https://www.youtube.com/watch?v=m3npRvcFLsA"
+gallery: []
 details: |-
-  Creación 2018, Fabrica del vapor
-  Milán: 25 minutos.
-  Performance/Dirección: Kalua Rodriguez & Yudel Collazo
+  Creación 2018, Fabrica del vapor, Milán, 25 minutos.
+  Performance/Dirección Kalua Rodriguez & Yudel Collazo
   Música en vivo Olivier Elouti
 description: "Explosión de palabras, acciones y sonoridades nacidas de la confusión y el caos. Enfrentemos cara a cara la identidad."
 ---
@@ -28,3 +23,7 @@ Todos llevamos un cuño que nos fue dado: sexo, color de la piel, una familia, u
 ¿Dónde construir un verdadero campo de lucha y qué tipo de lucha?
 
 Al parecer, la imperiosa necesidad de pertenecer y formar parte, nos hace convertirnos en esclavos o en guerreros constantes del día a día.
+"""
+
+with open('src/content/performance/concierto-para-dos.mdoc', 'w', encoding='utf-8') as f:
+    f.write(content)

@@ -8,6 +8,7 @@ import FestivalCTA from "../components/blocks/FestivalCTA";
 import NewsSection from "../components/blocks/NewsSection";
 import BlogSection from "../components/blocks/BlogSection";
 import { getCollection } from "astro:content";
+import WelcomeLoader from "../components/ui/WelcomeLoader";
 import type { PortfolioItem } from "../components/blocks/PortfolioSection";
 
 const blogItems = await getCollection("blog");
@@ -70,6 +71,7 @@ const portfolioItems: PortfolioItem[] = [
 	title="Gestión y Promoción de Espectáculos en Milán"
 	description="Interrogante Spettacolo: Referente en cultura española y latinoamericana en Milán. Descubre el Festival A PIEDI NUDI, nuestras creaciones teatrales y formación artística."
 >
+	<WelcomeLoader client:load />
 	<main>
 		{/* SECCIÓN 1: HERO - VIDEO FONDO 90VH */}
 		<Hero client:load />

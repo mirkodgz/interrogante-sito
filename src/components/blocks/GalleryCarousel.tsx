@@ -25,9 +25,15 @@ const Progress = ({ value, className }: { value: number; className?: string }) =
 
 interface GalleryCarouselProps {
     images: string[];
+    title?: string;
+    description?: string;
 }
 
-export default function GalleryCarousel({ images }: GalleryCarouselProps) {
+export default function GalleryCarousel({
+    images,
+    title = "Galería",
+    description = "Revive los mejores momentos, colaboraciones y logros de nuestras ediciones anteriores."
+}: GalleryCarouselProps) {
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
     const [scrollProgress, setScrollProgress] = useState(0);
@@ -85,11 +91,13 @@ export default function GalleryCarousel({ images }: GalleryCarouselProps) {
             <div className="container mx-auto px-6 max-w-7xl">
                 <div className="mb-8 space-y-4">
                     <h2 className="font-nav font-bold text-[32px] md:text-[40px] text-primary uppercase">
-                        Galería
+                        {title}
                     </h2>
-                    <p className="font-sans text-lg text-black/60 max-w-3xl">
-                        Revive los mejores momentos, colaboraciones y logros de nuestras ediciones anteriores.
-                    </p>
+                    {description && (
+                        <p className="font-sans text-lg text-black/60 max-w-3xl">
+                            {description}
+                        </p>
+                    )}
                 </div>
 
                 <Carousel

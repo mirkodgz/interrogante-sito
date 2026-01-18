@@ -13,7 +13,12 @@ const festivalCollection = defineCollection({
         videoUrl: z.string().optional(),
         press: z.array(z.any()).optional(),
         quote: z.string().optional(),
-        gallery: z.array(z.string()).optional()
+        gallery: z.array(z.string()).optional(),
+        seo: z.object({
+            title: z.string().optional(),
+            description: z.string().optional(),
+            ogImage: z.string().optional(),
+        }).optional(),
     })
 });
 
@@ -31,6 +36,11 @@ const creacionesCollection = defineCollection({
         // For rich text fields other than the body, we might receive them as JSON objects or strings depending on configuration.
         // Allowing any for now to avoid validation errors if Keystatic saves objects.
         details: z.any().optional(),
+        seo: z.object({
+            title: z.string().optional(),
+            description: z.string().optional(),
+            ogImage: z.string().optional(),
+        }).optional(),
     })
 });
 
@@ -46,6 +56,11 @@ const performanceCollection = defineCollection({
         fullVideoUrl: z.string().optional(),
         details: z.string().optional(),
         gallery: z.array(z.string()).optional(),
+        seo: z.object({
+            title: z.string().optional(),
+            description: z.string().optional(),
+            ogImage: z.string().optional(),
+        }).optional(),
     })
 });
 
@@ -57,6 +72,11 @@ const blogCollection = defineCollection({
         cover: z.string().optional(),
         summary: z.string().optional(),
         author: z.string().optional(),
+        seo: z.object({
+            title: z.string().optional(),
+            description: z.string().optional(),
+            ogImage: z.string().optional(),
+        }).optional(),
     })
 });
 
@@ -70,6 +90,11 @@ const teamCollection = defineCollection({
         facebook: z.string().optional(),
         instagram: z.string().optional(),
         linkedin: z.string().optional(),
+        seo: z.object({
+            title: z.string().optional(),
+            description: z.string().optional(),
+            ogImage: z.string().optional(),
+        }).optional(),
     })
 });
 

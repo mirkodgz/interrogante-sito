@@ -4,6 +4,9 @@ export default function Hero() {
     return (
         /* SECCIÓN: HERO - CINEMATIC BACKGROUND */
         <section className="h-[40vh] md:h-[90vh] relative overflow-hidden bg-black p-0 m-0">
+            {/* SEO H1: Invisible visualmente pero presente para Google */}
+            <h1 className="sr-only">Interrogante Spettacolo - Compañía Artística & Festival A PIEDI NUDI</h1>
+
             {/* Background Video */}
             <video
                 autoPlay

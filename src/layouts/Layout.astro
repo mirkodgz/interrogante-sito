@@ -128,6 +128,25 @@ const socialImageURL = ogImage.startsWith("http")
 			name="keywords"
 			content="Interrogante Spettacolo, teatro milan, festival a piedi nudi, cultura española milan, talleres teatro, formación profesores español, teatro multicultural, booking artistas milan"
 		/>
+		<script type="application/ld+json" is:inline>
+			{
+				"@context": "https://schema.org",
+				"@type": "PerformingGroup",
+				"name": "Interrogante Spettacolo",
+				"url": "https://interrogantespettacolo.com",
+				"logo": "https://interrogantespettacolo.com/Logo-Interrogante-white2.svg",
+				"description": "Compañía Artística referente en cultura española y latinoamericana en Milán. Organizadores del Festival A PIEDI NUDI.",
+				"sameAs": [
+					"https://www.instagram.com/interrogantespettacolo",
+					"https://www.facebook.com/interrogantespettacolo"
+				],
+				"address": {
+					"@type": "PostalAddress",
+					"addressLocality": "Milano",
+					"addressCountry": "IT"
+				}
+			}
+		</script>
 	</head>
 	<body class="min-h-screen flex flex-col">
 		<Header client:load links={dynamicLinks} />

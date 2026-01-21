@@ -5,7 +5,9 @@ import AboutDescription from "../../components/blocks/AboutDescription";
 import TeamList from "../../components/blocks/TeamList";
 import { getCollection } from "astro:content";
 
-const teamMembers = await getCollection("team");
+const teamMembers = await getCollection("team", ({ data }) => {
+    return data.language === "es";
+});
 ---
 
 <Layout title="Nosotros - Interrogante Spettacolo">

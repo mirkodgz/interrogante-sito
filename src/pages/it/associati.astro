@@ -1,0 +1,290 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Check, FileText, Send, UserCheck } from "lucide-react";
+import DoubleBlockSection from "../../components/blocks/DoubleBlockSection";
+
+const heroImage =
+    "https://res.cloudinary.com/dskliu1ig/image/upload/v1768570408/la-carretilla-web-cover_ao294n.webp";
+---
+
+<Layout title="La Carretilla - Associati | Interrogante Spettacolo">
+    <main class="bg-white pb-20">
+        <!-- HERO SECTION -->
+        <section
+            class="relative h-[40vh] md:h-[70vh] flex items-center justify-center overflow-hidden bg-primary"
+        >
+            <div class="absolute inset-0">
+                <img
+                    src={heroImage}
+                    alt="La Carretilla Hero"
+                    class="w-full h-full object-cover"
+                />
+            </div>
+            <div class="absolute inset-0 bg-black/20"></div>
+
+            <div
+                class="relative z-10 w-full container mx-auto px-6 flex justify-center"
+            >
+                <div
+                    class="max-w-3xl text-center flex flex-col items-center gap-6"
+                >
+                    <div class="flex flex-col items-center">
+                        <h1
+                            class="font-serif text-[32px] md:text-[40px] text-white uppercase tracking-wider subpixel-antialiased drop-shadow-2xl leading-tight"
+                        >
+                            LA CARRETILLA
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {/* REUSABLE DOUBLE BLOCK SECTION */}
+        <DoubleBlockSection
+            client:load
+            image="https://res.cloudinary.com/dskliu1ig/image/upload/v1768623999/LaCarretilla-1_ooezzb.jpg"
+            imageAlt="La Carretilla Experience"
+            blocks={[
+                {
+                    subtitle: "UN'ESPERIENZA ESCLUSIVA PER I NOSTRI ASSOCIATI",
+                    text: "La Carretilla è un'emozionante iniziativa pensata esclusivamente per i nostri associati. Si tratta di un evento mensile che ti permetterà di immergerti in un mondo di diversità culturale insieme al team di Interrogante Spettacolo.",
+                },
+                {
+                    subtitle: "COS'È LA CARRETILLA?",
+                    text: "Immagina una carriola piena di esperienze arricchenti, dove ogni mese potrai goderti:",
+                    features: [
+                        "Concerti vibranti: Dalla musica tradizionale ai suoni contemporanei.",
+                        "Spettacoli teatrali: Rappresentazioni che ti faranno riflettere, ridere ed emozionare.",
+                        "Mostre artistiche: Esposizioni di arte locale che celebrano la creatività e l'innovazione.",
+                        "Aperitivi culturali: Sapori di diverse parti del mondo che potrai gustare e condividere.",
+                        "Attività interattive: Workshop e dinamiche che favoriscono la collaborazione e l'apprendimento.",
+                    ],
+                },
+            ]}
+        />
+
+        <DoubleBlockSection
+            client:load
+            imageSide="right"
+            image="https://res.cloudinary.com/dskliu1ig/image/upload/v1768624049/LaCarretilla-2_h4vsu0.jpg"
+            imageAlt="Joining La Carretilla"
+            className="pt-0"
+            blocks={[
+                {
+                    subtitle: "PERCHÉ PARTECIPARE?",
+                    features: [
+                        "Connessione Culturale: Vivi esperienze che celebrano la diversità e il talento artistico.",
+                        "Networking: Conosci altri associati, artisti e creativi in un ambiente ispiratore.",
+                        "Apprendimento: Partecipa ad attività che ti arricchiranno culturalmente e personalmente.",
+                    ],
+                },
+                {
+                    subtitle: "COME PARTECIPARE?",
+                    text: "Essere parte della Carretilla è semplice:",
+                    features: [
+                        "1. Diventa associato dell'Associazione Multiculturale Interrogante Spettacolo.",
+                        "2. Ricevi i nostri inviti mensili per partecipare agli eventi.",
+                        "3. Goditi ogni esperienza e contribuisci alla costruzione di un ambiente culturale vibrante.",
+                    ],
+                },
+            ]}
+        />
+
+        <!-- CTA BANNER -->
+        <section class="py-20 bg-primary text-white text-center">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2 class="font-nav text-3xl md:text-5xl uppercase mb-6">
+                    SCOPRI LA CARRETILLA !
+                </h2>
+                <p class="font-sans text-xl opacity-80 mb-10 leading-relaxed">
+                    Ti invitiamo a immergerti nell'esperienza de La Carretilla,
+                    dove l'arte e la cultura incontrano il calore della nostra
+                    comunità.
+                </p>
+                <a
+                    href="#form"
+                    class="inline-block bg-secondary text-white px-10 py-4 rounded-full font-nav tracking-widest uppercase hover:bg-white hover:text-primary transition-all duration-300 transform hover:scale-105 shadow-xl"
+                >
+                    Diventa associato 👆
+                </a>
+            </div>
+        </section>
+
+        <!-- HOW TO BECOME MEMBER -->
+        <section class="py-24 bg-white">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2
+                    class="font-nav text-3xl md:text-5xl text-primary text-center uppercase mb-16 leading-tight font-bold"
+                >
+                    COME DIVENTARE ASSOCIATO DI INTERROGANTE SPETTACOLO
+                </h2>
+
+                <div
+                    class="font-sans text-gray-700 space-y-8 text-[15px] md:text-[16px] leading-relaxed max-w-3xl mx-auto"
+                >
+                    <p>
+                        Con una visione innovativa, uniamo la ricchezza della
+                        cultura latinoamericana con approcci pedagogici
+                        creativi, creando esperienze significative sia per
+                        studenti di tutte le età che per artisti.
+                    </p>
+
+                    <p>
+                        Diventando socio/a, riaffermi il tuo sostegno a una
+                        comunità che crede nel potere dell'arte per trasformare
+                        e connettere. In Interrogante Spettacolo, ogni passo che
+                        facciamo è un'opportunità per crescere insieme,
+                        raccontare le nostre storie e continuare a lasciare il
+                        segno.
+                    </p>
+
+                    <p
+                        class="font-bold text-gray-900 border-l-4 border-secondary pl-6 py-2 bg-gray-50"
+                    >
+                        Con un contributo annuale di 15 euro, farai parte di una
+                        comunità vibrante di artisti, docenti e collaboratori
+                        che credono nell'arte come strumento di trasformazione
+                        delle vite.
+                    </p>
+
+                    <div class="space-y-16 pt-10">
+                        {/* 1. Derechos */}
+                        <div class="relative pl-16">
+                            <div
+                                class="absolute left-0 top-0 bg-[#1a1a1a] text-white w-10 h-10 flex items-center justify-center font-nav text-xl rounded-sm"
+                            >
+                                1
+                            </div>
+                            <h3
+                                class="font-nav text-[20px] md:text-[22px] text-black uppercase mb-6 font-bold tracking-[0.2px]"
+                            >
+                                Diritti del socio/a
+                            </h3>
+                            <ul
+                                class="space-y-3 font-sans text-gray-700 list-none text-[15px] md:text-[16px]"
+                            >
+                                {
+                                    [
+                                        "Partecipare passivamente o attivamente alle nostre attività e laboratori, offrendo anche lavoro volontario per la loro realizzazione.",
+                                        "Proporre iniziative e progetti.",
+                                        "Partecipare all'assemblea e votare direttamente per l'approvazione e la modifica degli statuti, dei regolamenti, l'approvazione del bilancio annuale, tra gli altri.",
+                                        "Votare ed essere eletto/a durante le elezioni degli organi sociali dell'associazione.",
+                                        "Essere parte della crescita di una comunità multiculturale che crede nell'arte come strumento di cambiamento.",
+                                    ].map((item) => (
+                                        <li class="flex gap-3 items-start leading-snug">
+                                            <span class="text-secondary mt-1.5">
+                                                •
+                                            </span>
+                                            <span>{item}</span>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
+
+                        {/* 2. Deberes */}
+                        <div class="relative pl-16">
+                            <div
+                                class="absolute left-0 top-0 bg-[#1a1a1a] text-white w-10 h-10 flex items-center justify-center font-nav text-xl rounded-sm"
+                            >
+                                2
+                            </div>
+                            <h3
+                                class="font-nav text-[20px] md:text-[22px] text-black uppercase mb-6 font-bold tracking-[0.2px]"
+                            >
+                                Doveri del socio/a
+                            </h3>
+                            <ul
+                                class="space-y-3 font-sans text-gray-700 list-none text-[15px] md:text-[16px]"
+                            >
+                                {
+                                    [
+                                        "Rispettare lo statuto e il regolamento interno.",
+                                        "Rispettare le decisioni adottate dagli organi sociali.",
+                                        "Versare la quota associativa stabilita dal Consiglio Direttivo.",
+                                        "Rispettare le finalità dell'associazione mantenendo un comportamento conforme ai principi sociali.",
+                                    ].map((item) => (
+                                        <li class="flex gap-3 items-start leading-snug">
+                                            <span class="text-secondary mt-1.5">
+                                                •
+                                            </span>
+                                            <span>{item}</span>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- REGISTRATION FORM -->
+        <section id="form" class="py-24 container mx-auto px-6 max-w-4xl">
+            <div class="text-center mb-16">
+                <h2
+                    class="font-nav text-4xl md:text-5xl text-primary uppercase mb-4"
+                >
+                    MODULO DI ISCRIZIONE
+                </h2>
+                <p class="font-sans text-gray-600 text-lg">
+                    Se vuoi far parte della nostra comunità e aiutarci a
+                    promuovere l'arte e la cultura, compila il modulo
+                    sottostante. Il team di Interrogante Spettacolo ti
+                    contatterà per i passaggi successivi.
+                </p>
+            </div>
+
+            <form class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <input
+                        type="text"
+                        placeholder="Nome e Cognome"
+                        class="w-full bg-gray-50 border border-gray-200 px-6 py-4 font-sans focus:outline-none focus:border-primary transition-colors"
+                    />
+                    <input
+                        type="tel"
+                        placeholder="Telefono"
+                        class="w-full bg-gray-50 border border-gray-200 px-6 py-4 font-sans focus:outline-none focus:border-primary transition-colors"
+                    />
+                </div>
+                <input
+                    type="email"
+                    placeholder="E-mail"
+                    class="w-full bg-gray-50 border border-gray-200 px-6 py-4 font-sans focus:outline-none focus:border-primary transition-colors"
+                />
+
+                <div class="flex items-center gap-3">
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        class="w-5 h-5 accent-primary"
+                    />
+                    <label for="terms" class="text-gray-500 text-sm font-sans"
+                        >Ho letto e accetto i termini e le condizioni</label
+                    >
+                </div>
+
+                <div class="text-center pt-8 space-y-6">
+                    <button
+                        type="submit"
+                        class="bg-primary text-white px-12 py-4 rounded-full font-nav tracking-widest uppercase hover:bg-black transition-all duration-300 shadow-xl flex items-center gap-3 mx-auto"
+                    >
+                        <UserCheck className="w-5 h-5" />
+                        Invia richiesta associativa
+                    </button>
+
+                    <a
+                        href="https://res.cloudinary.com/dskliu1ig/image/upload/v1768624160/Documento-Asociativo-Esp-1_q18yhl.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center gap-2 text-primary font-nav text-lg uppercase tracking-wide border-b-2 border-primary/20 hover:border-primary transition-all pb-1 mx-auto"
+                    >
+                        <FileText className="w-5 h-5" />
+                        Scarica Modulo di Iscrizione 📄
+                    </a>
+                </div>
+            </form>
+        </section>
+    </main>
+</Layout>

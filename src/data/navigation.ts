@@ -2,6 +2,11 @@ export const navigationLinks = [
     {
         title: "NOSOTROS",
         href: "/nosotros/",
+        children: [
+            { title: "Kalua Rodriguez", href: "/nosotros/team/kalua-rodriguez" },
+            { title: "Yosvanis Gil", href: "/nosotros/team/yosvanis-gil" },
+            { title: "Yudel Collazo", href: "/nosotros/team/yudel-collazo" },
+        ],
     },
     {
         title: "CURSOS Y TALLERES",

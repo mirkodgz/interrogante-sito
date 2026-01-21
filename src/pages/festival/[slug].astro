@@ -10,7 +10,7 @@ import { getEntry } from "astro:content";
 import GalleryCarousel from "../../components/blocks/GalleryCarousel";
 
 const { slug } = Astro.params;
-const entry = await getEntry("festival", slug);
+const entry = await getEntry("festival", `es/${slug}`);
 
 if (!entry) {
     return Astro.redirect("/404");

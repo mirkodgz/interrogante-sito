@@ -1,0 +1,7 @@
+﻿
+> magical-mass@0.0.1 build
+> astro build
+
+[2m19:14:15[22m [34m[content][39m Syncing content
+[2m19:14:15[22m [34m[content][39m Content config changed
+[2m19:14:15[22m [34m[content][39m Clearing content store

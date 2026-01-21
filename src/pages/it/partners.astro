@@ -1,0 +1,110 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getEntry } from "astro:content";
+
+// Fetch the singleton data using getEntry
+const partnersEntry = await getEntry("pages", "partners");
+const partnersData = partnersEntry?.data;
+
+// Fallback if data is null
+const collaborators = partnersData?.collaborators || [];
+const partners = partnersData?.partners || [];
+const press = partnersData?.press || [];
+---
+
+<Layout title="Partner | Interrogante Spettacolo">
+    <main class="bg-gray-50 min-h-screen pb-32">
+        {/* Simple Header */}
+        <div class="bg-white text-primary py-24 text-center mb-16">
+            <h1 class="font-nav text-3xl md:text-5xl uppercase">
+                PARTNER INTERROGANTE SPETTACOLO
+            </h1>
+        </div>
+
+        <div class="container mx-auto px-6 max-w-7xl space-y-24">
+            {/* COLABORADORES */}
+            <section>
+                <h2
+                    class="font-nav text-4xl md:text-5xl text-primary uppercase text-center mb-12 font-bold tracking-wide"
+                >
+                    COLLABORATORI
+                </h2>
+                {
+                    collaborators.length > 0 ? (
+                        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 items-center justify-items-center">
+                            {collaborators.map((logo: string) => (
+                                <div class="w-full aspect-3/2 bg-white p-4 rounded-lg shadow-sm flex items-center justify-center hover:shadow-md transition-shadow">
+                                    <img
+                                        src={logo}
+                                        alt="Collaboratore"
+                                        class="max-w-full max-h-full object-contain transition-all duration-300 transform hover:scale-105"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p class="text-center text-gray-400 italic">
+                            Non ci sono ancora collaboratori aggiunti.
+                        </p>
+                    )
+                }
+            </section>
+
+            {/* PARTNERS */}
+            <section>
+                <h2
+                    class="font-nav text-4xl md:text-5xl text-primary uppercase text-center mb-12 font-bold tracking-wide"
+                >
+                    PARTNER
+                </h2>
+                {
+                    partners.length > 0 ? (
+                        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 items-center justify-items-center">
+                            {partners.map((logo: string) => (
+                                <div class="w-full aspect-3/2 bg-white p-4 rounded-lg shadow-sm flex items-center justify-center hover:shadow-md transition-shadow">
+                                    <img
+                                        src={logo}
+                                        alt="Partner"
+                                        class="max-w-full max-h-full object-contain transition-all duration-300 transform hover:scale-105"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p class="text-center text-gray-400 italic">
+                            Non ci sono ancora partner aggiunti.
+                        </p>
+                    )
+                }
+            </section>
+
+            {/* PRENSA */}
+            <section>
+                <h2
+                    class="font-nav text-4xl md:text-5xl text-primary uppercase text-center mb-12 font-bold tracking-wide"
+                >
+                    STAMPA
+                </h2>
+                {
+                    press.length > 0 ? (
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-center justify-items-center">
+                            {press.map((logo: string) => (
+                                <div class="w-full aspect-3/2 bg-white p-4 rounded-lg shadow-sm flex items-center justify-center hover:shadow-md transition-shadow">
+                                    <img
+                                        src={logo}
+                                        alt="Stampa"
+                                        class="max-w-full max-h-full object-contain transition-all duration-300 transform hover:scale-105"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p class="text-center text-gray-400 italic">
+                            Non ci sono ancora loghi della stampa aggiunti.
+                        </p>
+                    )
+                }
+            </section>
+        </div>
+    </main>
+</Layout>

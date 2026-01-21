@@ -1,0 +1,30 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import AboutHero from "../../../components/blocks/AboutHero";
+import AboutDescription from "../../../components/blocks/AboutDescription";
+import TeamList from "../../../components/blocks/TeamList";
+import { getCollection } from "astro:content";
+
+const teamMembers = await getCollection(
+    "team",
+    ({ data }) => data.language === "it",
+);
+
+const itParagraphs = [
+    "Interrogante Spettacolo è una compagnia internazionale di creazione artistica multiculturale, fondata all'Avana e attualmente con sede a Milano. L'iniziativa nasce dalla visione di Kalua Rodríguez, che cercava di stabilire uno spazio innovativo e sperimentale per laureati in pedagogia con interessi artistici. La sua esperienza come attrice ed emigrante in Europa l'ha portata a comprendere il potere dell'arte come mezzo di riconnessione personale e sociale, offrendo esperienze significative attraverso il teatro e altre forme creative.",
+    "Organizzata come associazione senza scopo di lucro, Interrogante Spettacolo si dedica alla produzione artistica e all'insegnamento dello spagnolo in Italia, utilizzando un approccio che combina il ricco patrimonio culturale latinoamericano con metodologie pedagogiche creative. La proposta della compagnia non solo migliora le competenze linguistiche degli studenti, ma promuove anche il loro sviluppo artistico, stabilendo un legame profondo con la lingua spagnola attraverso l'espressione e la creatività. Ciò ha permesso a Interrogante Spettacolo di diventare un punto di riferimento nella formazione di docenti e studenti, creando un ambiente in cui l'arte e la creatività sono fondamentali per un apprendimento trasformativo.",
+    "Da tre anni, Interrogante Spettacolo collabora strettamente con l'Istituto Cervantes di Milano, contribuendo all'arricchimento culturale ed educativo della comunità ispanofona. Inoltre, mantiene collaborazioni con rinomate istituzioni culturali della città, come il Museo delle Culture di Milano (MUDEC), il Padiglione d'Arte Contemporanea (PAC), la Fabbrica del Vapore, l'Associazione Culturale CUBEART, la Casa della Poesia di Milano e l'Accademia dei Filodrammatici di Milano. La sua missione è trasformare l'insegnamento dello spagnolo in Italia attraverso un approccio creativo che combina elementi artistici e teatrali, stabilendo uno standard innovativo che ispiri e migliori il processo educativo. Con un fermo impegno verso l'eccellenza, Interrogante Spettacolo celebra la diversità culturale e promuove la crescita collaborativa attraverso lo scambio di esperienze e lo sviluppo di reti di apprendimento.",
+];
+---
+
+<Layout title="Chi Siamo - Interrogante Spettacolo">
+    <main>
+        <AboutHero client:load title="Chi Siamo" />
+        <AboutDescription
+            client:load
+            title="INTERROGANTE SPETTACOLO"
+            paragraphs={itParagraphs}
+        />
+        <TeamList client:load teamMembers={teamMembers} lang="it" />
+    </main>
+</Layout>

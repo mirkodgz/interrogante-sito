@@ -1,0 +1,286 @@
+---
+import { getEntry } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import { render } from "astro:content";
+import { Youtube, Play } from "lucide-react";
+import SectionHeader from "../../../components/ui/SectionHeader";
+import { PerformanceCarousel } from "../../../components/blocks/PerformanceCarousel";
+import GalleryCarousel from "../../../components/blocks/GalleryCarousel";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect("/404");
+
+const entry = await getEntry("creaciones", `it/${slug}`);
+if (!entry) return Astro.redirect("/404");
+
+const { Content } = await render(entry);
+const { title, subtitle, cover, seo } = entry.data;
+
+const seoTitle = seo?.title || `${title} - Creazioni`;
+const seoDescription = seo?.description || subtitle;
+const seoOgImage = seo?.ogImage || cover;
+---
+
+<Layout title={seoTitle} description={seoDescription} ogImage={seoOgImage}>
+    {
+        slug === "la-familia-garrido" ? (
+            <main class="bg-black text-white">
+                {/* HERO */}
+                <section class="relative h-[35vh] md:h-[60vh] w-full overflow-hidden mb-16">
+                    {entry.data.cover && (
+                        <div class="absolute inset-0">
+                            <img
+                                src={entry.data.cover}
+                                alt={entry.data.title}
+                                class="w-full h-full object-cover opacity-60"
+                            />
+                            <div class="absolute inset-0 bg-linear-to-b from-transparent to-black" />
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <h1 class="font-nav text-5xl md:text-8xl uppercase leading-none text-center px-4 mix-blend-overlay opacity-90">
+                                    {entry.data.title}
+                                </h1>
+                            </div>
+                        </div>
+                    )}
+                </section>
+
+                <div class="container mx-auto px-6 max-w-7xl">
+                    {/* Header Text */}
+                    <div class="text-center mb-16 space-y-4">
+                        <h2 class="font-nav text-2xl md:text-3xl uppercase tracking-widest text-primary">
+                            {entry.data.details?.split("\n")[0] ||
+                                "REGIA DI KALUA RODRIGUEZ"}
+                        </h2>
+                        <p class="font-serif text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                            {entry.data.subtitle}
+                        </p>
+                    </div>
+
+                    {/* Main Grid */}
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-24 items-center max-w-6xl mx-auto">
+                        <div class="aspect-video w-full rounded-sm overflow-hidden shadow-2xl bg-gray-900 border border-gray-800">
+                            {entry.data.videoUrl && (
+                                <video
+                                    width="100%"
+                                    height="100%"
+                                    controls
+                                    class="w-full h-full object-cover"
+                                >
+                                    <source
+                                        src={entry.data.videoUrl}
+                                        type="video/mp4"
+                                    />
+                                </video>
+                            )}
+                        </div>
+                        <div class="text-left font-sans text-sm md:text-base text-white font-bold space-y-1 leading-relaxed pl-4">
+                            <div
+                                class="whitespace-pre-wrap"
+                                set:html={entry.data.details
+                                    .replace(
+                                        entry.data.details?.split("\n")[0] ||
+                                            "",
+                                        "",
+                                    )
+                                    .replace(
+                                        /\*\*(.*?)\*\*/g,
+                                        "<strong class='text-primary uppercase tracking-wider block mt-4 mb-1'>$1</strong>",
+                                    )
+                                    .replace(/\n/g, "<br/>")}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Trio Videos */}
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+                        {entry.data.additionalVideos &&
+                            entry.data.additionalVideos
+                                .slice(0, 3)
+                                .map((url, i) => (
+                                    <div class="aspect-9/16 w-full bg-gray-900 rounded-sm overflow-hidden border border-gray-800 relative group">
+                                        <video
+                                            width="100%"
+                                            height="100%"
+                                            controls
+                                            class="w-full h-full object-cover"
+                                        >
+                                            <source
+                                                src={url}
+                                                type="video/mp4"
+                                            />
+                                        </video>
+                                    </div>
+                                ))}
+                    </div>
+
+                    {/* Bottom Video */}
+                    {entry.data.additionalVideos &&
+                        entry.data.additionalVideos[3] && (
+                            <div class="max-w-2xl mx-auto mb-24">
+                                <div class="aspect-video w-full bg-gray-900 rounded-sm overflow-hidden border border-gray-800 shadow-2xl">
+                                    <video
+                                        width="100%"
+                                        height="100%"
+                                        controls
+                                        class="w-full h-full"
+                                    >
+                                        <source
+                                            src={entry.data.additionalVideos[3]}
+                                            type="video/mp4"
+                                        />
+                                    </video>
+                                </div>
+                            </div>
+                        )}
+
+                    {/* QUOTE SECTION */}
+                    <section class="py-24 px-4 bg-black border-y border-white/10 mt-12">
+                        <div class="max-w-[700px] mx-auto text-center">
+                            <p class="font-nav font-normal text-xl md:text-2xl text-white uppercase leading-relaxed tracking-[0.5px]">
+                                "
+                                {entry.data.quote ||
+                                    "Il potere è un uomo che non ricorda il nome che gli ha dato sua madre"}
+                                "
+                            </p>
+                            <p class="font-nav text-base text-white/60 uppercase mt-4 tracking-widest">
+                                - {entry.data.quoteAuthor || "Kalua Rodriguez"}
+                            </p>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        ) : (
+            <main class="bg-white">
+                {/* HERO */}
+                <section class="relative h-[25vh] md:h-[60vh] w-full overflow-hidden mb-16 bg-black">
+                    {entry.data.cover && (
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <img
+                                src={entry.data.cover}
+                                alt={entry.data.title}
+                                class="w-full h-full object-contain"
+                            />
+                            <div class="absolute inset-0 bg-black/10" />
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <h1 class="font-serif text-white text-[32px] md:text-[40px] uppercase tracking-wider subpixel-antialiased drop-shadow-lg text-center px-4">
+                                    {entry.data.title}
+                                </h1>
+                            </div>
+                        </div>
+                    )}
+                </section>
+
+                <div class="container mx-auto px-6 max-w-7xl">
+                    {/* FIXED DIRECTOR TITLE */}
+                    <div class="text-center mb-16">
+                        <p class="font-nav text-[25px] text-black uppercase tracking-[0.1px]">
+                            REGIA DI KALUA RODRÍGUEZ
+                        </p>
+                    </div>
+
+                    {/* VIDEO & DETAILS SECTION */}
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-24 items-start">
+                        {/* Left: Video */}
+                        <div class="flex flex-col">
+                            {entry.data.videoUrl && (
+                                <div class="aspect-video w-full rounded-sm overflow-hidden shadow-2xl mb-4 group relative bg-black">
+                                    <iframe
+                                        width="100%"
+                                        height="100%"
+                                        src={`https://www.youtube.com/embed/${
+                                            entry.data.videoUrl.includes("v=")
+                                                ? entry.data.videoUrl
+                                                      .split("v=")[1]
+                                                      .split("&")[0]
+                                                : entry.data.videoUrl
+                                                      .split("/")
+                                                      .pop()
+                                                      ?.split("?")[0]
+                                        }`}
+                                        title="YouTube video player"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowfullscreen
+                                        class="absolute inset-0 w-full h-full"
+                                    />
+                                </div>
+                            )}
+
+                            {entry.data.videoUrl && (
+                                <a
+                                    href={entry.data.videoUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-primary font-sans text-lg hover:underline mt-4 flex items-center justify-center gap-2"
+                                >
+                                    <Youtube className="w-6 h-6" />
+                                    Video completo su YouTube
+                                </a>
+                            )}
+                        </div>
+
+                        {/* Right: Details Box */}
+                        {entry.data.details && (
+                            <div class="bg-primary p-8 md:p-6 rounded-sm text-white shadow-xl">
+                                <div
+                                    class="font-sans font-normal text-sm md:text-base leading-snug whitespace-normal"
+                                    set:html={entry.data.details
+                                        .replace(/\r\n/g, "\n")
+                                        .replace(/\n\n/g, "\n")
+                                        .replace(/\n/g, "<br/>")
+                                        .replace(
+                                            /\*\*(.*?)\*\*/g,
+                                            "<strong class='text-white mr-1 font-normal'>$1</strong>",
+                                        )}
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* TITLE & DESCRIPTION */}
+                <section class="w-full bg-[#efeff6] py-24 border-t border-black/5">
+                    <div class="container mx-auto px-6 max-w-7xl">
+                        <div class="max-w-4xl mx-auto">
+                            {entry.data.subtitle && (
+                                <h2 class="font-nav text-[25px] text-primary uppercase tracking-[0.1px] mb-8 leading-none">
+                                    {entry.data.subtitle}
+                                </h2>
+                            )}
+                            <div class="prose prose-lg prose-p:font-sans prose-p:text-gray-800 prose-headings:font-serif text-justify max-w-none">
+                                <Content />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* QUOTE SECTION */}
+                <section class="py-24 px-4 bg-white border-b border-black/5">
+                    <div class="max-w-[700px] mx-auto text-center">
+                        <p class="font-nav font-normal text-xl md:text-2xl text-black uppercase leading-relaxed tracking-[0.5px]">
+                            "
+                            {entry.data.quote ||
+                                "Il potere è un uomo che non ricorda il nome che gli ha dato sua madre"}
+                            "
+                        </p>
+                        <p class="font-nav text-base text-black/60 uppercase mt-4 tracking-widest">
+                            - {entry.data.quoteAuthor || "Kalua Rodriguez"}
+                        </p>
+                    </div>
+                </section>
+
+                {/* GALLERY SECTION */}
+                {entry.data.gallery && entry.data.gallery.length > 0 && (
+                    <div>
+                        <GalleryCarousel
+                            client:load
+                            images={entry.data.gallery}
+                            title="Galleria"
+                            description=""
+                        />
+                    </div>
+                )}
+            </main>
+        )
+    }
+</Layout>

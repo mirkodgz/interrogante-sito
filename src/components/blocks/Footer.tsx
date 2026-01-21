@@ -1,8 +1,11 @@
 import React from 'react';
-import { contactInfo, navigationLinks } from '@/data/navigation';
-import { Instagram, Facebook, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import { contactInfo } from '@/data/navigation';
+import { Instagram, Facebook, Linkedin } from 'lucide-react';
+import { ui } from '@/i18n/ui';
 
-export default function Footer() {
+export default function Footer({ lang = 'es' }: { lang?: string }) {
+    const t = ui[lang as keyof typeof ui] || ui.es;
+
     return (
         <footer className="relative bg-secondary text-black pt-20 pb-10 border-t border-black/10 overflow-hidden">
             {/* Corner Shapes */}
@@ -19,7 +22,7 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 mb-20">
                     {/* Brand Section */}
                     <div className="flex flex-col gap-8">
-                        <a href="/" className="flex flex-col">
+                        <a href={lang === 'es' ? '/' : '/it/'} className="flex flex-col">
                             <img
                                 src="https://res.cloudinary.com/dskliu1ig/image/upload/v1768532411/InterroganteSpettacolo-V-v3_iytvvk.svg"
                                 alt="Interrogante Spettacolo"
@@ -27,14 +30,16 @@ export default function Footer() {
                             />
                         </a>
                         <p className="text-black font-sans text-base font-semibold leading-relaxed max-w-sm">
-                            Interrogante Spettacolo es una compañía internacional de experimentación artística. Organizada en una asociación sin ánimo de lucro de producción y promoción artística multicultural.
+                            {t['footer.description']}
                         </p>
                     </div>
 
                     {/* Contact/Info Section */}
                     <div className="flex flex-col gap-8">
                         <div>
-                            <h3 className="font-nav text-lg font-normal uppercase tracking-[1px] border-l-4 border-white pl-3 mb-6">DIRECCIÓN: KALUA RODRIGUEZ</h3>
+                            <h3 className="font-nav text-lg font-normal uppercase tracking-[1px] border-l-4 border-white pl-3 mb-6">
+                                {t['footer.addressTitle']}
+                            </h3>
                             <div className="text-base font-sans font-semibold space-y-1">
                                 <p className="font-bold">ASSOCIAZIONE INTERROGANTE SPETTACOLO</p>
                                 <p>Via Per San Pietro 1328</p>
@@ -44,11 +49,13 @@ export default function Footer() {
                         </div>
 
                         <div>
-                            <h3 className="font-nav text-lg font-normal uppercase tracking-[1px] border-l-4 border-white pl-3 mb-6">INFO/CONTACTO</h3>
+                            <h3 className="font-nav text-lg font-normal uppercase tracking-[1px] border-l-4 border-white pl-3 mb-6">
+                                {t['footer.infoTitle']}
+                            </h3>
                             <ul className="flex flex-col gap-4">
                                 <li className="text-base font-sans font-semibold">
                                     <p>Tel/WhatsApp: +39 392 168 3752</p>
-                                    <p>Dirección: Kalúa Rodríguez</p>
+                                    <p>{lang === 'es' ? 'Dirección' : 'Direzione'}: Kalúa Rodríguez</p>
                                 </li>
                                 {contactInfo.emails.map((email) => (
                                     <li key={email}>
@@ -63,7 +70,9 @@ export default function Footer() {
 
                     {/* Social Section */}
                     <div className="flex flex-col gap-6">
-                        <h3 className="font-nav text-lg font-normal uppercase tracking-[1px] border-l-4 border-white pl-3 mb-6">SÍGUENOS EN</h3>
+                        <h3 className="font-nav text-lg font-normal uppercase tracking-[1px] border-l-4 border-white pl-3 mb-6">
+                            {t['footer.followUs']}
+                        </h3>
                         <div className="flex gap-4">
                             <a href={contactInfo.social.facebook} target="_blank" rel="noopener noreferrer" className="bg-white p-2 text-primary hover:bg-black hover:text-white transition-all transform hover:-translate-y-1 shadow-md">
                                 <Facebook size={24} fill="currentColor" />
@@ -81,7 +90,7 @@ export default function Footer() {
                 {/* Bottom Bar */}
                 <div className="border-t border-black/10 pt-10 text-center">
                     <p className="text-sm font-semibold uppercase">
-                        © {new Date().getFullYear()} Interrogante Spettacolo - All rights reserved
+                        © {new Date().getFullYear()} Interrogante Spettacolo - {t['footer.rights']}
                     </p>
                 </div>
             </div>

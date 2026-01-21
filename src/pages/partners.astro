@@ -36,7 +36,7 @@ const press = partnersData?.press || [];
                 {
                     collaborators.length > 0 ? (
                         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 items-center justify-items-center">
-                            {collaborators.map((logo) => (
+                            {collaborators.map((logo: string) => (
                                 <div class="w-full aspect-[3/2] bg-white p-4 rounded-lg shadow-sm flex items-center justify-center hover:shadow-md transition-shadow">
                                     <img
                                         src={logo}
@@ -64,7 +64,7 @@ const press = partnersData?.press || [];
                 {
                     partners.length > 0 ? (
                         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 items-center justify-items-center">
-                            {partners.map((logo) => (
+                            {partners.map((logo: string) => (
                                 <div class="w-full aspect-[3/2] bg-white p-4 rounded-lg shadow-sm flex items-center justify-center hover:shadow-md transition-shadow">
                                     <img
                                         src={logo}
@@ -92,7 +92,7 @@ const press = partnersData?.press || [];
                 {
                     press.length > 0 ? (
                         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-center justify-items-center">
-                            {press.map((logo) => (
+                            {press.map((logo: string) => (
                                 <div class="w-full aspect-[3/2] bg-white p-4 rounded-lg shadow-sm flex items-center justify-center hover:shadow-md transition-shadow">
                                     <img
                                         src={logo}

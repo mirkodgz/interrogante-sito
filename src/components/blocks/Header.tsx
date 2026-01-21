@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ChevronRight, ChevronDown } from 'lucide-react';
+import LanguageSwitcher from '../ui/LanguageSwitcher';
 
 interface NavItem {
     title: string;
@@ -21,16 +22,18 @@ interface NavItem {
     children?: NavItem[];
 }
 
-export default function Header({ links }: { links?: NavItem[] }) {
+export default function Header({ links, lang = 'es' }: { links?: NavItem[], lang?: string }) {
     const displayLinks = links || navigationLinks;
     const [scrolled, setScrolled] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
 
     useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 20);
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        if (typeof window !== 'undefined') {
+            const handleScroll = () => setScrolled(window.scrollY > 20);
+            window.addEventListener('scroll', handleScroll);
+            return () => window.removeEventListener('scroll', handleScroll);
+        }
     }, []);
 
     // Lock scroll when menu is open
@@ -49,7 +52,7 @@ export default function Header({ links }: { links?: NavItem[] }) {
     return (
         <header
             className={cn(
-                "sticky top-0 left-0 w-full z-[120] transition-all duration-300",
+                "sticky top-0 left-0 w-full z-120 transition-all duration-300",
                 scrolled
                     ? "bg-primary shadow-lg py-2"
                     : "bg-primary py-2"
@@ -57,11 +60,11 @@ export default function Header({ links }: { links?: NavItem[] }) {
         >
             <div className="container mx-auto px-6 flex items-center justify-between">
                 {/* Logo */}
-                <a href="/" className="relative z-[120] flex items-center group">
+                <a href="/" className="relative z-120 flex items-center group">
                     <img
                         src="/Logo-Interrogante-white2.svg"
                         alt="Interrogante Spettacolo"
-                        className="h-[40px] md:h-[59px] w-auto object-contain"
+                        className="h-[45px] md:h-[64px] w-auto object-contain"
                     />
                 </a>
 
@@ -75,11 +78,11 @@ export default function Header({ links }: { links?: NavItem[] }) {
                                         <>
                                             <NavigationMenuTrigger
                                                 onClick={() => {
-                                                    if (link.href && link.href !== "#") {
+                                                    if (typeof window !== 'undefined' && link.href && link.href !== "#") {
                                                         window.location.href = link.href;
                                                     }
                                                 }}
-                                                className="!bg-transparent text-white hover:text-secondary transition-colors !font-nav text-[18px] font-normal tracking-normal uppercase px-2 cursor-pointer"
+                                                className="bg-transparent! text-white hover:text-secondary transition-colors font-nav! text-[18px] font-normal tracking-normal uppercase px-2 cursor-pointer"
                                             >
                                                 {link.title}
                                             </NavigationMenuTrigger>
@@ -98,7 +101,7 @@ export default function Header({ links }: { links?: NavItem[] }) {
                                                                         <ChevronRight className="w-4 h-4 text-white/50 group-hover/sub:text-white shrink-0" />
                                                                     </div>
                                                                     {/* Nested Flyout - Using absolute positioning outside the container */}
-                                                                    <div className="absolute left-[100%] top-0 hidden group-hover/sub:block min-w-[180px] w-max bg-primary border border-white/10 shadow-2xl z-[200]">
+                                                                    <div className="absolute left-full top-0 hidden group-hover/sub:block min-w-[180px] w-max bg-primary border border-white/10 shadow-2xl z-200">
                                                                         <ul className="flex flex-col gap-0 p-0">
                                                                             {child.children.map((subChild: NavItem) => (
                                                                                 <li key={subChild.title} className="border-b border-white/5 last:border-0 hover:bg-secondary">
@@ -145,36 +148,13 @@ export default function Header({ links }: { links?: NavItem[] }) {
                                 </NavigationMenuItem>
                             </NavigationMenuList>
                             <div className="absolute left-0 top-full mt-2">
-                                <NavigationMenuViewport className="!bg-primary border-none shadow-2xl text-white origin-top-left h-[var(--radix-navigation-menu-viewport-height)] w-[var(--radix-navigation-menu-viewport-width)] !overflow-visible rounded-md transition-[width,_height] duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 font-normal" />
+                                <NavigationMenuViewport className="bg-primary! border-none shadow-2xl text-white origin-top-left h-(--radix-navigation-menu-viewport-height) w-(--radix-navigation-menu-viewport-width) overflow-visible! rounded-md transition-[width,height] duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 font-normal" />
                             </div>
                         </NavigationMenu>
                     ))}
 
                     <div className="flex items-center gap-1 ml-4 border-l border-white/20 pl-4">
-                        <a
-                            href="#"
-                            className="flex items-center gap-2 px-2 py-1 text-white hover:text-secondary transition-colors font-nav text-[18px] uppercase font-normal opacity-50 grayscale hover:opacity-100 hover:grayscale-0"
-                            title="Italiano (Proximamente)"
-                        >
-                            <div className="w-6 h-4 flex overflow-hidden rounded-[1px] shadow-sm">
-                                <div className="w-1/3 h-full bg-[#009246]"></div>
-                                <div className="w-1/3 h-full bg-white"></div>
-                                <div className="w-1/3 h-full bg-[#ce2b37]"></div>
-                            </div>
-                            <span className="leading-none">IT</span>
-                        </a>
-                        <a
-                            href="/"
-                            className="flex items-center gap-2 px-2 py-1 text-white hover:text-secondary transition-colors font-nav text-[18px] uppercase font-normal"
-                            title="Español"
-                        >
-                            <div className="w-6 h-4 flex flex-col overflow-hidden rounded-[1px] shadow-sm">
-                                <div className="h-1/4 bg-[#aa151b]"></div>
-                                <div className="h-2/4 bg-[#f1bf00]"></div>
-                                <div className="h-1/4 bg-[#aa151b]"></div>
-                            </div>
-                            <span className="leading-none">ES</span>
-                        </a>
+                        <LanguageSwitcher currentLang={lang as any} />
                     </div>
                 </div>
 
@@ -182,16 +162,16 @@ export default function Header({ links }: { links?: NavItem[] }) {
                 <div className="lg:hidden">
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="relative z-[130] w-10 h-10 flex flex-col items-end justify-center gap-1.5 focus:outline-none"
+                        className="relative z-130 w-10 h-10 flex flex-col items-end justify-center gap-1.5 focus:outline-none"
                         aria-label="Toggle Menu"
                     >
                         <motion.span
                             animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                            className="w-8 h-[1px] bg-white block"
+                            className="w-8 h-[2px] bg-white block"
                         />
                         <motion.span
                             animate={isOpen ? { rotate: -45, y: -2, width: "32px" } : { rotate: 0, y: 0, width: "20px" }}
-                            className="h-[1px] bg-white block"
+                            className="h-[2px] bg-white block"
                         />
                     </button>
                 </div>
@@ -203,7 +183,7 @@ export default function Header({ links }: { links?: NavItem[] }) {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="fixed inset-0 h-[100vh] w-full bg-primary z-[110] lg:hidden"
+                            className="fixed inset-0 h-screen w-full bg-primary z-110 lg:hidden"
                         >
                             <div className="flex flex-col h-full pt-28 px-2 overflow-y-auto pb-10">
                                 <nav className="flex flex-col gap-6">
@@ -248,7 +228,7 @@ export default function Header({ links }: { links?: NavItem[] }) {
                                                             >
                                                                 <div className="flex flex-col py-4 px-8 border-l-2 border-secondary/30 ml-4 my-2 gap-4">
                                                                     {link.children.map((child: NavItem) => (
-                                                                        <div key={child.title} className="flex flex-col gap-3">
+                                                                        <div key={`${link.title}-${child.title}`} className="flex flex-col gap-3">
                                                                             <a
                                                                                 href={child.href}
                                                                                 target={child.external ? "_blank" : undefined}
@@ -263,7 +243,7 @@ export default function Header({ links }: { links?: NavItem[] }) {
                                                                                 <div className="flex flex-col gap-3 pl-4 border-l border-white/10">
                                                                                     {child.children.map((subChild: NavItem) => (
                                                                                         <a
-                                                                                            key={subChild.title}
+                                                                                            key={`${child.title}-${subChild.title}`}
                                                                                             href={subChild.href}
                                                                                             target={subChild.external ? "_blank" : undefined}
                                                                                             rel={subChild.external ? "noopener noreferrer" : undefined}
@@ -301,30 +281,7 @@ export default function Header({ links }: { links?: NavItem[] }) {
                                         transition={{ delay: 0.1 + displayLinks.length * 0.05 }}
                                         className="flex items-center gap-6 mt-8 pt-8 border-t border-white/10"
                                     >
-                                        <a
-                                            href="#"
-                                            className="flex items-center gap-3 text-white font-nav text-xl uppercase tracking-widest opacity-50 grayscale"
-                                            onClick={() => setIsOpen(false)}
-                                        >
-                                            <div className="w-6 h-5 flex overflow-hidden rounded-[2px] shadow-sm">
-                                                <div className="w-1/3 h-full bg-[#009246]"></div>
-                                                <div className="w-1/3 h-full bg-white"></div>
-                                                <div className="w-1/3 h-full bg-[#ce2b37]"></div>
-                                            </div>
-                                            <span>IT</span>
-                                        </a>
-                                        <a
-                                            href="/"
-                                            className="flex items-center gap-3 text-white font-nav text-xl uppercase tracking-widest"
-                                            onClick={() => setIsOpen(false)}
-                                        >
-                                            <div className="w-6 h-5 flex flex-col overflow-hidden rounded-[2px] shadow-sm">
-                                                <div className="h-1/4 bg-[#aa151b]"></div>
-                                                <div className="h-2/4 bg-[#f1bf00]"></div>
-                                                <div className="h-1/4 bg-[#aa151b]"></div>
-                                            </div>
-                                            <span>ES</span>
-                                        </a>
+                                        <LanguageSwitcher currentLang={lang as any} />
                                     </motion.div>
                                 </nav>
                             </div>
@@ -332,6 +289,6 @@ export default function Header({ links }: { links?: NavItem[] }) {
                     )}
                 </AnimatePresence>
             </div>
-        </header >
+        </header>
     );
 }

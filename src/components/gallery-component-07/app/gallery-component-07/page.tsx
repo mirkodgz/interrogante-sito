@@ -1,4 +1,4 @@
-import Gallery from '@/components/shadcn-studio/blocks/gallery-component-07/gallery-component-07'
+import Gallery from '@/components/gallery-component-07/components/shadcn-studio/blocks/gallery-component-07/gallery-component-07'
 
 const galleryImages = [
   'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/gallery/image-58.png',

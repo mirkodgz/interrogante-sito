@@ -3,6 +3,7 @@ import { defineCollection, z } from 'astro:content';
 const festivalCollection = defineCollection({
     type: 'content',
     schema: z.object({
+        language: z.enum(['es', 'it']),
         title: z.string(),
         subtitle: z.string().optional(),
         edition: z.string().optional(),
@@ -14,6 +15,7 @@ const festivalCollection = defineCollection({
         press: z.array(z.any()).optional(),
         quote: z.string().optional(),
         gallery: z.array(z.string()).optional(),
+        isComingSoon: z.boolean().optional(),
         seo: z.object({
             title: z.string().optional(),
             description: z.string().optional(),
@@ -25,6 +27,7 @@ const festivalCollection = defineCollection({
 const creacionesCollection = defineCollection({
     type: 'content',
     schema: z.object({
+        language: z.enum(['es', 'it']),
         title: z.string(),
         subtitle: z.string().optional(),
         cover: z.string().optional(),
@@ -47,6 +50,7 @@ const creacionesCollection = defineCollection({
 const performanceCollection = defineCollection({
     type: 'content',
     schema: z.object({
+        language: z.enum(['es', 'it']),
         title: z.string(),
         date: z.any().optional(),
         cover: z.string().optional(),
@@ -83,6 +87,7 @@ const blogCollection = defineCollection({
 const teamCollection = defineCollection({
     type: 'content',
     schema: z.object({
+        language: z.enum(['es', 'it']),
         name: z.string(),
         role: z.string(),
         cover: z.string(),

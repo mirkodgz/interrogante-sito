@@ -10,7 +10,7 @@ import GalleryCarousel from "../../components/blocks/GalleryCarousel";
 const { slug } = Astro.params;
 if (!slug) return Astro.redirect("/404");
 
-const entry = await getEntry("creaciones", slug);
+const entry = await getEntry("creaciones", `es/${slug}`);
 if (!entry) return Astro.redirect("/404");
 
 const { Content } = await render(entry);

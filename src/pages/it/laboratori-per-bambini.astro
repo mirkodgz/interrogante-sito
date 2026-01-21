@@ -1,0 +1,50 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/ui/PageHero";
+
+const heroImage =
+    "https://res.cloudinary.com/dskliu1ig/image/upload/v1768145671/JugandoEnEspanol-DEF_sbobsb.jpg";
+---
+
+<Layout
+    title="Laboratori per Bambini | Giocando in Spagnolo | Interrogante Spettacolo"
+>
+    <main class="bg-white pb-20">
+        {/* HERO SECTION */}
+        <PageHero
+            client:load
+            title="GIOCANDO IN SPAGNOLO"
+            image={heroImage}
+            height="60vh"
+        >
+            <p
+                class="text-white/80 font-sans text-xl mt-4 uppercase tracking-[4px]"
+            >
+                Laboratori per Bambini
+            </p>
+        </PageHero>
+
+        <section class="py-24 container mx-auto px-6 max-w-4xl text-center">
+            <h2
+                class="font-nav text-3xl md:text-5xl text-primary uppercase mb-8"
+            >
+                Prossimamente
+            </h2>
+            <p
+                class="font-sans text-lg text-gray-600 leading-relaxed text-center"
+            >
+                Stiamo preparando esperienze indimenticabili per i più piccoli.
+                Molto presto potrai trovare qui tutte le informazioni sui nostri
+                laboratori infantili dove il gioco e la lingua si incontrano.
+            </p>
+            <div class="mt-12">
+                <a
+                    href="/it/contatto"
+                    class="inline-block bg-primary text-white px-10 py-4 rounded-full font-nav tracking-widest uppercase hover:bg-secondary transition-all duration-300"
+                >
+                    Contattaci per maggiori info
+                </a>
+            </div>
+        </section>
+    </main>
+</Layout>

@@ -1,0 +1,98 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Hero from "../../components/blocks/Hero";
+import TextStrips from "../../components/blocks/TextStrips";
+import AboutSection from "../../components/blocks/AboutSection";
+import PortfolioSection from "../../components/blocks/PortfolioSection";
+import FestivalCTA from "../../components/blocks/FestivalCTA";
+import NewsSection from "../../components/blocks/NewsSection";
+import BlogSection from "../../components/blocks/BlogSection";
+import { getCollection } from "astro:content";
+import WelcomeLoader from "../../components/ui/WelcomeLoader";
+import type { PortfolioItem } from "../../components/blocks/PortfolioSection";
+
+// El Blog se mantiene en español
+const blogItems = await getCollection("blog");
+
+const portfolioItems: PortfolioItem[] = [
+    {
+        id: "1",
+        title: "Laboratori culturali",
+        description: "In collaborazione con:",
+        image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768143765/LavoratoriCreativiv2_p8nkt8.webp",
+        href: "https://www.eventbrite.it/e/biglietti-laboratori-culturali-arte-cinema-comunicazione-musica-e-teatro-922855745377",
+        target: "_blank",
+        collaboratorLogo:
+            "https://res.cloudinary.com/dskliu1ig/image/upload/v1768143720/256px-Logotipo_del_Instituto_Cervantes.svg_wea4va.png",
+    },
+    {
+        id: "2",
+        title: "Laboratorio di microteatro",
+        description: "In collaborazione con:",
+        image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768144875/Imagen-TallerdeMicroteatro_md5tl8.jpg",
+        href: "https://milan.cervantes.es/it/cultura_spagnolo/laboratorio_teatro.htm",
+        target: "_blank",
+        collaboratorLogo:
+            "https://res.cloudinary.com/dskliu1ig/image/upload/v1768143720/256px-Logotipo_del_Instituto_Cervantes.svg_wea4va.png",
+    },
+    {
+        id: "3",
+        title: "Formazione per insegnanti",
+        description: "In collaborazione con:",
+        image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768145257/Foto-v1s22134_r4yrrn.jpg",
+        href: "/formacion-para-profesores-de-espanol",
+        target: "_self",
+        collaboratorLogo:
+            "https://res.cloudinary.com/dskliu1ig/image/upload/v1768143720/256px-Logotipo_del_Instituto_Cervantes.svg_wea4va.png",
+    },
+    {
+        id: "4",
+        title: "Giocando in spagnolo",
+        description: "Interrogante Spettacolo",
+        image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768145671/JugandoEnEspanol-DEF_sbobsb.jpg",
+        href: "/talleres-para-ninos",
+        target: "_self",
+        collaboratorLogo:
+            "https://res.cloudinary.com/dskliu1ig/image/upload/v1768145671/JugandoEnEspanol-DEF_sbobsb.jpg",
+    },
+    {
+        id: "5",
+        title: "Crea il tuo laboratorio",
+        description: "In collaborazione con:",
+        image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768146634/CreatuTallerCover_v9fy5l.jpg",
+        href: "/crea-tu-taller",
+        target: "_self",
+        collaboratorLogo:
+            "https://res.cloudinary.com/dskliu1ig/image/upload/v1768143720/256px-Logotipo_del_Instituto_Cervantes.svg_wea4va.png",
+    },
+];
+---
+
+<Layout
+    title="Interrogante Spettacolo - Compagnia Artistica"
+    description="Interrogante Spettacolo: Punto di riferimento per la cultura spagnola e latinoamericana a Milano. Scopri il Festival A PIEDI NUDI, le nostre creazioni teatrali e la formazione artistica."
+>
+    <WelcomeLoader client:load />
+    <main>
+        {/* SECCIÓN 1: HERO */}
+        <Hero client:load />
+
+        {/* SECCIÓN 2: CINTAS DE TEXTO */}
+        <TextStrips client:load />
+
+        {/* SECCIÓN 3: CORSI E LABORATORI */}
+        <PortfolioSection client:load portfolioItems={portfolioItems} />
+
+        {/* SECCIÓN 4: CHI SIAMO */}
+        <AboutSection client:load />
+
+        {/* SECCIÓN 5: C.T.A. FESTIVAL */}
+        <FestivalCTA client:load />
+
+        {/* SECCIÓN 6: NEWS */}
+        <NewsSection client:load />
+
+        {/* SECCIÓN 7: BLOG (Sempre in Spagnolo come richiesto) */}
+        <BlogSection client:load blogItems={blogItems} />
+    </main>
+</Layout>

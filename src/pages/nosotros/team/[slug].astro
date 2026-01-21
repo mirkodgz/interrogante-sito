@@ -6,7 +6,7 @@ import PageHero from "../../../components/ui/PageHero";
 const { slug } = Astro.params;
 if (!slug) return Astro.redirect("/404");
 
-const entry = await getEntry("team", slug);
+const entry = await getEntry("team", `es/${slug}`);
 if (!entry) return Astro.redirect("/404");
 
 const { Content } = await render(entry);

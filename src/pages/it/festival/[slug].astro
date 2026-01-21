@@ -1,0 +1,204 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import PageHero from "../../../components/ui/PageHero";
+import { getCollection, render, getEntry } from "astro:content";
+import BrandButton from "../../../components/ui/BrandButton";
+import { cn } from "../../../lib/utils";
+import { ArrowUpRight } from "lucide-react";
+import GalleryCarousel from "../../../components/blocks/GalleryCarousel";
+
+const { slug } = Astro.params;
+const entry = await getEntry("festival", `it/${slug}`);
+
+if (!entry) {
+    return Astro.redirect("/404");
+}
+const { Content } = await render(entry);
+const {
+    title,
+    subtitle,
+    cover,
+    videoUrl,
+    press,
+    quote,
+    gallery,
+    isComingSoon,
+    description,
+    seo,
+} = entry.data;
+
+const seoTitle = seo?.title || title.replace("|", " - ");
+const seoDescription = seo?.description || description;
+const seoOgImage = seo?.ogImage || cover;
+
+// Helper para convertir URL de YouTube a Embed
+function getYoutubeEmbedUrl(url: string | undefined) {
+    if (!url) return null;
+    const videoIdMatch =
+        url.match(/[?&]v=([^&#]+)/) || url.match(/youtu\.be\/([^&#?]+)/);
+    const videoId = videoIdMatch ? videoIdMatch[1] : null;
+    return videoId
+        ? `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`
+        : null;
+}
+
+const embedVideoUrl = getYoutubeEmbedUrl(videoUrl);
+
+// Split title for Hero if it contains '|'
+const titleParts = title.split("|");
+const displayTitle = titleParts.length > 1 ? titleParts.join(" - ") : title;
+---
+
+<Layout title={seoTitle} description={seoDescription} ogImage={seoOgImage}>
+    <main class="bg-white w-full overflow-x-hidden">
+        {
+            isComingSoon ? (
+                <section class="min-h-[80vh] flex flex-col items-center justify-center text-center px-4">
+                    <h1 class="font-nav font-bold text-5xl md:text-8xl text-primary uppercase mb-6">
+                        PROSSIMAMENTE
+                    </h1>
+                    <p class="font-sans text-xl text-black/60 uppercase tracking-widest">
+                        Stiamo preparando la {title.split("|")[0]}
+                    </p>
+                    <div class="mt-12">
+                        <BrandButton href="/it/festival/" variant="primary">
+                            TORNA AL FESTIVAL
+                        </BrandButton>
+                    </div>
+                </section>
+            ) : (
+                <>
+                    {/* SECCIÓN 1: HERO */}
+                    <PageHero
+                        client:load
+                        title={displayTitle}
+                        image={cover || ""}
+                        height=""
+                        className="h-[50vh] md:h-[75vh]"
+                        overlayOpacity="bg-black/20"
+                    />
+                    {/* SECCIÓN 2: VIDEO + TEXTO */}
+                    <section class="py-20 md:py-32 w-full">
+                        <div class="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-12 lg:gap-10">
+                            {/* BLOQUE IZQUIERDO: VIDEO */}
+                            <div class="w-full lg:w-1/2">
+                                <div class="relative w-full aspect-video rounded-sm overflow-hidden shadow-2xl bg-black mb-6">
+                                    {embedVideoUrl ? (
+                                        <>
+                                            <iframe
+                                                src={embedVideoUrl}
+                                                title="YouTube video player"
+                                                class="absolute inset-0 w-full h-full border-0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                allowfullscreen
+                                            />
+                                        </>
+                                    ) : (
+                                        <div class="w-full h-full flex items-center justify-center text-white/50">
+                                            Video non disponibile
+                                        </div>
+                                    )}
+                                </div>
+                                {title && (
+                                    <div class="flex justify-center mt-4">
+                                        <a
+                                            href={videoUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="inline-flex items-center gap-2 font-sans text-[16px] font-semibold text-primary hover:underline transition-all"
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="20"
+                                                height="20"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                class="lucide lucide-youtube-icon lucide-youtube"
+                                            >
+                                                <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+                                                <path d="m10 15 5-3-5-3z" />
+                                            </svg>
+                                            Sintesi {title.replace("|", " ")}
+                                        </a>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* BLOQUE DERECHO: TEXTO */}
+                            <div class="w-full lg:w-1/2 flex flex-col gap-3">
+                                {subtitle && (
+                                    <h2 class="font-nav font-bold text-[25px] text-black uppercase leading-[1.1] tracking-[0.3px]">
+                                        {subtitle}
+                                    </h2>
+                                )}
+                                <div class="text-[#656464] font-sans text-[16px] font-semibold leading-normal text-left space-y-6">
+                                    <Content />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    {/* SECCIÓN 3: PARLAN DI NOI */}
+                    {press && press.length > 0 && (
+                        <section class="py-20 bg-[#efeff6] border-t border-black/5">
+                            <div class="max-w-7xl mx-auto px-4">
+                                <h2 class="text-center font-nav font-bold text-[32px] md:text-[38px] text-primary uppercase mb-20 tracking-normal leading-tight">
+                                    PARLAN DI NOI
+                                </h2>
+
+                                <div
+                                    class={`grid grid-cols-1 sm:grid-cols-2 ${press.length === 3 ? "lg:grid-cols-3 max-w-5xl" : "lg:grid-cols-4"} mx-auto gap-12 lg:gap-8`}
+                                >
+                                    {press.map((item) => (
+                                        <div class="flex flex-col items-center group">
+                                            <h3 class="font-nav font-bold text-[25px] text-black uppercase mb-4 tracking-wide text-center h-12 flex items-center">
+                                                {item.title}
+                                            </h3>
+
+                                            <a
+                                                href={item.url}
+                                                target="_blank"
+                                                class="w-full aspect-square rounded-sm overflow-hidden mb-5 shadow-lg block border border-black/5"
+                                            >
+                                                <img
+                                                    src={item.image}
+                                                    alt={item.title}
+                                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                                />
+                                            </a>
+
+                                            <BrandButton
+                                                href={item.url}
+                                                variant="primary"
+                                                className="px-6 py-2 text-sm"
+                                            >
+                                                LEGGI DI PIÙ
+                                            </BrandButton>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+                    )}
+                    {/* SECCIÓN 4: LA FRASE */}
+                    {quote && (
+                        <section class="py-24 px-4 bg-white border-y border-black/5">
+                            <div class="max-w-[700px] mx-auto text-center">
+                                <p class="font-nav font-normal text-xl md:text-2xl text-black uppercase leading-relaxed tracking-[0.5px]">
+                                    "{quote}"
+                                </p>
+                            </div>
+                        </section>
+                    )}
+                    {/* SECCIÓN 5: GALERÍA */}
+                    {gallery && gallery.length > 0 && (
+                        <GalleryCarousel client:load images={gallery} />
+                    )}
+                </>
+            )
+        }
+    </main>
+</Layout>

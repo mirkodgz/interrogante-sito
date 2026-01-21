@@ -7,6 +7,10 @@ import Footer from "../components/blocks/Footer";
 import BackToTop from "../components/ui/BackToTop";
 import { getCollection } from "astro:content";
 import { navigationLinks } from "../data/navigation";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 interface Props {
 	title: string;
@@ -20,20 +24,41 @@ const {
 	ogImage = "/og-image.jpg",
 } = Astro.props;
 
-// Fetch dynamic children
-const creaciones = await getCollection("creaciones");
-const festival = await getCollection("festival");
-const performance = await getCollection("performance");
+// Fetch dynamic children filtered by language
+const creaciones = await getCollection(
+	"creaciones",
+	({ data }) => data.language === lang,
+);
+console.log("CREACIONES DEBUG:", lang);
+creaciones.forEach((c) => console.log(`- ${c.slug}: ${c.data.language}`));
+
+const festival = await getCollection(
+	"festival",
+	({ data }) => data.language === lang,
+);
+const performance = await getCollection(
+	"performance",
+	({ data }) => data.language === lang,
+);
+console.log("Current Lang:", lang);
+console.log("Festival Items found:", festival.length);
+festival.forEach((f) => console.log(`- ${f.slug} (${f.data.language})`));
 
 // Update navigationLinks with real data
 const dynamicLinks = navigationLinks
 	.filter((link) => link.title !== "PERFORMANCE") // Remove top-level PERFORMANCE
 	.map((link) => {
 		if (link.title === "CREACIONES") {
-			const creacionesItems = creaciones.map((c) => ({
-				title: c.data.title,
-				href: `/creaciones/${c.slug}/`,
-			}));
+			const creacionesItems = creaciones.map((c) => {
+				const slug = c.slug.split("/").pop();
+				return {
+					title: c.data.title,
+					href:
+						lang === "es"
+							? `/creaciones/${slug}/`
+							: `/${lang}/creazioni/${slug}/`,
+				};
+			});
 
 			// Find if there's a PERFORMANCE placeholder in static children
 			const staticChildren = link.children || [];
@@ -41,43 +66,185 @@ const dynamicLinks = navigationLinks
 				(child) => child.title === "PERFORMANCE",
 			);
 
-			const finalChildren = [...creacionesItems];
+			const finalChildren: any[] = [...creacionesItems];
 
 			if (performancePlaceholder) {
 				finalChildren.push({
 					...performancePlaceholder,
-					children: performance.map((p) => ({
-						title: p.data.title,
-						href: `/performance/${p.slug}/`,
-					})),
+					children: performance.map((p) => {
+						// Strip 'es/' or 'it/' if needed, but Astro slug is the directory + file
+						// If we use [lang] subdirs, the slug is 'es/slug'
+						const slug = p.slug.split("/").pop();
+						return {
+							title: p.data.title,
+							href:
+								lang === "es"
+									? `/performance/${slug}/`
+									: `/${lang}/performance/${slug}/`,
+						};
+					}),
 				});
 			}
 
 			return {
 				...link,
-				children: finalChildren,
+				title:
+					t(`nav.${link.title.toLowerCase()}` as any) || link.title,
+				children: finalChildren.map((child) => {
+					let childHref = child.href;
+					if (
+						lang === "it" &&
+						!child.href.startsWith("http") &&
+						!child.href.startsWith("#") &&
+						!child.href.startsWith("/it")
+					) {
+						const childRouteMap: Record<string, string> = {
+							"/formacion-para-profesores-de-espanol/":
+								"/formazione-insegnanti/",
+							"/talleres-para-ninos/": "/laboratori-per-bambini/",
+							"/crea-tu-taller/": "/crea-il-tuo-laboratorio/",
+							"/nosotros/team/kalua-rodriguez":
+								"/chi-siamo/team/kalua-rodriguez",
+							"/nosotros/team/yosvanis-gil":
+								"/chi-siamo/team/yosvanis-gil",
+							"/nosotros/team/yudel-collazo":
+								"/chi-siamo/team/yudel-collazo",
+						};
+						const mappedChildPath =
+							childRouteMap[child.href] || child.href;
+						childHref = `/it${mappedChildPath}`;
+					}
+					return { ...child, href: childHref };
+				}),
 			};
 		}
 		if (link.title === "FESTIVAL") {
 			return {
 				...link,
-				children: festival.map((f) => ({
-					title: f.data.title,
-					href: `/festival/${f.slug}/`,
-				})),
+				title: t("nav.festival"),
+				children: festival.map((f) => {
+					const slug = f.slug.split("/").pop();
+					return {
+						title: f.data.title,
+						href:
+							lang === "es"
+								? `/festival/${slug}/`
+								: `/${lang}/festival/${slug}/`,
+					};
+				}),
 			};
 		}
-		return link;
+
+		// Translate static link titles
+		const translationKey = `nav.${link.title.toLowerCase()}` as any;
+		const translatedTitle = t(translationKey);
+
+		let finalHref = link.href;
+		if (
+			lang === "it" &&
+			!link.href.startsWith("http") &&
+			!link.href.startsWith("#")
+		) {
+			// Mapping for translated slugs
+			const routeMap: Record<string, string> = {
+				"/nosotros/": "/chi-siamo/",
+				"/contacto/": "/contatto/",
+				"/creaciones/": "/creazioni/",
+				"/partners/": "/partners/",
+				"/la-carretilla/": "/associati/",
+				"/festival/": "/festival/",
+				"/formacion-para-profesores-de-espanol/":
+					"/formazione-insegnanti/",
+				"/talleres-para-ninos/": "/laboratori-per-bambini/",
+				"/crea-tu-taller/": "/crea-il-tuo-laboratorio/",
+			};
+
+			const mappedPath = routeMap[link.href] || link.href;
+			finalHref = `/it${mappedPath}`;
+		}
+
+		return {
+			...link,
+			title:
+				translatedTitle !== translationKey
+					? translatedTitle
+					: link.title,
+			href: finalHref,
+			children: link.children?.map((child) => {
+				let childHref = child.href;
+				if (
+					lang === "it" &&
+					!child.href.startsWith("http") &&
+					!child.href.startsWith("#")
+				) {
+					const childRouteMap: Record<string, string> = {
+						"/formacion-para-profesores-de-espanol/":
+							"/formazione-insegnanti/",
+						"/talleres-para-ninos/": "/laboratori-per-bambini/",
+						"/crea-tu-taller/": "/crea-il-tuo-laboratorio/",
+						"/nosotros/team/kalua-rodriguez":
+							"/chi-siamo/team/kalua-rodriguez",
+						"/nosotros/team/yosvanis-gil":
+							"/chi-siamo/team/yosvanis-gil",
+						"/nosotros/team/yudel-collazo":
+							"/chi-siamo/team/yudel-collazo",
+					};
+					const mappedChildPath =
+						childRouteMap[child.href] || child.href;
+					childHref = `/it${mappedChildPath}`;
+				}
+				return { ...child, href: childHref };
+			}),
+		};
 	});
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = ogImage.startsWith("http")
 	? ogImage
 	: new URL(ogImage, Astro.site);
+
+// Hreflang Logic
+const currentPath = Astro.url.pathname;
+let alternatePath = null;
+let alternateLang = lang === "es" ? "it" : "es";
+
+// Skip hreflang for blog as it's Spanish only
+if (!currentPath.includes("/blog")) {
+	if (lang === "es") {
+		if (currentPath === "/" || currentPath === "") alternatePath = "/it/";
+		else if (currentPath.startsWith("/nosotros"))
+			alternatePath = currentPath.replace("/nosotros", "/it/chi-siamo");
+		else if (currentPath.startsWith("/contacto"))
+			alternatePath = currentPath.replace("/contacto", "/it/contatto");
+		else if (currentPath.startsWith("/creaciones"))
+			alternatePath = currentPath.replace("/creaciones", "/it/creazioni");
+		// Festival and Performance keep the same base slug in Spanish, but need /it/ prefix + translated base if applicable
+		// Based on file structure: src/pages/it/festival/[slug].astro -> /it/festival/[slug]
+		// src/pages/it/performance/[slug].astro -> /it/performance/[slug]
+		// So simple prefixing works for these if the slug bases are standard.
+		// Wait, did I translate the 'performance' and 'festival' segments?
+		// User requirement: "Italiano (it) accessible via the /it/ prefix."
+		// In Layout navigation we used: /it/festival/[slug].
+		// So festival and performance seem to keep the word in Italian (same).
+		else alternatePath = `/it${currentPath}`;
+	} else {
+		if (currentPath === "/it/" || currentPath === "/it")
+			alternatePath = "/";
+		else if (currentPath.startsWith("/it/chi-siamo"))
+			alternatePath = currentPath.replace("/it/chi-siamo", "/nosotros");
+		else if (currentPath.startsWith("/it/contatto"))
+			alternatePath = currentPath.replace("/it/contatto", "/contacto");
+		else if (currentPath.startsWith("/it/creazioni"))
+			alternatePath = currentPath.replace("/it/creazioni", "/creaciones");
+		else alternatePath = currentPath.replace("/it", "") || "/";
+	}
+}
+
+const alternateURL = alternatePath ? new URL(alternatePath, Astro.site) : null;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -100,6 +267,16 @@ const socialImageURL = ogImage.startsWith("http")
 		/>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonicalURL} />
+		{
+			alternateURL && (
+				<link
+					rel="alternate"
+					hreflang={alternateLang}
+					href={alternateURL}
+				/>
+			)
+		}
+		<link rel="alternate" hreflang={lang} href={canonicalURL} />
 
 		<ClientRouter />
 
@@ -130,11 +307,11 @@ const socialImageURL = ogImage.startsWith("http")
 		/>
 	</head>
 	<body class="min-h-screen flex flex-col">
-		<Header client:load links={dynamicLinks} />
-		<div class="flex-grow">
+		<Header client:load links={dynamicLinks} lang={lang} />
+		<div class="grow">
 			<slot />
 		</div>
-		<Footer />
+		<Footer client:load lang={lang} />
 		<BackToTop client:load />
 	</body>
 </html>

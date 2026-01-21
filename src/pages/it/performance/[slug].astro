@@ -1,0 +1,172 @@
+---
+import { getEntry, render } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import { Youtube } from "lucide-react";
+import { SingleLineGallery } from "../../../components/blocks/SingleLineGallery";
+
+const { slug } = Astro.params;
+const entry = await getEntry("performance", `it/${slug}`);
+
+if (!entry) {
+    return Astro.redirect("/404");
+}
+
+const { Content } = await render(entry);
+
+const { title, description, cover, seo } = entry.data;
+const seoTitle = seo?.title || `${title} - Performance`;
+const seoDescription = seo?.description || description;
+const seoOgImage = seo?.ogImage || cover;
+
+const hasGallery = entry.data.gallery && entry.data.gallery.length > 0;
+---
+
+<Layout title={seoTitle} description={seoDescription} ogImage={seoOgImage}>
+    <main class="bg-white min-h-screen pb-24">
+        {/* HERO - 60vh */}
+        <section
+            class="relative h-[25vh] md:h-[60vh] w-full overflow-hidden mb-16 bg-black"
+        >
+            {
+                entry.data.cover && (
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <img
+                            src={entry.data.cover}
+                            alt={entry.data.title}
+                            class="w-full h-full object-contain"
+                        />
+                        <div class="absolute inset-0 bg-black/10" />
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <h1 class="font-serif text-white text-[32px] md:text-[40px] uppercase tracking-wider subpixel-antialiased drop-shadow-lg text-center px-4">
+                                {entry.data.title}
+                            </h1>
+                        </div>
+                    </div>
+                )
+            }
+        </section>
+
+        <div class="container mx-auto px-6 max-w-7xl">
+            {/* 1. DESCRIPTION / POST CONTENT */}
+            <div class="max-w-4xl mx-auto text-center mb-16">
+                <div
+                    class="prose prose-lg prose-p:font-sans prose-p:text-gray-800 prose-headings:font-serif max-w-none text-center"
+                >
+                    <Content />
+                </div>
+            </div>
+
+            {/* 2. GRID SECTION: Visual (Carousel or Video) + Details */}
+            <div
+                class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-24 items-start"
+            >
+                <div class="flex flex-col">
+                    {
+                        hasGallery ? (
+                            <SingleLineGallery
+                                images={entry.data.gallery || []}
+                                client:load
+                            />
+                        ) : (
+                            entry.data.videoUrl && (
+                                <div class="aspect-video w-full rounded-sm overflow-hidden shadow-2xl mb-4 group relative bg-black">
+                                    {entry.data.videoUrl.includes("youtube") ||
+                                    entry.data.videoUrl.includes("youtu.be") ? (
+                                        <iframe
+                                            width="100%"
+                                            height="100%"
+                                            src={entry.data.videoUrl.replace(
+                                                "watch?v=",
+                                                "embed/",
+                                            )}
+                                            title="YouTube video player"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            allowfullscreen
+                                            class="absolute inset-0 w-full h-full"
+                                        />
+                                    ) : (
+                                        <video
+                                            src={entry.data.videoUrl}
+                                            controls
+                                            class="absolute inset-0 w-full h-full object-contain"
+                                        />
+                                    )}
+                                </div>
+                            )
+                        )
+                    }
+                </div>
+
+                {/* Right Column: Details */}
+                {
+                    entry.data.details && (
+                        <div class="bg-primary p-4 md:p-4 rounded-sm text-white shadow-xl h-full">
+                            <div
+                                class="font-sans text-sm md:text-base leading-relaxed whitespace-pre-wrap"
+                                set:html={entry.data.details
+                                    .replace(
+                                        /\*\*(.*?)\*\*/g,
+                                        "<strong>$1</strong>",
+                                    )
+                                    .replace(/\n/g, "<br/>")}
+                            />
+                        </div>
+                    )
+                }
+            </div>
+
+            {/* 3. BOTTOM VIDEO */}
+            {
+                hasGallery && entry.data.videoUrl && (
+                    <div class="max-w-4xl mx-auto mb-12">
+                        <h3 class="font-nav text-2xl uppercase mb-6 text-center">
+                            Video
+                        </h3>
+                        <div class="aspect-video w-full rounded-sm overflow-hidden shadow-2xl mb-4 group relative bg-black">
+                            {entry.data.videoUrl.includes("youtube") ||
+                            entry.data.videoUrl.includes("youtu.be") ? (
+                                <iframe
+                                    width="100%"
+                                    height="100%"
+                                    src={entry.data.videoUrl.replace(
+                                        "watch?v=",
+                                        "embed/",
+                                    )}
+                                    title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen
+                                    class="absolute inset-0 w-full h-full"
+                                />
+                            ) : (
+                                <video
+                                    src={entry.data.videoUrl}
+                                    controls
+                                    class="absolute inset-0 w-full h-full object-contain"
+                                />
+                            )}
+                        </div>
+                    </div>
+                )
+            }
+
+            {/* FULL VIDEO LINK */}
+            {
+                entry.data.fullVideoUrl && (
+                    <div class="text-center mb-24">
+                        <a
+                            href={entry.data.fullVideoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-2 bg-black text-white px-8 py-3 rounded-full font-nav tracking-widest uppercase hover:bg-primary transition-colors duration-300"
+                        >
+                            <Youtube className="w-5 h-5" />
+                            Guarda il Video Completo
+                        </a>
+                    </div>
+                )
+            }
+        </div>
+    </main>
+</Layout>

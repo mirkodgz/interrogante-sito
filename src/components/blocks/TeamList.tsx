@@ -20,15 +20,23 @@ interface TeamMember {
 
 interface TeamListProps {
     teamMembers: TeamMember[];
+    lang?: 'es' | 'it';
 }
 
-const TeamList = ({ teamMembers }: TeamListProps) => {
+const TeamList = ({ teamMembers, lang = 'es' }: TeamListProps) => {
+    const isIt = lang === 'it';
+    const t = {
+        title: isIt ? "IL NOSTRO TEAM" : "NUESTRO EQUIPO",
+        highlight: isIt ? "TEAM" : "EQUIPO",
+        button: isIt ? "LEGGI DI PIÙ" : "LEER MÁS"
+    };
+
     return (
         <section className="py-24 bg-white">
             <div className="container mx-auto px-6">
                 <SectionHeader
-                    title="NUESTRO EQUIPO"
-                    highlightedWord="EQUIPO"
+                    title={t.title}
+                    highlightedWord={t.highlight}
                     className="mb-16"
                 />
 
@@ -77,8 +85,8 @@ const TeamList = ({ teamMembers }: TeamListProps) => {
 
                             {/* Button */}
                             <BrandButton
-                                text="LEER MÁS"
-                                href={`/nosotros/team/${member.slug}`}
+                                text={t.button}
+                                href={isIt ? `/it/chi-siamo/team/${member.slug.split('/').pop()}` : `/nosotros/team/${member.slug.split('/').pop()}`}
                                 variant="primary"
                                 className="!px-8"
                             />

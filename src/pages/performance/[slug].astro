@@ -17,7 +17,7 @@ import { SingleLineGallery } from "../../components/blocks/SingleLineGallery";
 import { getEntry } from "astro:content";
 
 const { slug } = Astro.params;
-const entry = await getEntry("performance", slug);
+const entry = await getEntry("performance", `es/${slug}`);
 
 if (!entry) {
     return Astro.redirect("/404");
@@ -94,7 +94,7 @@ const hasGallery = entry.data.gallery && entry.data.gallery.length > 0;
                     {
                         hasGallery ? (
                             <SingleLineGallery
-                                images={entry.data.gallery}
+                                images={entry.data.gallery || []}
                                 client:load
                             />
                         ) : (

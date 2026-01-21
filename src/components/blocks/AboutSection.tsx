@@ -22,6 +22,7 @@ const AboutSection = () => {
                     highlightedWord="Spettacolo"
                     variant="dark"
                     className="mb-12"
+                    as="h1"
                 />
 
                 {/* Central Image */}

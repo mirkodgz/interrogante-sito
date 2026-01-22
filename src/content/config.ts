@@ -30,6 +30,7 @@ const creacionesCollection = defineCollection({
         language: z.enum(['es', 'it']),
         title: z.string(),
         subtitle: z.string().optional(),
+        order: z.number().optional(),
         cover: z.string().optional(),
         videoUrl: z.string().optional(),
         additionalVideos: z.array(z.string()).optional(),

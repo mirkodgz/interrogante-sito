@@ -51,7 +51,7 @@ const NewsSection = ({ lang = 'es' }: { lang?: string }) => {
                             </h3>
 
                             {/* Card Image */}
-                            <div className="relative w-full max-w-[449px] aspect-[449/271] rounded-sm overflow-hidden mb-6">
+                            <div className="relative w-full max-w-[449px] aspect-449/271 rounded-sm overflow-hidden mb-6">
                                 <img
                                     src={item.image}
                                     alt={item.title}

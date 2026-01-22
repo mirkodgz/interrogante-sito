@@ -2,7 +2,11 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 
-const creaciones = await getCollection("creaciones");
+const creaciones = (
+    await getCollection("creaciones", ({ data }) => {
+        return data.language === "es";
+    })
+).sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
 
 // Hero image from the provided screenshot or a default one from creaciones
 const heroImage =
@@ -34,36 +38,39 @@ const heroImage =
         <!-- GRID OF CREATIONS - PANORAMIC CARDS -->
         <div class="container mx-auto px-6 max-w-7xl pt-20 space-y-12">
             {
-                creaciones.map((obra) => (
-                    <a
-                        href={`/creaciones/${obra.slug}`}
-                        class="group relative h-[250px] md:h-[350px] block overflow-hidden rounded-sm shadow-xl transition-all duration-500 hover:shadow-2xl"
-                    >
-                        {/* Background Image */}
-                        <div class="absolute inset-0">
-                            <img
-                                src={obra.data.cover}
-                                alt={obra.data.title}
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                            />
-                            <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-500" />
-                        </div>
+                creaciones.map((obra) => {
+                    const urlSlug = obra.slug.replace(/^es\//, "");
+                    return (
+                        <a
+                            href={`/creaciones/${urlSlug}`}
+                            class="group relative h-[250px] md:h-[350px] block overflow-hidden rounded-sm shadow-xl transition-all duration-500 hover:shadow-2xl"
+                        >
+                            {/* Background Image */}
+                            <div class="absolute inset-0">
+                                <img
+                                    src={obra.data.cover}
+                                    alt={obra.data.title}
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                />
+                                <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-500" />
+                            </div>
 
-                        {/* Content Overlay */}
-                        <div class="absolute inset-0 flex items-center justify-center p-8">
-                            <div class="bg-primary/95 text-white px-8 py-4 border-l-4 border-white transform skew-x-[-12deg] group-hover:scale-105 transition-transform duration-300 shadow-2xl">
-                                <div class="transform skew-x-[12deg]">
-                                    <h2 class="font-nav text-2xl md:text-4xl lg:text-5xl uppercase leading-none">
-                                        {obra.data.title}
-                                    </h2>
+                            {/* Content Overlay */}
+                            <div class="absolute inset-0 flex items-center justify-center p-8">
+                                <div class="bg-primary/95 text-white px-8 py-4 border-l-4 border-white transform -skew-x-12 group-hover:scale-105 transition-transform duration-300 shadow-2xl">
+                                    <div class="transform skew-x-12">
+                                        <h2 class="font-nav text-2xl md:text-4xl lg:text-5xl uppercase leading-none">
+                                            {obra.data.title}
+                                        </h2>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        {/* Subtle micro-animation line */}
-                        <div class="absolute bottom-0 left-0 h-1 bg-secondary w-0 group-hover:w-full transition-all duration-500" />
-                    </a>
-                ))
+                            {/* Subtle micro-animation line */}
+                            <div class="absolute bottom-0 left-0 h-1 bg-secondary w-0 group-hover:w-full transition-all duration-500" />
+                        </a>
+                    );
+                })
             }
         </div>
     </main>

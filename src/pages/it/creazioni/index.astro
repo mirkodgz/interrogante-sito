@@ -2,10 +2,11 @@
 import { getCollection } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 
-const allCreaciones = await getCollection("creaciones");
-const itCreaciones = allCreaciones.filter((item) =>
-    item.slug.startsWith("it/"),
-);
+const itCreaciones = (
+    await getCollection("creaciones", ({ data }) => {
+        return data.language === "it";
+    })
+).sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
 
 // Hero image from the provided screenshot or a default one from creaciones
 const heroImage =

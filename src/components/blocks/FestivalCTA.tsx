@@ -2,8 +2,11 @@ import React from 'react';
 import { MotionPreset } from '@/components/ui/motion-preset';
 import BrandButton from '@/components/ui/BrandButton';
 import SectionHeader from '@/components/ui/SectionHeader';
+import { ui } from '@/i18n/ui';
 
-const FestivalCTA = () => {
+const FestivalCTA = ({ lang = 'es' }: { lang?: string }) => {
+    const t = ui[lang as keyof typeof ui] || ui.es;
+
     return (
         <section className="relative py-24 bg-[#efeff6] overflow-hidden">
             <div className="container mx-auto px-6 flex flex-col items-center">
@@ -40,8 +43,8 @@ const FestivalCTA = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <BrandButton
-                        text="VER MÁS"
-                        href="/festival/"
+                        text={t['home.festival.button']}
+                        href={lang === 'es' ? '/festival/' : '/it/festival/'}
                         variant="primary"
                     />
                 </MotionPreset>

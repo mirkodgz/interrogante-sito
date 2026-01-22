@@ -90,6 +90,7 @@ const teamCollection = defineCollection({
         language: z.enum(['es', 'it']),
         name: z.string(),
         role: z.string(),
+        order: z.number().optional(),
         cover: z.string(),
         profileImage: z.string().optional(),
         facebook: z.string().optional(),

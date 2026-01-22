@@ -2,8 +2,11 @@ import React from 'react'
 import { MotionPreset } from '@/components/ui/motion-preset'
 import BrandButton from '@/components/ui/BrandButton'
 import SectionHeader from '@/components/ui/SectionHeader'
+import { ui } from '@/i18n/ui'
 
-const AboutSection = () => {
+const AboutSection = ({ lang = 'es' }: { lang?: string }) => {
+    const t = ui[lang as keyof typeof ui] || ui.es;
+
     return (
         /* SECCIÓN: ABOUT / INTRO - FONDO GRADIENTE DIVIDIDO */
         <section className="relative py-24 overflow-hidden">
@@ -51,7 +54,7 @@ const AboutSection = () => {
                     className="max-w-4xl text-center mb-12"
                 >
                     <p className="text-white/90 text-[16px] font-semibold leading-relaxed">
-                        Organizada como una asociación sin fines de lucro, Interrogante Spettacolo se dedica a la producción artística y a la enseñanza del español en Italia, utilizando un enfoque que combina la rica herencia cultural latinoamericana con metodologías pedagógicas creativas. La propuesta de la compañía no solo mejora las competencias lingüísticas de los estudiantes, sino que también promueve su desarrollo artístico, estableciendo un vínculo profundo con el idioma español a través de la expresión y la creatividad. Esto ha permitido que Interrogante Spettacolo se convierta en un referente en la formación de docentes y estudiantes, creando un entorno en el que el arte y la creatividad son fundamentales para un aprendizaje transformador.
+                        {t['home.about.description']}
                     </p>
                 </MotionPreset>
 
@@ -63,8 +66,8 @@ const AboutSection = () => {
                     transition={{ duration: 0.5 }}
                 >
                     <BrandButton
-                        text="Conócenos más"
-                        href="/nosotros/"
+                        text={t['home.about.button']}
+                        href={lang === 'es' ? '/nosotros/' : '/it/chi-siamo/'}
                         variant="white"
                     />
                 </MotionPreset>

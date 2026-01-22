@@ -78,19 +78,23 @@ const portfolioItems: PortfolioItem[] = [
         <Hero client:load />
 
         {/* SECCIÓN 2: CINTAS DE TEXTO */}
-        <TextStrips client:load />
+        <TextStrips client:load lang="it" />
 
-        {/* SECCIÓN 3: CORSI E LABORATORI */}
-        <PortfolioSection client:load portfolioItems={portfolioItems} />
+        {/* SECCIÓN: PORTAFOLIO / PROYECTOS */}
+        <PortfolioSection
+            client:load
+            portfolioItems={portfolioItems}
+            lang="it"
+        />
 
-        {/* SECCIÓN 4: CHI SIAMO */}
-        <AboutSection client:load />
+        {/* SECCIÓN: CHI SIAMO */}
+        <AboutSection client:load lang="it" />
 
         {/* SECCIÓN 5: C.T.A. FESTIVAL */}
-        <FestivalCTA client:load />
+        <FestivalCTA client:load lang="it" />
 
         {/* SECCIÓN 6: NEWS */}
-        <NewsSection client:load />
+        <NewsSection client:load lang="it" />
 
         {/* SECCIÓN 7: BLOG (Sempre in Spagnolo come richiesto) */}
         <BlogSection client:load blogItems={blogItems} />

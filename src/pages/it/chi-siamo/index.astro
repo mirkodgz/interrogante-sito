@@ -5,10 +5,9 @@ import AboutDescription from "../../../components/blocks/AboutDescription";
 import TeamList from "../../../components/blocks/TeamList";
 import { getCollection } from "astro:content";
 
-const teamMembers = await getCollection(
-    "team",
-    ({ data }) => data.language === "it",
-);
+const teamMembers = (
+    await getCollection("team", ({ data }) => data.language === "it")
+).sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
 
 const itParagraphs = [
     "Interrogante Spettacolo è una compagnia internazionale di creazione artistica multiculturale, fondata all'Avana e attualmente con sede a Milano. L'iniziativa nasce dalla visione di Kalua Rodríguez, che cercava di stabilire uno spazio innovativo e sperimentale per laureati in pedagogia con interessi artistici. La sua esperienza come attrice ed emigrante in Europa l'ha portata a comprendere il potere dell'arte come mezzo di riconnessione personale e sociale, offrendo esperienze significative attraverso il teatro e altre forme creative.",

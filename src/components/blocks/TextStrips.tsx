@@ -1,14 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { ui } from '@/i18n/ui';
 
-const strips = [
-    { text: "TRANSFORMA", color: "bg-secondary", direction: -1 }, // Left
-    { text: "LA ENSEÑANZA", color: "bg-primary", direction: 1 },  // Right
-    { text: "DESPIERTA", color: "bg-black", direction: -1 },       // Left
-    { text: "LA CREATIVIDAD.", color: "bg-primary", direction: 1 }, // Right
-];
+export default function TextStrips({ lang = 'es' }: { lang?: string }) {
+    const t = ui[lang as keyof typeof ui] || ui.es;
 
-export default function TextStrips() {
+    const strips = [
+        { text: t['home.strips.1'], color: "bg-secondary", direction: -1 }, // Left
+        { text: t['home.strips.2'], color: "bg-primary", direction: 1 },  // Right
+        { text: t['home.strips.3'], color: "bg-black", direction: -1 },       // Left
+        { text: t['home.strips.4'], color: "bg-primary", direction: 1 }, // Right
+    ];
+
     return (
         /* SECCIÓN: CINTAS DINÁMICAS - CONCEPTOS */
         <section className="py-24 bg-[#f8f8f8] overflow-hidden flex flex-col items-center">
@@ -35,7 +38,7 @@ export default function TextStrips() {
               ${index % 2 === 0 ? '-rotate-2' : 'rotate-2'}
             `}
                     >
-                        <span className="text-white font-nav text-[44px] font-[700] tracking-[3px] leading-none uppercase">
+                        <span className="text-white font-nav text-[44px] font-bold tracking-[3px] leading-none uppercase text-center">
                             {strip.text}
                         </span>
                     </motion.div>

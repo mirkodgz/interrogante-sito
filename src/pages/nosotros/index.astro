@@ -5,9 +5,11 @@ import AboutDescription from "../../components/blocks/AboutDescription";
 import TeamList from "../../components/blocks/TeamList";
 import { getCollection } from "astro:content";
 
-const teamMembers = await getCollection("team", ({ data }) => {
-    return data.language === "es";
-});
+const teamMembers = (
+    await getCollection("team", ({ data }) => {
+        return data.language === "es";
+    })
+).sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
 ---
 
 <Layout title="Nosotros - Interrogante Spettacolo">

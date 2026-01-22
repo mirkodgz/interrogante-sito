@@ -41,10 +41,11 @@ export default function Footer({ lang = 'es' }: { lang?: string }) {
                                 {t['footer.addressTitle']}
                             </h3>
                             <div className="text-base font-sans font-semibold space-y-1">
-                                <p className="font-bold">ASSOCIAZIONE INTERROGANTE SPETTACOLO</p>
+                                <p className="font-bold">ASSOCIAZIONE INTERROGANTE SPETTACOLO ETS</p>
                                 <p>Via Per San Pietro 1328</p>
                                 <p>22010 Carlazzo (CO)</p>
                                 <p>Codice fiscale: 95142440130</p>
+                                <p>Partida IVA: 04257870131</p>
                             </div>
                         </div>
 

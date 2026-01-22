@@ -2,20 +2,24 @@ import React from 'react';
 import { MotionPreset } from '@/components/ui/motion-preset';
 import BrandButton from '@/components/ui/BrandButton';
 import SectionHeader from '@/components/ui/SectionHeader';
+import { ui } from '@/i18n/ui';
 
-const NewsSection = () => {
+const NewsSection = ({ lang = 'es' }: { lang?: string }) => {
+    const t = ui[lang as keyof typeof ui] || ui.es;
+    const isIt = lang === 'it';
+
     const newsItems = [
         {
             title: "A PIEDI NUDI 4",
             highlightedWord: "4",
             image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768527003/Foto-Cover-APN4_fvdqfy.jpg",
-            href: "/festival/"
+            href: isIt ? "/it/festival/" : "/festival/"
         },
         {
             title: "LA CARRETILLA",
             highlightedWord: "CARRETILLA",
             image: "https://res.cloudinary.com/dskliu1ig/image/upload/v1768527018/la-carettilla-img-is_ormeeq.jpg",
-            href: "/la-carretilla/"
+            href: isIt ? "/it/creazioni/la-carretilla" : "/creaciones/la-carretilla"
         }
     ];
 
@@ -58,7 +62,7 @@ const NewsSection = () => {
 
                             {/* CTA Button */}
                             <BrandButton
-                                text="VER MÁS"
+                                text={t['home.festival.button']}
                                 href={item.href}
                                 variant="primary"
                                 className="scale-90"

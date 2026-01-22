@@ -76,3 +76,27 @@
     @apply text-primary;
   }
 }
+
+/* Scrollbar personalizada - Color primario violeta */
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4338ab;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #352d8a;
+}
+
+/* Para Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #4338ab #f1f1f1;
+}

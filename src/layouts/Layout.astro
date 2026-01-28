@@ -109,6 +109,10 @@ const dynamicLinks = navigationLinks
 								"/chi-siamo/team/yosvanis-gil",
 							"/nosotros/team/yudel-collazo":
 								"/chi-siamo/team/yudel-collazo",
+							"/iniciativa-culturales-para-ninos/":
+								"/iniziative-culturali-per-bambini/",
+							"/jugando-en-espanol/": "/giocando-in-spagnolo/",
+							"/abuela-te-hablo/": "/abuela-te-hablo/",
 						};
 						const mappedChildPath =
 							childRouteMap[child.href] || child.href;
@@ -157,6 +161,10 @@ const dynamicLinks = navigationLinks
 					"/formazione-insegnanti/",
 				"/talleres-para-ninos/": "/laboratori-per-bambini/",
 				"/crea-tu-taller/": "/crea-il-tuo-laboratorio/",
+				"/iniciativa-culturales-para-ninos/":
+					"/iniziative-culturali-per-bambini/",
+				"/jugando-en-espanol/": "/giocando-in-spagnolo/",
+				"/abuela-te-hablo/": "/abuela-te-hablo/",
 			};
 
 			const mappedPath = routeMap[link.href] || link.href;
@@ -188,6 +196,10 @@ const dynamicLinks = navigationLinks
 							"/chi-siamo/team/yosvanis-gil",
 						"/nosotros/team/yudel-collazo":
 							"/chi-siamo/team/yudel-collazo",
+						"/iniciativa-culturales-para-ninos/":
+							"/iniziative-culturali-per-bambini/",
+						"/jugando-en-espanol/": "/giocando-in-spagnolo/",
+						"/abuela-te-hablo/": "/abuela-te-hablo/",
 					};
 					const mappedChildPath =
 						childRouteMap[child.href] || child.href;
@@ -226,6 +238,21 @@ if (!currentPath.includes("/blog")) {
 		// User requirement: "Italiano (it) accessible via the /it/ prefix."
 		// In Layout navigation we used: /it/festival/[slug].
 		// So festival and performance seem to keep the word in Italian (same).
+		else if (currentPath.startsWith("/iniciativa-culturales-para-ninos"))
+			alternatePath = currentPath.replace(
+				"/iniciativa-culturales-para-ninos",
+				"/it/iniziative-culturali-per-bambini",
+			);
+		else if (currentPath.startsWith("/jugando-en-espanol"))
+			alternatePath = currentPath.replace(
+				"/jugando-en-espanol",
+				"/it/giocando-in-spagnolo",
+			);
+		else if (currentPath.startsWith("/abuela-te-hablo"))
+			alternatePath = currentPath.replace(
+				"/abuela-te-hablo",
+				"/it/abuela-te-hablo",
+			);
 		else alternatePath = `/it${currentPath}`;
 	} else {
 		if (currentPath === "/it/" || currentPath === "/it")
@@ -236,6 +263,16 @@ if (!currentPath.includes("/blog")) {
 			alternatePath = currentPath.replace("/it/contatto", "/contacto");
 		else if (currentPath.startsWith("/it/creazioni"))
 			alternatePath = currentPath.replace("/it/creazioni", "/creaciones");
+		else if (currentPath.startsWith("/it/iniziative-culturali-per-bambini"))
+			alternatePath = currentPath.replace(
+				"/it/iniziative-culturali-per-bambini",
+				"/iniciativa-culturales-para-ninos",
+			);
+		else if (currentPath.startsWith("/it/giocando-in-spagnolo"))
+			alternatePath = currentPath.replace(
+				"/it/giocando-in-spagnolo",
+				"/jugando-en-espanol",
+			);
 		else alternatePath = currentPath.replace("/it", "") || "/";
 	}
 }

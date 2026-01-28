@@ -1,51 +1,158 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PageHero from "../components/ui/PageHero";
-
-const heroImage =
-    "https://res.cloudinary.com/dskliu1ig/image/upload/v1768145671/JugandoEnEspanol-DEF_sbobsb.jpg";
+import AboutDescription from "../components/blocks/AboutDescription";
 ---
 
 <Layout
     title="Talleres para Niños | Jugando en Español | Interrogante Spettacolo"
 >
-    <main class="bg-white pb-20">
-        {/* HERO SECTION */}
-        <PageHero
-            client:load
-            title="JUGANDO EN ESPAÑOL"
-            image={heroImage}
-            height="60vh"
-        >
-            <p
-                class="text-white/80 font-sans text-xl mt-4 uppercase tracking-[4px]"
+    <!-- HERO SECTION -->
+    <section
+        class="relative h-[80vh] flex items-center justify-center overflow-hidden"
+    >
+        <div class="absolute inset-0">
+            <video
+                class="w-full h-full object-cover"
+                autoplay
+                muted
+                loop
+                playsinline
             >
-                Talleres para Niños
-            </p>
-        </PageHero>
+                <source
+                    src="https://res.cloudinary.com/dskliu1ig/video/upload/v1769559684/video-CervantesCompress_kevbly.mp4"
+                    type="video/mp4"
+                />
+            </video>
+            <div class="absolute inset-0 bg-black/40"></div>
+        </div>
+        <div class="relative z-10 text-center px-6">
+            <h1
+                class="font-nav text-4xl md:text-6xl lg:text-7xl text-white uppercase max-w-5xl mx-auto leading-none drop-shadow-2xl"
+            >
+                TALLERES PARA NIÑOS
+            </h1>
+        </div>
+    </section>
 
-        <section class="py-24 container mx-auto px-6 max-w-4xl text-center">
-            <h2
-                class="font-nav text-3xl md:text-5xl text-primary uppercase mb-8"
+    <AboutDescription
+        client:visible
+        title="NUESTRA MIRADA DIDÁCTICA"
+        paragraphs={[
+            "Una de las modalidades más utilizadas es el laboratorio. El taller, como también se le puede llamar, puede ser realizado dentro de las escuelas, universidades, centros culturales, teatros y espacios alternativos. Es una experiencia única y enriquecedora que atraviesa un recorrido que va desde el autorreconocimiento a las conexiones con el espacio y con el otro. Un viaje que concluye con la construcción de un material artístico.",
+            "Cada taller tiene una existencia propia y el número de encuentros puede variar de acuerdo al interés del sector que solicite el servicio o al objetivo de la Compañía.",
+            "“Para dirigirnos a niños y adolescentes nos acogemos al uso del juego escénico que en una técnica que permite la interacción sin hablar de las reglas y desciplina de la escena. Nuestro trabajo con estas edades está encaminado a pensar en la necesidad de compartir en grupo y a despertar interés por la belleza emotiva, sobre todo con los chicos más grandes que atraviesan por una edad difícil”.",
+        ]}
+    />
+
+    <!-- ACTIVITIES SECTION -->
+    <section class="py-24 bg-white">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <!-- List -->
+            <div
+                class="bg-gray-50 border border-gray-100 rounded-lg p-12 text-center shadow-sm mb-20 max-w-3xl mx-auto"
             >
-                Próximamente
-            </h2>
-            <p
-                class="font-sans text-lg text-gray-600 leading-relaxed text-justify"
-            >
-                Estamos preparando experiencias inolvidables para los más
-                pequeños. Muy pronto podrás encontrar aquí toda la información
-                sobre nuestros talleres infantiles donde el juego y el idioma se
-                encuentran.
-            </p>
-            <div class="mt-12">
+                <div class="flex justify-center mb-6">
+                    <div class="bg-primary/10 p-4 rounded-full">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="48"
+                            height="48"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="text-primary"
+                            ><path
+                                d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"
+                            ></path><circle cx="12" cy="13" r="3"></circle></svg
+                        >
+                    </div>
+                </div>
+                <ul class="space-y-4 font-sans text-xl text-gray-700">
+                    {
+                        [
+                            "Laboratorios",
+                            "Actividad Cultural para niños",
+                            "Actividad Cultural para adolescentes",
+                            "Espectáculos",
+                            "Sketch",
+                            "Cursos y eventos de contenido específico en lengua española",
+                        ].map((item) => (
+                            <li class="flex items-center justify-center gap-3">
+                                <span class="text-primary">✓</span> {item}
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+
+            <!-- Image Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 <a
-                    href="/contacto"
-                    class="inline-block bg-primary text-white px-10 py-4 rounded-full font-nav tracking-widest uppercase hover:bg-secondary transition-all duration-300"
+                    href="/iniciativa-culturales-para-ninos/"
+                    class="group flex flex-col items-center gap-6"
                 >
-                    Contactar para más info
+                    <div
+                        class="w-full aspect-square relative overflow-hidden rounded-xl shadow-lg transition-transform duration-300 group-hover:-translate-y-2"
+                    >
+                        <img
+                            src="https://res.cloudinary.com/dskliu1ig/image/upload/v1769560354/TalleresConInstitutoCervantes-Verde_d7ulvh.png"
+                            alt="Colaboración con Instituto Cervantes"
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                    <h3
+                        class="font-nav text-2xl text-primary text-center uppercase group-hover:text-secondary transition-colors"
+                    >
+                        COLABORACIÓN CON <span
+                            class="bg-red-600 text-white px-1 text-base align-middle ml-1"
+                            >IC</span
+                        >
+                    </h3>
+                </a>
+
+                <a
+                    href="/jugando-en-espanol/"
+                    class="group flex flex-col items-center gap-6"
+                >
+                    <div
+                        class="w-full aspect-square relative overflow-hidden rounded-xl shadow-lg transition-transform duration-300 group-hover:-translate-y-2"
+                    >
+                        <img
+                            src="https://res.cloudinary.com/dskliu1ig/image/upload/v1769560354/JugandoEnEspanol-Verde_krnsml.png"
+                            alt="Jugando en Español"
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                    <h3
+                        class="font-nav text-2xl text-primary text-center uppercase group-hover:text-secondary transition-colors"
+                    >
+                        JUGANDO EN ESPAÑOL
+                    </h3>
+                </a>
+
+                <a
+                    href="/abuela-te-hablo/"
+                    class="group flex flex-col items-center gap-6"
+                >
+                    <div
+                        class="w-full aspect-square relative overflow-hidden rounded-xl shadow-lg transition-transform duration-300 group-hover:-translate-y-2"
+                    >
+                        <img
+                            src="https://res.cloudinary.com/dskliu1ig/image/upload/v1769560354/Abuela-Te-Hablo-Verdee_j8tw6p.png"
+                            alt="Abuela Te Hablo"
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                    <h3
+                        class="font-nav text-2xl text-primary text-center uppercase group-hover:text-secondary transition-colors"
+                    >
+                        ABUELA TE HABLO
+                    </h3>
                 </a>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 </Layout>

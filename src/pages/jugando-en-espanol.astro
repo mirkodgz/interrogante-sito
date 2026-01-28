@@ -1,0 +1,225 @@
+---
+import Layout from "../layouts/Layout.astro";
+import TeamList from "../components/blocks/TeamList";
+import { getCollection } from "astro:content";
+import { Youtube, Instagram } from "lucide-react";
+
+const teamMembers = (
+    await getCollection("team", ({ data }) => {
+        return data.language === "es";
+    })
+).sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
+---
+
+<Layout title="Jugando en Español | Interrogante Spettacolo">
+    <main class="bg-white pb-20">
+        <!-- HERO SECTION -->
+        <section
+            class="relative h-[60vh] flex items-center justify-center overflow-hidden"
+        >
+            <div class="absolute inset-0">
+                <img
+                    src="https://res.cloudinary.com/dskliu1ig/image/upload/v1768145671/JugandoEnEspanol-DEF_sbobsb.jpg"
+                    alt="Jugando en Español"
+                    class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-black/40"></div>
+            </div>
+            <div class="relative z-10 text-center px-6">
+                <h1
+                    class="font-nav text-4xl md:text-6xl lg:text-7xl text-white uppercase max-w-5xl mx-auto leading-none drop-shadow-2xl"
+                >
+                    JUGANDO EN ESPAÑOL
+                </h1>
+            </div>
+        </section>
+
+        <!-- MAIN TITLE -->
+        <section class="py-16 container mx-auto px-6">
+            <h2
+                class="font-nav text-3xl md:text-5xl text-primary text-center uppercase tracking-tight max-w-5xl mx-auto leading-tight"
+            >
+                ¡ Aprendamos español descubriendo el maravilloso mundo del
+                teatro !
+            </h2>
+        </section>
+
+        <!-- DESCRIPTION SECTION -->
+        <section class="pb-20 container mx-auto px-6 max-w-4xl">
+            <div class="flex flex-col gap-6 mb-16">
+                <h3 class="font-nav text-2xl text-black uppercase">
+                    LABORATORIO: JUGANDO EN ESPAÑOL
+                </h3>
+                <div
+                    class="font-sans text-gray-700 space-y-4 text-lg leading-relaxed text-justify"
+                >
+                    <p>
+                        Este taller está diseñado para ser una experiencia
+                        lúdica y enriquecedora, donde los niños puedan descubrir
+                        la alegría de moverse, jugar y explorar nuevas formas de
+                        expresión, acercándose a la cultura hispana en un
+                        ambiente seguro y divertido.
+                    </p>
+                    <p>
+                        Con el objetivo principal de acercar a los niños a la
+                        cultura hispanoamericana a través del juego, la
+                        expresión corporal y los juegos escénicos, con un uso
+                        moderado del español para no interferir en la
+                        adquisición del idioma italiano.
+                    </p>
+                </div>
+            </div>
+
+            <!-- GRADIENT BOX -->
+            <div
+                class="bg-linear-to-b from-red-600 to-orange-400 rounded-xl p-10 md:p-16 text-white shadow-2xl"
+            >
+                <h2
+                    class="font-nav text-3xl md:text-5xl text-center uppercase mb-12 tracking-wider"
+                >
+                    Preguntas metodológicas
+                </h2>
+
+                <div class="space-y-12">
+                    {/* Preguntas */}
+                    <div class="space-y-4">
+                        <h4
+                            class="font-sans text-xl font-bold border-b border-white/30 pb-2"
+                        >
+                            Preguntas metodológicas:
+                        </h4>
+                        <ul class="font-sans text-lg space-y-2 opacity-95">
+                            <li>
+                                ¿Cómo contribuir al aprendizaje de un nuevo
+                                idioma a través del arte teatral?
+                            </li>
+                            <li>
+                                ¿Cómo fomentar la inclusión del arte en las
+                                escuelas para apoyar la enseñanza del programa
+                                de lengua española?
+                            </li>
+                            <li>
+                                ¿Cómo estimular la curiosidad en los niños por
+                                el conocimiento de una nueva cultura e
+                                identidad?
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* Objetivos */}
+                    <div class="space-y-4">
+                        <h4
+                            class="font-sans text-xl font-bold border-b border-white/30 pb-2"
+                        >
+                            Objetivo de los laboratorios:
+                        </h4>
+                        <ul class="font-sans text-lg space-y-2 opacity-95">
+                            <li>
+                                Proporcionar herramientas didácticas y
+                                educativas mediante la puesta en escena de
+                                pequeñas historias y otras dinámicas teatrales.
+                            </li>
+                            <li>
+                                Estimular el ejercicio de la lengua española a
+                                partir del desarrollo de habilidades creativas.
+                            </li>
+                            <li>
+                                Contribuir a la creación de un nuevo espacio de
+                                aprendizaje y comunicación grupal.
+                            </li>
+                            <li>
+                                Fomentar la actividad de inclusión a través del
+                                conocimiento de una nueva identidad cultural.
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* Conclusión */}
+                    <div class="space-y-4">
+                        <h4
+                            class="font-sans text-xl font-bold border-b border-white/30 pb-2"
+                        >
+                            En conclusión, una experiencia única:
+                        </h4>
+                        <ul
+                            class="font-sans text-lg space-y-3 opacity-95 text-justify"
+                        >
+                            <li>
+                                <strong>Porque</strong> a través de la interacción
+                                con los actores durante el espectáculo o los talleres,
+                                en un contexto desestructurado, estimulante y divertido,
+                                diferente a las lecciones normales del aula, los estudiantes
+                                comprenden y son capaces de comunicarse libremente,
+                                superando el miedo a cometer errores.
+                            </li>
+                            <li>
+                                <strong>Porque</strong> nuestro método favorece la
+                                consolidación, enriquece el vocabulario y estimula
+                                el deseo de hablar en español.
+                            </li>
+                            <li>
+                                <strong>Porque</strong> promueve el placer de escuchar
+                                desarrollando la capacidad de comprensión, atención
+                                y memoria.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACTORES / PROFESORES -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2
+                    class="font-nav text-3xl md:text-5xl text-primary uppercase mb-12"
+                >
+                    ACTORES/ PROFESORES
+                </h2>
+                <TeamList client:load teamMembers={teamMembers} />
+            </div>
+        </section>
+
+        <!-- SUBSCRIBE SECTION -->
+        <section class="py-24 px-6">
+            <div
+                class="max-w-4xl mx-auto rounded-xl p-16 text-white text-center shadow-2xl"
+                style="background: linear-gradient(180deg, #E91E1E 22%, #F9BC00 100%)"
+            >
+                <div class="space-y-12">
+                    <div class="space-y-6">
+                        <h2
+                            class="font-nav text-3xl md:text-4xl uppercase tracking-widest"
+                        >
+                            SUSCRÍBETE A NUESTRO CANAL YOUTUBE
+                        </h2>
+                        <a
+                            href="https://www.youtube.com/channel/UCXd5gTRSr5__fjcqQYgvf6w"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center justify-center bg-white text-red-600 p-4 rounded-full hover:scale-110 transition-transform shadow-lg"
+                        >
+                            <Youtube className="w-10 h-10" />
+                        </a>
+                    </div>
+
+                    <div class="space-y-6">
+                        <h2
+                            class="font-nav text-3xl md:text-4xl uppercase tracking-widest"
+                        >
+                            SÍGUENOS EN INSTAGRAM!
+                        </h2>
+                        <a
+                            href="https://www.instagram.com/motonetayoyernesto/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center justify-center bg-white text-orange-500 p-4 rounded-full hover:scale-110 transition-transform shadow-lg"
+                        >
+                            <Instagram className="w-10 h-10" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</Layout>

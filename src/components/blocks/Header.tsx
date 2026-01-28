@@ -197,25 +197,31 @@ export default function Header({ links, lang = 'es' }: { links?: NavItem[], lang
                                         >
                                             {link.children ? (
                                                 <div className="flex flex-col">
-                                                    <button
-                                                        onClick={() => setActiveSubmenu(activeSubmenu === link.title ? null : link.title)}
-                                                        className={cn(
-                                                            "flex items-center justify-between w-full py-2 px-4 transition-all duration-300",
-                                                            activeSubmenu === link.title
-                                                                ? "bg-white text-primary -mx-8 w-[calc(100%+64px)] px-10"
-                                                                : "text-white"
-                                                        )}
-                                                    >
-                                                        <span className="font-nav text-xl uppercase font-medium">
+                                                    <div className={cn(
+                                                        "flex items-center justify-between w-full transition-all duration-300",
+                                                        activeSubmenu === link.title
+                                                            ? "bg-white text-primary -mx-8 w-[calc(100%+64px)] px-10"
+                                                            : "text-white px-4"
+                                                    )}>
+                                                        <a
+                                                            href={link.href}
+                                                            onClick={() => setIsOpen(false)}
+                                                            className="grow py-2 font-nav text-xl uppercase font-medium"
+                                                        >
                                                             {link.title}
-                                                        </span>
-                                                        <ChevronDown
-                                                            className={cn(
-                                                                "w-5 h-5 transition-transform duration-300",
-                                                                activeSubmenu === link.title ? "rotate-180" : ""
-                                                            )}
-                                                        />
-                                                    </button>
+                                                        </a>
+                                                        <button
+                                                            onClick={() => setActiveSubmenu(activeSubmenu === link.title ? null : link.title)}
+                                                            className="p-2 -mr-2"
+                                                        >
+                                                            <ChevronDown
+                                                                className={cn(
+                                                                    "w-5 h-5 transition-transform duration-300",
+                                                                    activeSubmenu === link.title ? "rotate-180" : ""
+                                                                )}
+                                                            />
+                                                        </button>
+                                                    </div>
 
                                                     <AnimatePresence>
                                                         {activeSubmenu === link.title && (
